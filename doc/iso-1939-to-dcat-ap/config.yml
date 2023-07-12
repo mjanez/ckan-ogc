@@ -1,0 +1,15 @@
+# Parameters for mnrdb_config script
+default:
+  data_folder: ''
+  log_folder: '../log'
+  output_folder: '../output' 
+
+inspire_info:
+  # The URL of the XML document to be transformed. Here it corresponds to a 'GetRecords' output of a fictitious CSW, with the 'maxRecords' parameter set to 10.
+  #xml_url:'https://www.mapama.gob.es/ide/metadatos/srv/spa/csw?request=GetRecords&service=CSW&version=2.0.2&namespace=xmlns%28csw=http://www.opengis.net/cat/csw%29&resultType=results&outputSchema=http://www.isotc211.org/2005/gmd&outputFormat=application/xml&typeNames=csw:Record&elementSetName=full&constraintLanguage=CQL_TEXT&constraint_language_version=1.1.0&maxRecords=10'
+  # xml_url: 'https://www.mapama.gob.es/ide/metadatos/srv/spa/csw?SERVICE=CSW&VERSION=2.0.2&REQUEST=GetRecordById&OUTPUTSCHEMA=http%3A%2F%2Fwww.isotc211.org%2F2005%2Fgmd&OUTPUTFORMAT=application%2Fxml&ID=cc94abe9-75a1-4362-8de2-c8b8e1f7cc00'
+
+  xml_url : 'https://www.mapama.gob.es/ide/metadatos/srv/spa/csw?SERVICE=CSW&VERSION=2.0.2&REQUEST=GetRecordById&OUTPUTSCHEMA=http%3A%2F%2Fwww.isotc211.org%2F2005%2Fgmd&OUTPUTFORMAT=application%2Fxml&ID=cc94abe9-75a1-4362-8de2-c8b8e1f7cc00'
+  
+  # The URL pointing to the latest version of the XSLT
+  xsl_url : './xlst_mapper/xlst_sample/iso-19139-to-dcat-ap.xsl'

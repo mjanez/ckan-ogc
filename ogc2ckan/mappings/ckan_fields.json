@@ -1,0 +1,674 @@
+[
+    {
+        "ckan_object": "dataset",
+        "ckan_section": "Basic Info",
+        "new_metadata_fields": "title",
+        "multiplicity": "1",
+        "codelists": null,
+        "stored": "Text"
+    },
+    {
+        "ckan_object": "dataset",
+        "ckan_section": "Basic Info",
+        "new_metadata_fields": "owner_org",
+        "multiplicity": "1",
+        "codelists": null,
+        "stored": "URI"
+    },
+    {
+        "ckan_object": "dataset",
+        "ckan_section": "Basic Info",
+        "new_metadata_fields": "private",
+        "multiplicity": "1",
+        "codelists": null,
+        "stored": "Bool"
+    },
+    {
+        "ckan_object": "dataset",
+        "ckan_section": "Basic Info",
+        "new_metadata_fields": "notes",
+        "multiplicity": "1.*",
+        "codelists": null,
+        "stored": "Text"
+    },
+    {
+        "ckan_object": "dataset",
+        "ckan_section": "Basic Info",
+        "new_metadata_fields": "dcat_type",
+        "multiplicity": "1",
+        "codelists": "https://inspire.ec.europa.eu/metadata-codelist/distributionType,https://www.dublincore.org/specifications/dublin-core/dcmi-terms/#section-7,https://id.loc.gov/vocabulary/marcgt.html",
+        "stored": "URI"
+    },
+    {
+        "ckan_object": "dataset",
+        "ckan_section": "Basic Info",
+        "new_metadata_fields": "theme_es",
+        "multiplicity": "1.*",
+        "codelists": "http://datos.gob.es/kos/sector-publico/sector",
+        "stored": "List[URI]"
+    },
+    {
+        "ckan_object": "dataset",
+        "ckan_section": "Basic Info",
+        "new_metadata_fields": "identifier",
+        "multiplicity": "1",
+        "codelists": null,
+        "stored": "Text"
+    },
+    {
+        "ckan_object": "dataset",
+        "ckan_section": "Basic Info",
+        "new_metadata_fields": "language",
+        "multiplicity": "1.*",
+        "codelists": "https://publications.europa.eu/distribution/authority/language",
+        "stored": "URI"
+    },
+    {
+        "ckan_object": "dataset",
+        "ckan_section": "Basic Info",
+        "new_metadata_fields": "issued",
+        "multiplicity": "1",
+        "codelists": null,
+        "stored": "Date"
+    },
+    {
+        "ckan_object": "dataset",
+        "ckan_section": "Basic Info",
+        "new_metadata_fields": "created",
+        "multiplicity": "1",
+        "codelists": null,
+        "stored": "Date"
+    },
+    {
+        "ckan_object": "dataset",
+        "ckan_section": "Basic Info",
+        "new_metadata_fields": "modified",
+        "multiplicity": "1",
+        "codelists": null,
+        "stored": "Date"
+    },
+    {
+        "ckan_object": "dataset",
+        "ckan_section": "Basic Info",
+        "new_metadata_fields": "topic",
+        "multiplicity": "1",
+        "codelists": "http://inspire.ec.europa.eu/metadata-codelist/TopicCategory",
+        "stored": "URI"
+    },
+    {
+        "ckan_object": "dataset",
+        "ckan_section": "Basic Info",
+        "new_metadata_fields": "tag_string",
+        "multiplicity": "1.*",
+        "codelists": "https://inspire.ec.europa.eu/metadata-codelist/TopicCategory,http://inspire.ec.europa.eu/metadata-codelist/SpatialScope,https://www.eionet.europa.eu/gemet/en/alphabetic/",
+        "stored": "List[Text]"
+    },
+    {
+        "ckan_object": "dataset",
+        "ckan_section": "Basic Info",
+        "new_metadata_fields": "tag_uri",
+        "multiplicity": "1.*",
+        "codelists": "https://inspire.ec.europa.eu/metadata-codelist/TopicCategory,http://inspire.ec.europa.eu/metadata-codelist/SpatialScope,https://www.eionet.europa.eu/gemet/en/alphabetic/",
+        "stored": "List[URI]"
+    },
+    {
+        "ckan_object": "dataset",
+        "ckan_section": "Basic Info",
+        "new_metadata_fields": "contact_name",
+        "multiplicity": "1",
+        "codelists": null,
+        "stored": "Text"
+    },
+    {
+        "ckan_object": "dataset",
+        "ckan_section": "Basic Info",
+        "new_metadata_fields": "contact_email",
+        "multiplicity": "1",
+        "codelists": null,
+        "stored": "Text"
+    },
+    {
+        "ckan_object": "dataset",
+        "ckan_section": "Basic Info",
+        "new_metadata_fields": "contact_uri",
+        "multiplicity": "0.1",
+        "codelists": null,
+        "stored": "URI"
+    },
+    {
+        "ckan_object": "dataset",
+        "ckan_section": "Basic Info",
+        "new_metadata_fields": "contact_url",
+        "multiplicity": "0.1",
+        "codelists": null,
+        "stored": "URL"
+    },
+    {
+        "ckan_object": "dataset",
+        "ckan_section": "Responsible Party",
+        "new_metadata_fields": "publisher_name",
+        "multiplicity": "1",
+        "codelists": null,
+        "stored": "Text"
+    },
+    {
+        "ckan_object": "dataset",
+        "ckan_section": "Responsible Party",
+        "new_metadata_fields": "publisher_identifier",
+        "multiplicity": "1",
+        "codelists": null,
+        "stored": "URI"
+    },
+    {
+        "ckan_object": "dataset",
+        "ckan_section": "Responsible Party",
+        "new_metadata_fields": "publisher_uri",
+        "multiplicity": "1",
+        "codelists": null,
+        "stored": "URI"
+    },
+    {
+        "ckan_object": "dataset",
+        "ckan_section": "Responsible Party",
+        "new_metadata_fields": "publisher_email",
+        "multiplicity": "1",
+        "codelists": null,
+        "stored": "Text"
+    },
+    {
+        "ckan_object": "dataset",
+        "ckan_section": "Responsible Party",
+        "new_metadata_fields": "publisher_url",
+        "multiplicity": "0.1",
+        "codelists": null,
+        "stored": "URL"
+    },
+    {
+        "ckan_object": "dataset",
+        "ckan_section": "Responsible Party",
+        "new_metadata_fields": "publisher_type",
+        "multiplicity": "1",
+        "codelists": "http://purl.org/adms/publishertype/",
+        "stored": "URI"
+    },
+    {
+        "ckan_object": "dataset",
+        "ckan_section": "Responsible Party",
+        "new_metadata_fields": "maintainer_name",
+        "multiplicity": "0.1",
+        "codelists": null,
+        "stored": "Text"
+    },
+    {
+        "ckan_object": "dataset",
+        "ckan_section": "Responsible Party",
+        "new_metadata_fields": "maintainer_uri",
+        "multiplicity": "0.1",
+        "codelists": null,
+        "stored": "URI"
+    },
+    {
+        "ckan_object": "dataset",
+        "ckan_section": "Responsible Party",
+        "new_metadata_fields": "maintainer_email",
+        "multiplicity": "0.1",
+        "codelists": null,
+        "stored": "Text"
+    },
+    {
+        "ckan_object": "dataset",
+        "ckan_section": "Responsible Party",
+        "new_metadata_fields": "maintainer_url",
+        "multiplicity": "0.1",
+        "codelists": null,
+        "stored": "URL"
+    },
+    {
+        "ckan_object": "dataset",
+        "ckan_section": "Responsible Party",
+        "new_metadata_fields": "author_name",
+        "multiplicity": "0.1",
+        "codelists": null,
+        "stored": "Text"
+    },
+    {
+        "ckan_object": "dataset",
+        "ckan_section": "Responsible Party",
+        "new_metadata_fields": "author_uri",
+        "multiplicity": "0.1",
+        "codelists": null,
+        "stored": "URI"
+    },
+    {
+        "ckan_object": "dataset",
+        "ckan_section": "Responsible Party",
+        "new_metadata_fields": "author_mail",
+        "multiplicity": "0.1",
+        "codelists": null,
+        "stored": "Text"
+    },
+    {
+        "ckan_object": "dataset",
+        "ckan_section": "Responsible Party",
+        "new_metadata_fields": "author_url",
+        "multiplicity": "0.1",
+        "codelists": null,
+        "stored": "URL"
+    },
+    {
+        "ckan_object": "dataset",
+        "ckan_section": "Quality",
+        "new_metadata_fields": "alternate_identifier",
+        "multiplicity": "0.1",
+        "codelists": null,
+        "stored": "Text"
+    },
+    {
+        "ckan_object": "dataset",
+        "ckan_section": "Quality",
+        "new_metadata_fields": "provenance",
+        "multiplicity": "1",
+        "codelists": null,
+        "stored": "Text"
+    },
+    {
+        "ckan_object": "dataset",
+        "ckan_section": "Quality",
+        "new_metadata_fields": "conforms_to",
+        "multiplicity": "1.*",
+        "codelists": null,
+        "stored": "List[URI]"
+    },
+    {
+        "ckan_object": "dataset",
+        "ckan_section": "Quality",
+        "new_metadata_fields": "metadata_profile",
+        "multiplicity": "1.*",
+        "codelists": null,
+        "stored": "List[URI]"
+    },
+    {
+        "ckan_object": "dataset",
+        "ckan_section": "Quality",
+        "new_metadata_fields": "temporal_start",
+        "multiplicity": "0.1",
+        "codelists": null,
+        "stored": "Date"
+    },
+    {
+        "ckan_object": "dataset",
+        "ckan_section": "Quality",
+        "new_metadata_fields": "temporal_end",
+        "multiplicity": "0.1",
+        "codelists": null,
+        "stored": "Date"
+    },
+    {
+        "ckan_object": "dataset",
+        "ckan_section": "Quality",
+        "new_metadata_fields": "frequency",
+        "multiplicity": "0.1",
+        "codelists": "http://publications.europa.eu/distribution/authority/frequency",
+        "stored": "URI"
+    },
+    {
+        "ckan_object": "dataset",
+        "ckan_section": "Quality",
+        "new_metadata_fields": "source",
+        "multiplicity": "0.*",
+        "codelists": null,
+        "stored": "URI"
+    },
+    {
+        "ckan_object": "dataset",
+        "ckan_section": "Quality",
+        "new_metadata_fields": "lineage_source",
+        "multiplicity": "1.*",
+        "codelists": null,
+        "stored": "List[Text]"
+    },
+    {
+        "ckan_object": "dataset",
+        "ckan_section": "Quality",
+        "new_metadata_fields": "lineage_process_steps",
+        "multiplicity": "1.*",
+        "codelists": null,
+        "stored": "List[Text]"
+    },
+    {
+        "ckan_object": "dataset",
+        "ckan_section": "Quality",
+        "new_metadata_fields": "reference",
+        "multiplicity": "0.*",
+        "codelists": null,
+        "stored": "List[URI]"
+    },
+    {
+        "ckan_object": "dataset",
+        "ckan_section": "Quality",
+        "new_metadata_fields": "encoding",
+        "multiplicity": "0.1",
+        "codelists": "https://www.iana.org/assignments/character-sets/character-sets.xhtml",
+        "stored": "Text"
+    },
+    {
+        "ckan_object": "dataset",
+        "ckan_section": "Quality",
+        "new_metadata_fields": "temporal_resolution",
+        "multiplicity": "0.1",
+        "codelists": null,
+        "stored": "Text"
+    },
+    {
+        "ckan_object": "dataset",
+        "ckan_section": "Spatial",
+        "new_metadata_fields": "theme",
+        "multiplicity": "1.*",
+        "codelists": "https://inspire.ec.europa.eu/theme",
+        "stored": "List[URI]"
+    },
+    {
+        "ckan_object": "dataset",
+        "ckan_section": "Spatial",
+        "new_metadata_fields": "inspire_id",
+        "multiplicity": "1",
+        "codelists": null,
+        "stored": "URI"
+    },
+    {
+        "ckan_object": "dataset",
+        "ckan_section": "Spatial",
+        "new_metadata_fields": "reference_system",
+        "multiplicity": "1",
+        "codelists": "https://www.opengis.net/def/crs/EPSG/0",
+        "stored": "URI"
+    },
+    {
+        "ckan_object": "dataset",
+        "ckan_section": "Spatial",
+        "new_metadata_fields": "spatial",
+        "multiplicity": "1",
+        "codelists": null,
+        "stored": "JSON"
+    },
+    {
+        "ckan_object": "dataset",
+        "ckan_section": "Spatial",
+        "new_metadata_fields": "spatial_uri",
+        "multiplicity": "0.1",
+        "codelists": "http://datos.gob.es/recurso/sector-publico/territorio",
+        "stored": "URI"
+    },
+    {
+        "ckan_object": "dataset",
+        "ckan_section": "Spatial",
+        "new_metadata_fields": "representation_type",
+        "multiplicity": "0.1",
+        "codelists": "http://inspire.ec.europa.eu/metadata-codelist/SpatialRepresentationType",
+        "stored": "URI"
+    },
+    {
+        "ckan_object": "dataset",
+        "ckan_section": "Spatial",
+        "new_metadata_fields": "spatial_resolution_in_meters",
+        "multiplicity": "0.1",
+        "codelists": null,
+        "stored": "Text"
+    },
+    {
+        "ckan_object": "dataset",
+        "ckan_section": "License",
+        "new_metadata_fields": "license_id",
+        "multiplicity": "1",
+        "codelists": "https://iepnb.es/catalogo/api/3/action/license_list",
+        "stored": "URI"
+    },
+    {
+        "ckan_object": "dataset",
+        "ckan_section": "License",
+        "new_metadata_fields": "access_rights",
+        "multiplicity": "1",
+        "codelists": "https://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess",
+        "stored": "URI"
+    },
+    {
+        "ckan_object": "dataset",
+        "ckan_section": "License",
+        "new_metadata_fields": "version",
+        "multiplicity": "0.1",
+        "codelists": null,
+        "stored": "Text"
+    },
+    {
+        "ckan_object": "dataset",
+        "ckan_section": "License",
+        "new_metadata_fields": "version_notes",
+        "multiplicity": "0.1",
+        "codelists": null,
+        "stored": "Text"
+    },
+    {
+        "ckan_object": "dataset",
+        "ckan_section": "License",
+        "new_metadata_fields": "valid",
+        "multiplicity": "0.1",
+        "codelists": null,
+        "stored": "Date"
+    },
+    {
+        "ckan_object": "distribution",
+        "ckan_section": "distribution",
+        "new_metadata_fields": "dataset_id",
+        "multiplicity": "1",
+        "codelists": null,
+        "stored": "dataset.identifier"
+    },
+    {
+        "ckan_object": "distribution",
+        "ckan_section": "distribution",
+        "new_metadata_fields": "distribution_id",
+        "multiplicity": "1",
+        "codelists": null,
+        "stored": "Text"
+    },
+    {
+        "ckan_object": "distribution",
+        "ckan_section": "distribution",
+        "new_metadata_fields": "distribution_url",
+        "multiplicity": "0.1",
+        "codelists": null,
+        "stored": "URI"
+    },
+    {
+        "ckan_object": "distribution",
+        "ckan_section": "distribution",
+        "new_metadata_fields": "distribution_description",
+        "multiplicity": "1",
+        "codelists": null,
+        "stored": "Text"
+    },
+    {
+        "ckan_object": "distribution",
+        "ckan_section": "distribution",
+        "new_metadata_fields": "distribution_issued",
+        "multiplicity": "1",
+        "codelists": null,
+        "stored": "Date"
+    },
+    {
+        "ckan_object": "distribution",
+        "ckan_section": "distribution",
+        "new_metadata_fields": "distribution_created",
+        "multiplicity": "1",
+        "codelists": null,
+        "stored": "Date"
+    },
+    {
+        "ckan_object": "distribution",
+        "ckan_section": "distribution",
+        "new_metadata_fields": "distribution_modified",
+        "multiplicity": "1",
+        "codelists": null,
+        "stored": "Date"
+    },
+    {
+        "ckan_object": "distribution",
+        "ckan_section": "distribution",
+        "new_metadata_fields": "distribution_availability",
+        "multiplicity": "0.1",
+        "codelists": "https://publications.europa.eu/distribution/authority/planned-availability",
+        "stored": "URI"
+    },
+    {
+        "ckan_object": "distribution",
+        "ckan_section": "distribution",
+        "new_metadata_fields": "distribution_format",
+        "multiplicity": "0.1",
+        "codelists": "https://publications.europa.eu/distribution/authority/file-type",
+        "stored": "URI"
+    },
+    {
+        "ckan_object": "distribution",
+        "ckan_section": "distribution",
+        "new_metadata_fields": "distribution_mimetype",
+        "multiplicity": "0.1",
+        "codelists": "https://www.iana.org/assignments/media-types/media-types.xhtml",
+        "stored": "URI"
+    },
+    {
+        "ckan_object": "distribution",
+        "ckan_section": "distribution",
+        "new_metadata_fields": "distribution_status",
+        "multiplicity": "0.1",
+        "codelists": "http://purl.org/adms/status/",
+        "stored": "URI"
+    },
+    {
+        "ckan_object": "distribution",
+        "ckan_section": "distribution",
+        "new_metadata_fields": "distribution_encoding",
+        "multiplicity": "0.1",
+        "codelists": "https://www.iana.org/assignments/character-sets/character-sets.xhtml",
+        "stored": "Text"
+    },
+    {
+        "ckan_object": "distribution",
+        "ckan_section": "distribution",
+        "new_metadata_fields": "distribution_language",
+        "multiplicity": "1.*",
+        "codelists": "https://publications.europa.eu/distribution/authority/language",
+        "stored": "URI"
+    },
+    {
+        "ckan_object": "distribution",
+        "ckan_section": "distribution",
+        "new_metadata_fields": "distribution_size",
+        "multiplicity": "0.1",
+        "codelists": null,
+        "stored": "Integer"
+    },
+    {
+        "ckan_object": "distribution",
+        "ckan_section": "distribution",
+        "new_metadata_fields": "distribution_distribution_relation",
+        "multiplicity": "0.*",
+        "codelists": null,
+        "stored": "List[URI]"
+    },
+    {
+        "ckan_object": "distribution",
+        "ckan_section": "distribution",
+        "new_metadata_fields": "distribution_license",
+        "multiplicity": "0.1",
+        "codelists": "https://iepnb.es/catalogo/api/3/action/license_list",
+        "stored": "URI"
+    },
+    {
+        "ckan_object": "distribution",
+        "ckan_section": "distribution",
+        "new_metadata_fields": "distribution_rights",
+        "multiplicity": "1",
+        "codelists": "https://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess",
+        "stored": "URI"
+    },
+    {
+        "ckan_object": "distribution",
+        "ckan_section": "distribution",
+        "new_metadata_fields": "distribution_conforms_to",
+        "multiplicity": "1.*",
+        "codelists": null,
+        "stored": "List[URI]"
+    },
+    {
+        "ckan_object": "distribution",
+        "ckan_section": "distribution",
+        "new_metadata_fields": "distribution_reference_system",
+        "multiplicity": "1",
+        "codelists": "https://www.opengis.net/def/crs/EPSG/0",
+        "stored": "URI"
+    },
+    {
+        "ckan_object": "distribution",
+        "ckan_section": "distribution",
+        "new_metadata_fields": "distribution_provenance",
+        "multiplicity": "1",
+        "codelists": null,
+        "stored": "Text"
+    },
+    {
+        "ckan_object": "distribution",
+        "ckan_section": "distribution",
+        "new_metadata_fields": "distribution_lineage_process_steps",
+        "multiplicity": "1.*",
+        "codelists": null,
+        "stored": "List[Text]"
+    },
+    {
+        "ckan_object": "distribution",
+        "ckan_section": "distribution",
+        "new_metadata_fields": "distribution_id",
+        "multiplicity": "-",
+        "codelists": null,
+        "stored": "List[distribution_id]"
+    },
+    {
+        "ckan_object": "DataDictionary",
+        "ckan_section": "Field",
+        "new_metadata_fields": "datadictionary_id",
+        "multiplicity": "1",
+        "codelists": null,
+        "stored": null
+    },
+    {
+        "ckan_object": "DataDictionary",
+        "ckan_section": "Field",
+        "new_metadata_fields": "datadictionary_type",
+        "multiplicity": "1",
+        "codelists": "Text, Integer, Decimal, Float, Date, Time, Timestamp, Byte array, Array[Integer], Array[Text]",
+        "stored": null
+    },
+    {
+        "ckan_object": "DataDictionary",
+        "ckan_section": "Field",
+        "new_metadata_fields": "datadictionary_info.type_override",
+        "multiplicity": "0.1",
+        "codelists": "Text, Integer, Decimal, Float, Date, Time, Timestamp, Byte array, Array[Integer], Array[Text]",
+        "stored": null
+    },
+    {
+        "ckan_object": "DataDictionary",
+        "ckan_section": "Field",
+        "new_metadata_fields": "datadictionary_info.label",
+        "multiplicity": "1",
+        "codelists": null,
+        "stored": null
+    },
+    {
+        "ckan_object": "DataDictionary",
+        "ckan_section": "Field",
+        "new_metadata_fields": "datadictionary_info.notes",
+        "multiplicity": "0.1",
+        "codelists": null,
+        "stored": null
+    }
+]

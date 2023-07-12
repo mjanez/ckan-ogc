@@ -1,0 +1,32 @@
+# lpha-3/ISO 639-2 Code https://www.loc.gov/standards/iso639-2/php/code_list.php
+
+ENG:
+  title: Spatial dataset of the metadata record
+  description: Default Description
+  provenance: Default Provenance
+  lineage: Default Lineage
+  distributions:
+    default: "Distribution of the dataset:"
+    wms: "Service providing map visualisation (WMS) according to the Open Geospatial Consortium specifications (http://www.ogc.org/standards/wms)."
+    wmts: "Service that provides visualisation of tessellated maps (WMTS) according to the Open Geospatial Consortium specifications (http://www.ogc.org/standards/wmts)."
+    wfs: "Service providing discrete phenomena download (WFS) according to the Open Geospatial Consortium specifications (http://www.ogc.org/standards/wfs)."
+    wcs: "Servicio que proporciona descarga de fenómenos continuos (WCS) conforme a las especificaciones del Open Geospatial Consortium (http://www.ogc.org/standards/wcs)."
+    geojson: "Format for the exchange of spatial data based on JSON notation (GeoJSON) according to the specification of the Internet Engineering Task Force (http://www.rfc-editor.org/rfc/rfc7946)."
+    geodcatap: "Metadata according to the GeoDCAT-AP extension (http://semiceu.github.io/GeoDCAT-AP/releases/) of the Open Data Portal Metadata in Europe (DCAT-AP) metadata profile for spatial data sets and services. GeoDCAT-AP provides an RDF vocabulary and the corresponding RDF syntax binding for linking the metadata elements of the ISO 19115:2003 base profile and those defined in the framework of the INSPIRE Directive."
+    inspire: "Metadata for INSPIRE datasets and services in ISO/TS 19139 (http://inspire.ec.europa.eu/id/document/tg/metadata-iso19139)."
+
+
+SPA:
+  title: Conjuntos de datos espaciales del registro de metadatos
+  description: Descripción por Defecto
+  provenance: Procedencia por Defecto
+  lineage: Linaje por Defecto
+  distributions:
+    default: "Distribución del conjunto de datos:"
+    wms: "Servicio que proporciona visualización de mapas (WMS) conforme a las especificaciones del Open Geospatial Consortium (http://www.ogc.org/standards/wms)."
+    wmts: "Servicio que proporciona visualización de mapas teselados (WMTS) conforme a las especificaciones del Open Geospatial Consortium (http://www.ogc.org/standards/wmts)."
+    wfs: "Servicio que proporciona descarga de fenómenos discretos (WFS) conforme a las especificaciones del Open Geospatial Consortium (http://www.ogc.org/standards/wfs)."
+    wcs: "Service providing continuous scene download (WCS) according to the Open Geospatial Consortium specifications (http://www.ogc.org/standards/wcs)."
+    geojson: "Formato para el intercambio de datos espaciales basados en la notación JSON (GeoJSON) conforme a la especificación de la Internet Engineering Task Force (http://www.rfc-editor.org/rfc/rfc7946)."
+    geodcatap: "Metadatos conforme a la extensión GeoDCAT-AP (http://semiceu.github.io/GeoDCAT-AP/releases/) del perfil de metadatos de portales de datos abiertos en Europa (DCAT-AP) para conjuntos de datos y servicios espaciales. GeoDCAT-AP proporciona un vocabulario RDF y el correspondiente enlace de sintaxis RDF para la unión de los elementos de metadatos del perfil básico de la norma ISO 19115:2003 y los definidos en el marco de la Directiva INSPIRE."
+    inspire: "Metadatos para los conjuntos de datos y servicios INSPIRE en ISO/TS 19139 (http://inspire.ec.europa.eu/id/document/tg/metadata-iso19139)."

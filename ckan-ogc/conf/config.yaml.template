@@ -1,0 +1,116 @@
+# Servers to Harvest [Mandatory] | URL Endpoint 
+harvest_servers:
+  # Geoserver Open IACS
+  - url: 'http://185.179.104.23:8082/geoserver/ows'
+    name: 'OPEN-IACS'
+    groups: []
+    active: True
+    type: 'ogc'
+    organization: 'open-iacs'
+    # If the org has a custom mappings: ckan-harvester/src/ckan/ogc_ckan/custom/mappings
+    custom_organization_active: True
+    custom_organization_mapping_file: 'open-iacs.yaml'
+    private_datasets: False
+    default_dcat_info:
+      publisher_name: 'Open IACS Project'
+      publisher_email: 'info@tragsa.es'
+      publisher_identifier: 'https://openiacs.eu/'
+      publisher_url: 'https://openiacs.eu/'
+      publisher_type: 'http://purl.org/adms/publishertype/NationalAuthority'
+      # Default URIs of metadata contact point and resource maintainer
+      maintainer_uri: 'https://openiacs.eu/'
+      contact_uri: 'https://openiacs.eu/'
+      contact_name: 'Tragsatec'
+      contact_email: 'info@tragsa.es'
+      contact_url: 'https://openiacs.eu/'
+      topic: 'http://inspire.ec.europa.eu/metadata-codelist/TopicCategory/farming'
+      lineage_process_steps: 'Spatial dataset generated from the original cartography provided by the competent national agency of the Integrated Administration and Control System (IACS) in ESRI Shapefile format at different administrative levels. Transformed and homogenised at national level, stored in a spatial component database (Postgres-PostGIS) and published via a Geoserver-type map server.'
+      language: 'http://publications.europa.eu/resource/authority/language/ENG'
+      theme_es: 'http://datos.gob.es/kos/sector-publico/sector/medio-ambiente'
+      spatial: '{"coordinates": [[[-32.17,26.79],[44.49,26.79],[44.49,71.30],[-32.17,71.30],[-32.17,26.79]]], "type": "Polygon"}'
+      provenance: 'The spatial data has been produced as part of the Open IACS project (CEF: Action No: 2018-EU-IA-0086).'
+    default_keywords: 
+      - name: "open-iacs"
+        uri: "http://localhost:80/catalog/organization/open-iacs"
+      - name: "farming"
+        uri: "http://inspire.ec.europa.eu/metadata-codelist/TopicCategory/farming"
+      - name: "european"
+        uri: "http://inspire.ec.europa.eu/metadata-codelist/SpatialScope/european"
+    default_inspire_info:
+      inspireid_theme: 'LC'
+      inspireid_nutscode: 'ES' 
+      inspireid_versionid: ''
+    constraints: 
+      keywords: ['open-iacs', 'farming', 'iacs', 'gsaa', 'lpis', 'european']
+      mails: ['info@tragsa.es']
+    workspaces: ['iacs']  
+
+  # codsi csw
+  - url: 'https://www.idee.es/csw-codsi-idee/srv/spa/csw'
+    name: 'CODSI'
+    groups: []
+    active: False
+    type: 'csw'
+    organization: 'test'
+    custom_organization_active: False
+    custom_organization_mapping_file: ''
+    private_datasets: False
+    default_dcat_info:
+      publisher_name: 'Ministerio de Transportes, Movilidad y Agenda Urbana'
+      publisher_email: 'buzon-hermes@mitma.es'
+      publisher_identifier: 'http://datos.gob.es/recurso/sector-publico/org/Organismo/E05065601'
+      publisher_url: 'https://www.mitma.gob.es'
+      publisher_type: 'http://purl.org/adms/publishertype/NationalAuthority'
+      # Default URIs of metadata contact point and resource maintainer
+      maintainer_uri: 'http://datos.gob.es/recurso/sector-publico/org/Organismo/E05065601'
+      contact_uri: 'http://datos.gob.es/recurso/sector-publico/org/Organismo/E05065601'
+      topic: 'http://inspire.ec.europa.eu/metadata-codelist/TopicCategory/transportation'
+      theme_es: 'http://datos.gob.es/kos/sector-publico/sector/transporte'
+      spatial: '{"coordinates": [[[-32.17,26.79],[44.49,26.79],[44.49,71.30],[-32.17,71.30],[-32.17,26.79]]], "type": "Polygon"}'
+      spatial_uri: 'https://datos.gob.es/es/recurso/sector-publico/territorio/Pais/España'
+    default_keywords: 
+      - name: "mitma"
+        uri: "http://localhost:80/catalog/organization/test"
+      - name: "transportation"
+        uri: "http://inspire.ec.europa.eu/metadata-codelist/TopicCategory/transportation"
+    default_inspire_info:
+      inspireid_theme: 'TN'
+      inspireid_nutscode: 'ES' 
+      inspireid_versionid: ''
+    constraints: 
+      keywords: ['transporte']
+      mails: ['ign@mitma.es', 'buzon-hermes@mitma.es']
+
+  # XLSX Metadata
+  - url: '/app/ogc2ckan/data/ckan_geodcat-ap_template-nonspatial.xlsx'
+    name: 'MITMA XLSX'
+    groups: []
+    active: True
+    type: 'table'
+    organization: 'mitma'
+    custom_organization_active: False
+    custom_organization_mapping_file: ''
+    private_datasets: False
+    default_dcat_info:
+      publisher_name: 'Ministerio de Transporte, Movilidad y Agenda Urbana (MITMA)'
+      publisher_email: 'buzon-hermes@mitma.es'
+      publisher_identifier: 'http://datos.gob.es/recurso/sector-publico/org/Organismo/E05065601'
+      publisher_url: 'https://www.mitma.gob.es'
+      publisher_type: 'http://purl.org/adms/publishertype/NationalAuthority'
+      # Default URIs of metadata contact point and resource maintainer
+      maintainer_uri: 'http://datos.gob.es/recurso/sector-publico/org/Organismo/E05065601'
+      contact_uri: 'http://datos.gob.es/recurso/sector-publico/org/Organismo/E05065601'
+      topic: 'http://inspire.ec.europa.eu/metadata-codelist/TopicCategory/transportation'
+      theme_es: 'http://datos.gob.es/kos/sector-publico/sector/transporte'
+      spatial: '{"coordinates": [[[-32.17,26.79],[44.49,26.79],[44.49,71.30],[-32.17,71.30],[-32.17,26.79]]], "type": "Polygon"}'
+      spatial_uri: 'https://datos.gob.es/es/recurso/sector-publico/territorio/Pais/España'
+      language: 'http://publications.europa.eu/resource/authority/language/SPA'
+    default_keywords: 
+      - name: "mitma"
+        uri: "http://localhost:80/catalog/organization/test"
+      - name: "transportation"
+        uri: "http://inspire.ec.europa.eu/metadata-codelist/TopicCategory/transportation"
+    default_inspire_info:
+      inspireid_theme: 'TN'
+      inspireid_nutscode: 'ES' 
+      inspireid_versionid: ''
