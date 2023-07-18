@@ -1,6 +1,7 @@
 name: ckan-ogc
 services:
   ogc2ckan:
+    container_name: ckan-ogc
     build:
       context: .
       dockerfile: Dockerfile
@@ -16,6 +17,4 @@ services:
         - ./log:${APP_DIR}/log
         - ./metadata:${APP_DIR}/metadata
     restart: on-failure:3
-networks:
-  default:
-    name: ogc2ckan_default
+    network_mode: host

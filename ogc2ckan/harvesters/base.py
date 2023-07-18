@@ -187,7 +187,7 @@ class Harvester:
         distribution = schema["distribution"]
         
         uuid_identifier = self._create_uuid_identifier()
-        ckan_name = self._get_ckan_name(uuid_identifier, self.organization)
+        ckan_name = uuid_identifier
         
         ckan_groups = [{'name': g.lower()} for g in self.groups or []]
 
@@ -282,7 +282,7 @@ class Harvester:
 
     @staticmethod
     def _normalize_date(date):
-        if date is not None:
+        if isinstance(date, str):
             return date.replace('/', '-')
         return None
 

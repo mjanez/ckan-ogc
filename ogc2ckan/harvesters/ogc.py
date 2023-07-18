@@ -209,8 +209,8 @@ class HarvesterOGC(Harvester):
             dataset.set_temporal_start(time_extent[0].split("/")[0])
             dataset.set_temporal_end(time_extent[-1].split("/")[-1] if len(time_extent) > 1 else None)
         else:
-            dataset.set_temporal_start(None)
-            dataset.set_temporal_end(None)
+            dataset.set_temporal_start(self._normalize_date(custom_metadata.get('temporal_start')) if custom_metadata else None)
+            dataset.set_temporal_end(self._normalize_date(custom_metadata.get('temporal_end')) if custom_metadata else None)
 
         # Set frequency
         if hasattr(wms_layer_info, 'frequency'):
@@ -284,13 +284,13 @@ class HarvesterOGC(Harvester):
 
         # WMS
         if wms_layer_info is not None:
-            wms_url = self.url + '&request=GetCapabilities' + '#' + record
+            wms_url = self.get_wms_url() + '&request=GetCapabilities' + '#' + record
             dist_info = self._get_distribution_info("WMS", wms_url, self.localized_strings_dict['distributions']['wms'], ckan_info.default_license, ckan_info.default_license_id, dataset.access_rights, dataset.language)
             add_distribution(distribution, dist_info)
 
         # WMTS
         if wmts_layer_info is not None:
-            wmts_url = self.get_wmts_url() + "&request=GetCapabilities"
+            wmts_url = self.get_wmts_url() + "?request=GetCapabilities"
             dist_info = self._get_distribution_info("WMTS", wmts_url, self.localized_strings_dict['distributions']['wmts'], ckan_info.default_license, ckan_info.default_license_id, dataset.access_rights, dataset.language)
             add_distribution(distribution, dist_info)
 

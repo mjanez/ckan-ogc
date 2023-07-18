@@ -1,0 +1,100 @@
+mapping_values:
+- dataset_id: el_2021_gsaa
+  title: Greece sample Dataset (2021)
+  author_name: Opekepe
+  author_email: info@opekepe.gr
+  author_url: https://www.opekepe.gr
+  provenance: 'The spatial data of the GSAA and LPIS have been generated from the Opekepe. As part of the Example project (CEF: Action No: 2018-EU-IA-0086).'
+  lineage_process_steps: 
+  - The spatial data of the GSAA and LPIS have been generated with ArcGIS'
+  - 'The data is stored in PostGIS Database'
+  - 'The service is published with GeoServer'
+  keywords:
+  - name: "gsaa"
+    uri: "http://inspire.ec.europa.eu/metadata-codelist/IACSData/gsaa"
+  - name: "iacs_data"
+    uri: "http://inspire.ec.europa.eu/metadata-codelist/IACSData"
+  - name: "iacs"
+    uri: "http://inspire.ec.europa.eu/metadata-codelist/IACSData/iacs"
+    author_name: Opekepe
+    author_email: info@opekepe.gr
+    author_url: https://www.opekepe.gr
+    provenance: 'The spatial data of the GSAA and LPIS have been generated from the Opekepe. As part of the Example project (CEF: Action No: 2018-EU-IA-0086).'
+  author_name: Opekepe
+  author_email: info@opekepe.gr
+  author_url: https://www.opekepe.gr
+  provenance: 'The spatial data of the GSAA and LPIS have been generated from the Opekepe. As part of the Example project (CEF: Action No: 2018-EU-IA-0086).'
+  temporal_start: '2021-01-01'
+  temporal_end: '2021-12-31'
+
+- dataset_id: pg_nuts_03
+  label: NUTS
+  author_name: Eurostat
+  author_email: ESTAT-ESGAB@ec.europa.eu
+  author_url: https://ec.europa.eu/eurostat
+  publisher_name: Eurostat
+  publisher_email: ESTAT-ESGAB@ec.europa.eu
+  publisher_url: https://ec.europa.eu/eurostat
+  publisher_identifier: https://ec.europa.eu/eurostat
+  publisher_type: http://purl.org/adms/publishertype/SupraNationalAuthority
+  provenance: 'The spatial data of NUTS have been generated from Eurostat. As part of the Example project (CEF: Action No: 2018-EU-IA-0086).'
+  title: 'Nomenclature of Territorial Units for Statistics (NUTS) 2021 - Level 3'
+  lineage_source: 'Administrative Units/Statistical Units data. https://ec.europa.eu/eurostat/web/gisco/geodata/reference-data/administrative-units-statistical-units/nuts'
+  lineage_process_steps: 
+  - 'Spatial data obtain from Eurostat'
+  - 'The data is stored in PostGIS Database'
+  - 'The service is published with GeoServer'
+  keywords:
+  - name: nuts
+    uri: http://inspire.ec.europa.eu/featureconcept/NUTSRegion
+  - name: "european"
+    uri: "http://inspire.ec.europa.eu/metadata-codelist/SpatialScope/european"
+  description: "The NUTS are a hierarchical system divided into 3 levels. NUTS 1: major socio-economic regions, NUTS 2: basic regions for the application of regional policies, NUTS 3: small regions for specific diagnoses. Additionally a NUTS 0 level, usually co-incident with national boundaries are also available. The NUTS legislation is periodically amended; therefore multiple years are available for download. More information on the NUTS regulations can be found here."
+
+- dataset_id: eu_2020_indicator_rn2000_10k_pnt
+  label: Natura 2000 indicator of EU (2020)
+  title: Natura 2000 indicator of EU (2020)
+  description: Natura 2000 is a network of core breeding and resting sites for rare and threatened species, and some rare natural habitat types which are protected in their own right. It stretches across all 27 EU countries, both on land and at sea. The aim of the network is to ensure the long-term survival of Europe's most valuable and threatened species and habitats, listed under both the Birds Directive and the Habitats Directive.
+  keywords:
+    - name: natura2000
+      uri: http://inspire.ec.europa.eu/metadata-codelist/PriorityDataset/Natura2000Sites-dir-2009-147
+  author_name: 'Example Project'
+  author_email: 'info@tragsa.es'
+  author_uri: 'https://example.eu/'
+  author_url: 'https://example.eu/'
+
+- dataset_id: eu_2020_indicator_zepa_10k_pnt
+  label: Protected Sites (ZEPA/SPAs) indicator of EU (2020)
+  title: Protected Sites (ZEPA/SPAs) indicator of EU (2020)
+  description: SPAs are Natura 2000 sites that have been designated under the Birds Directive 79/409/CEE and they are strategic suitable areas for the protection of the most threatened birds species. The BirdLife International project, called Important Bird Areas (IBA), was the scientific reference point to institute the SPAs. The selected strategic areas are extremely important for the protection of birds, as they are specific areas connected to their reproduction, nutrition or migration.
+  keywords:
+    - name: natura2000
+      uri: http://inspire.ec.europa.eu/metadata-codelist/PriorityDataset/Natura2000Sites-dir-2009-147
+  author_name: 'Example Project'
+  author_email: 'info@tragsa.es'
+  author_uri: 'https://example.eu/'
+  author_url: 'https://example.eu/'
+
+- dataset_id: eu_2020_indicator_lic_10k_pnt
+  label: Protected Sites (LIC) indicator of EU (2020)
+  title: Protected Sites (LIC) indicator of EU (2020)
+  description: Site of Community importance means a site which, in the biogeographical region or regions to which it belongs, contributes significantly to the maintenance or restoration at a favourable conservation status of a natural habitat type in Annex I or of a species in Annex II and may also contribute significantly to the coherence of Natura 2000 referred to in Article 3, and/or contributes significantly to the maintenance of biological diversity within the biogeographic region or regions concerned. For animal species ranging over wide areas, sites of Community importance shall correspond to the places within the natural range of such species which present the physical or biological factors essential to their life and reproduction.
+  keywords:
+    - name: natura2000
+      uri: http://inspire.ec.europa.eu/metadata-codelist/PriorityDataset/Natura2000Sites-dir-2009-147
+  author_name: 'Example Project'
+  author_email: 'info@tragsa.es'
+  author_uri: 'https://example.eu/'
+  author_url: 'https://example.eu/'
+
+- dataset_id: eu_2020_indicator_spg_per
+  label: Surface of Permanent Grassland (%) indicator of EU (2020)
+  title: Surface of Permanent Grassland (%) indicator of EU (2020)
+  description: Permanent grassland is a herbaceous plant cover which has been settled for a number of years. It is characterized by a great variety of spontaneous plant species in an ecological balance under the combined effect of the environment and agricultural practices. These are essential for its sustainability (fertilization, grazing and mowing). It differs from sown grasslands by the absence of tillage and the limitation of phytosanitary products, which preserves the soil’s life and the numerous animal species it shelters. In some contexts, permanent grassland can be intensively managed by high mineral fertilization, which leads to an impoverishment of the number of species.
+  keywords:
+    - name: agriculturalarea
+      uri: http://inspire.ec.europa.eu/metadata-codelist/IACSData/agriculturalArea
+  author_name: 'Example Project'
+  author_email: 'info@tragsa.es'
+  author_uri: 'https://example.eu/'
+  author_url: 'https://example.eu/'
