@@ -16,7 +16,7 @@
 ## Overview
 Docker Compose environment for ingesting metadata from different spatial/semantic/general metadata sources into CKAN.
 
-* OGC harvester (WWCS/WFS, WMS & WMTS sservices
+* OGC harvester (WCS/WFS, WMS & WMTS services)
 * CSW harvester (ISO 19115/19139 Metadata)
 * CKAN API. - WIP
 * Tabular data (CSV, TSV)
