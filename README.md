@@ -1,4 +1,4 @@
-<h1 align="center">CKAN Docker harvester</h1>
+<h1 align="center">CKAN Docker Compose harvesters</h1>
 <p align="center">
 <a href="https://github.com/mjanez/ckan-ogc"><img src="https://img.shields.io/badge/%20ckan-ogc-brightgreen" alt="ogc2ckan version"></a><a href="https://opensource.org/licenses/MIT"> <img src="https://img.shields.io/badge/license-Unlicense-brightgreen" alt="License: Unlicense"></a> <a href="https://github.com/mjanez/ckan-ogc/actions/workflows/docker/badge.svg" alt="License: Unlicense"></a>
 
@@ -14,13 +14,21 @@
 * [Docker](https://docs.docker.com/get-docker/)
 
 ## Overview
-Docker compose environment for development and testing with CKAN Open Data portals.
+Docker Compose environment for ingesting metadata from different spatial/semantic/general metadata sources into CKAN.
+
+* OGC harvester (WWCS/WFS, WMS & WMTS sservices
+* CSW harvester (ISO 19115/19139 Metadata)
+* CKAN API. - WIP
+* Tabular data (CSV, TSV)
+* Spreadsheets (XLS/XLSX)
+* Metadata files (XML ISO19139) - WIP
+* Semantic metadata files (RDF/TTL) - WIP
 
 >**Note**<br>
-> In the integration with: [mjanez/ckan-docker](https://github.com/mjanez/ckan-docker)[^1], it is possible to test it with a CKAN-type open data portal.
+> It can be tested with an open data portal of the CKAN type such as: : [mjanez/ckan-docker](https://github.com/mjanez/ckan-docker)[^1]
 
 ## Quick start
-First the `.env.example` template and configure by changing the `.env` file. Change `PYCSW_URL` and `CKAN_URL`,  as well as the published port `PYCSW_PORT`, if needed.
+First copy the `.env.example` template and configure by changing the `.env` file. Change `PYCSW_URL` and `CKAN_URL`,  as well as the published port `PYCSW_PORT`, if needed.
 
 ```bash
 cp .env.example .env
