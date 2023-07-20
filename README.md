@@ -34,11 +34,7 @@ First copy the `.env.example` template and configure by changing the `.env` file
 cp .env.example .env
 ```
 
-Then configure your custom `config.yaml`. Define the harvest servers and the CKAN DCAT default info.
-
-```bash
-cp ckan-ogc/conf/config.yaml.template ckan-ogc/conf/config.yaml
-```
+Then configure your custom `ckan-ogc/conf/config.yaml.template`. Define the harvest servers and the CKAN DCAT default info.
 
 >**Note**<br>
 >Also if you need create yous custom organization YAML file in `ogc2ckan/mappings/organizations`. Use the template `ogc2ckan/mappings/organizations/organizations.yaml.template` to create your custom file.
@@ -78,6 +74,12 @@ Dependencies:
 python3 -m pip install --user pip3
 pip3 install pdm
 pdm install --no-self
+```
+
+configure your custom `config.yaml`. Define the harvest servers and the CKAN DCAT default info.
+
+```bash
+cp ckan-ogc/conf/config.yaml.template ckan-ogc/conf/config.yaml
 ```
 
 Run:
