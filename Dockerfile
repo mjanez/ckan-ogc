@@ -24,7 +24,7 @@ COPY pyproject.toml pdm.lock .
 
 RUN pdm install --no-self --group prod
 
-COPY ckan-ogc/conf/config.yaml config.yaml
+COPY ckan-ogc/conf/config.yaml.template config.yaml
 COPY ckan-ogc/entrypoint.sh entrypoint.sh
 COPY ogc2ckan ogc2ckan
 COPY data data
