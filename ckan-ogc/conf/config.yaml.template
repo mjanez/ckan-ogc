@@ -82,7 +82,7 @@ harvest_servers:
       mails: ['ign@mitma.es', 'buzon-hermes@mitma.es']
 
   # XLSX Metadata
-  - url: '/app/ogc2ckan/data/template-table.xlsx'
+  - url: '/app/data/template-table.xlsx'
     name: 'MITMA XLSX'
     groups: []
     active: False
