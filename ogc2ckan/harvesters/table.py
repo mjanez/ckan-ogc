@@ -7,6 +7,8 @@ import logging
 # third-party libraries
 import pandas as pd
 import numpy as np
+import openpyxl
+import xlrd
 
 # custom classes
 from harvesters.base import Harvester
@@ -14,7 +16,7 @@ from config.ckan_config import CKANInfo
 
 # custom functions
 from config.ogc2ckan_config import get_log_module
-from mappings.default_ogc2ckan_config import OGC2CKAN_HARVESTER_MD_CONFIG
+from mappings.default_ogc2ckan_config import OGC2CKAN_HARVESTER_CONFIG, OGC2CKAN_HARVESTER_MD_CONFIG
 from controller.mapping import get_df_mapping_json
 
 log_module = get_log_module()
@@ -47,41 +49,60 @@ class HarvesterTable(Harvester):
     def __init__(self, app_dir, url, name, groups, active, organization, type, custom_organization_active, custom_organization_mapping_file, private_datasets, default_keywords, default_inspire_info, **default_dcat_info):
         super().__init__(app_dir, url, name, groups, active, organization, type, custom_organization_active, custom_organization_mapping_file, private_datasets, default_keywords, default_inspire_info, **default_dcat_info)
         self.file_extension = Path(self.url).suffix[1:]
-        self.table_data = self.get_file_by_extension()
+        self.table_data = []
         
-    def get_file_by_extension(self):
-        if self.file_extension == 'csv':
-            table_data = pd.read_csv(self.url, sep=',', encoding='utf-8', dtype=str)
-        elif self.file_extension in ['xls', 'xlsx']:
-            engine = 'openpyxl' if self.file_extension == 'xlsx' else None
-            table_data = pd.read_excel(self.url, sheet_name='Dataset', dtype=str, engine=engine)
+    def get_file_by_extension(self, harvester_formats):
+        filename = os.path.basename(self.url)
+        try:
+            if self.file_extension in harvester_formats:
+                if self.file_extension in ['csv', 'tsv']:
+                    #TODO add support for other file formats
+                    raise Exception(f"Table file format: '{self.file_extension}' not supported yet")
+                    if self.file_extension == 'csv':
+                        table_data = pd.read_csv(self.url, sep=',', encoding='utf-8', dtype=str)
+                        table_distributions = table_data[table_data['table_type'] == 'distribution']
+                    elif self.file_extension == 'tsv':
+                        table_data = pd.read_csv(self.url, sep='\t', encoding='utf-8', dtype=str)
+                        table_distributions = table_data[table_data['table_type'] == 'distribution']
+                elif self.file_extension in ['xls', 'xlsx']:
+                    engine = 'openpyxl' if self.file_extension == 'xlsx' else None
+                    table_data = pd.read_excel(self.url, sheet_name='Dataset', dtype=str, engine=engine).fillna('')
+                    table_distributions = pd.read_excel(self.url, sheet_name='Distribution', dtype=str, engine=engine).fillna('')
+                                
+                logging.info(f"{log_module}:Load '{self.file_extension.upper()}' file: '{filename}' with {len(table_data)} records") 
 
-            # Remove all fields that are a nan float and trim all spaces of the values
-            table_data = table_data.apply(lambda x: x.str.strip() if x.dtype == 'object' else x).fillna(value='')
-            table_data = table_data.to_dict('records')
+                # Remove all fields that are a nan float and trim all spaces of the values
+                table_data = table_data.apply(lambda x: x.str.strip() if x.dtype == 'object' else x)
+                table_data = table_data.fillna(value='')
 
-            # Extract the distribution records from the same excel sheet as datasets using a filter
-            table_distributions = pd.read_excel(self.url, sheet_name='Distribution', dtype=str).fillna('')
-            table_distributions = table_distributions.apply(lambda x: x.str.strip() if x.dtype == 'object' else x)
+                # Convert table to list of dicts
+                table_data = table_data.to_dict('records')
 
-            # Remove the 'resource_' prefix from column names in the distributions dataframe
-            table_distributions = table_distributions.rename(columns=lambda x: x.replace('resource_', ''))
+                # Extract the distribution records from the same excel sheet as datasets using a filter
+                table_distributions = table_distributions.apply(lambda x: x.str.strip() if x.dtype == 'object' else x)
 
-            # Group distributions by dataset_id and convert to list of dicts
-            table_distributions_grouped = table_distributions.groupby('dataset_id').apply(lambda x: x.to_dict('records')).to_dict()
+                # Remove the 'resource_' prefix from column names in the distributions dataframe
+                table_distributions = table_distributions.rename(columns=lambda x: x.replace('resource_', ''))
 
-            # Insert all records in distributions to a dict of objects in datasets.distributions 
-            # based on the dataset_id is equal to datasets.identifier
-            for table_dataset in table_data:
-                dataset_id = table_dataset.get('identifier') or table_dataset.get('alternate_identifier')
-                table_dataset['distributions'] = table_distributions_grouped.get(dataset_id, [])
+                # Group distributions by dataset_id and convert to list of dicts
+                table_distributions_grouped = table_distributions.groupby('dataset_id').apply(lambda x: x.to_dict('records')).to_dict()
 
-        else:
-            raise Exception(f"Table file format: '{self.file_extension}' not supported")
+                # Add distributions to each dataset object
+                table_data = [{**d, 'distributions': table_distributions_grouped.get(d.get('identifier') or d.get('alternate_identifier'), [])} for d in table_data]
+                
+                return table_data
 
-        return table_data
+            else:
+                raise Exception(f"Table file format: '{self.file_extension}' not supported")
+    
+        except Exception as e:
+            raise Exception(f"{log_module}:Failed to load the file:'{self.url}'", str(e))
 
     def get_datasets(self, ckan_info):
+        harvester_formats = ckan_info.ckan_harvester['table']['formats']
+        # Get table data
+        self.table_data = self.get_file_by_extension(harvester_formats)
+        
         # Update values with commas to lists of objects
         self.table_data = self._update_object_lists(self.table_data)
 

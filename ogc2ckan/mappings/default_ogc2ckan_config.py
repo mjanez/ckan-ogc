@@ -11,16 +11,19 @@ OGC2CKAN_HARVESTER_CONFIG = {
         'type': 'csw',
         'active': True,
         'keywords': ['csw', 'catalog'],
+        'formats': ['csw']
     },
     'ogc_server': {
         'type': 'ogc',
         'active': True,
         'keywords': ['ows', 'geoserver', 'mapserver', 'ogc'],
+        'formats': ['wfs', 'wcs', 'wms', 'wmts']
     },
     'table': {
         'type': 'table',
         'active': True,
         'keywords': ['xls', 'csv'],
+        'formats': ['csv', 'xls', 'xlsx', 'tsv']
     },
 }
 
