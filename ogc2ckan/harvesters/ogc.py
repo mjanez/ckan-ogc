@@ -142,7 +142,8 @@ class HarvesterOGC(Harvester):
         dataset.set_ogc_workspace(ogc_workspace)
         
         # Set alternate identifier (layer name)
-        dataset.set_alternate_identifier(layer_info.id)
+        alternate_identifier = layer_info.id if layer_info.id else None
+        dataset.set_alternate_identifier(alternate_identifier)
 
         # Title
         title = custom_metadata.get('title') if custom_metadata else layer_info.title
