@@ -35,6 +35,7 @@ cp .env.example .env
 ```
 
 Then configure your custom `ckan-ogc/conf/config.yaml.template`. Define the harvest servers and the CKAN DCAT default info.
+* Put your XLS/CSV/XML files in: [./data/*](/data/) folder as you need.
 
 >**Note**<br>
 >Also if you need create yous custom organization YAML file in `ogc2ckan/mappings/organizations`. Use the template `ogc2ckan/mappings/organizations/organizations.yaml.template` to create your custom file.
