@@ -118,7 +118,8 @@ class HarvesterTable(Harvester):
         dataset = dataset(uuid_identifier, ckan_name, self.organization, ckan_info.default_license_id)
         
         # Set alternate identifier (layer name)
-        dataset.set_alternate_identifier(table_dataset.alternate_identifier)
+        alternate_identifier = getattr(table_dataset, 'alternate_identifier', None)
+        dataset.set_alternate_identifier(alternate_identifier)
 
         # Title
         title = custom_metadata.get('title') if custom_metadata else table_dataset.title
