@@ -34,6 +34,21 @@ First copy the `.env.example` template and configure by changing the `.env` file
 cp .env.example .env
 ```
 
+Custom ennvars:
+- `CKAN_URL`: CKAN site URL to load the harvested datasets.
+- `PYCSW_URL`: PyCSW site URL to load the harvested datasets.
+- `APP_DIR`: Path to the application folder in Docker.
+- `TZ`: Timezone.
+- `CKAN_API_KEY`: CKAN authorisation key can be created at `{CKAN_URL}/user/admin`.
+- `DEFAULT_LICENSE`: Default license for the harvested datasets. Open Data default: `http://creativecommons.org/licenses/by/4.0/`
+- `DEFAULT_LICENSE_ID`: Default license ID for the harvested datasets, ID list: `{ckan_site_url}/api/3/action/license_list`. Open Data default: `cc-by-4.0`
+- `PARALLELIZATION`: [WIP] Parallelization of the harvesters. Default: `False`
+- `CKAN_DATASET_SCHEMA`: Dataset schema of the CKAN Endpoint. Default: `geodcatap`
+- `SSL_UNVERIFIED_MODE`: SSL certificate from host will download if `SSL_UNVERIFIED_MODE=True`. Ennvar to avoid SSL error when certificate was self-signed.
+
+    >**Warning**<br>
+    > `SSL_UNVERIFIED_MODE=True` is not recommended for production environments. Update your certificate or use a valid one. **Check the container log if it fails, and put `True` in the `.env` file.**
+
 Then configure your custom `ckan-ogc/conf/config.yaml.template`. Define the harvest servers and the CKAN DCAT default info.
 * Put your XLS/CSV/XML files in: [./data/*](/data/) folder as you need.
 

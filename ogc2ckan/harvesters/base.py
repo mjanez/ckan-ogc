@@ -5,6 +5,7 @@ import re
 import unicodedata
 from typing import Any
 import logging
+from datetime import datetime
 
 # third-party libraries
 from geojson import Polygon, dumps
@@ -153,11 +154,11 @@ class Harvester:
             logging.info(f"{self.name} ({self.type.upper()}) server OGC workspaces selected: {', '.join([w.upper() for w in self.workspaces])}")
             
             # Create datasets using ckan_management
-            self.ckan_count, self.server_count = ckan_management.create_ckan_datasets(ckan_info.ckan_site_url, ckan_info.authorization_key, self.datasets, self.workspaces)
+            self.ckan_count, self.server_count = ckan_management.create_ckan_datasets(ckan_info.ckan_site_url, ckan_info.authorization_key, self.datasets, ckan_info.ssl_unverified_mode, self.workspaces)
 
         else:
             # Create datasets using ckan_management
-            self.ckan_count, self.server_count = ckan_management.create_ckan_datasets(ckan_info.ckan_site_url, ckan_info.authorization_key, self.datasets)
+            self.ckan_count, self.server_count = ckan_management.create_ckan_datasets(ckan_info.ckan_site_url, ckan_info.authorization_key, self.datasets,  ckan_info.ssl_unverified_mode)
         
     def get_dataset_common_elements(self, record: str, ckan_dataset_schema: str) -> tuple:
         """
@@ -279,8 +280,19 @@ class Harvester:
     @staticmethod
     def _normalize_date(date):
         if isinstance(date, str):
-            return date.replace('/', '-')
-        return None
+            date_formats = ['%Y-%m-%d', '%d-%m-%Y']
+            for date_format in date_formats:
+                try:
+                    date = datetime.strptime(date, date_format).strftime('%Y-%m-%d')
+                    return date
+                except ValueError:
+                    pass
+            return None
+        elif isinstance(date, datetime):
+            date = date.strftime('%Y-%m-%d')
+        else:
+            return None
+        return date
 
     @staticmethod
     def _set_min_max_coordinates(dataset, minx, maxx, miny, maxy):

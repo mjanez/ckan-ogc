@@ -212,13 +212,11 @@ class HarvesterTable(Harvester):
         spatial_uri = getattr(table_dataset, 'spatial_uri', getattr(self.default_dcat_info, 'spatial_uri', None))
         dataset.set_spatial_uri(spatial_uri)        
 
-        # Set temporal coverage (only series)
-        if is_series:
-            temporal_start = getattr(table_dataset, 'temporal_start', getattr(self.default_dcat_info, 'temporal_start', None))
-            temporal_end = getattr(table_dataset, 'temporal_end', getattr(self.default_dcat_info, 'temporal_end', None))
-        else:
-            dataset.set_temporal_end(getattr(table_dataset, 'temporal_end', None))
-            dataset.set_temporal_start(getattr(table_dataset, 'temporal_start', None))
+        # Set temporal coverage
+        temporal_start = getattr(table_dataset, 'temporal_start', getattr(self.default_dcat_info, 'temporal_start', None))
+        temporal_end = getattr(table_dataset, 'temporal_end', getattr(self.default_dcat_info, 'temporal_end', None))
+        dataset.set_temporal_start(self._normalize_date(temporal_start))
+        dataset.set_temporal_end(self._normalize_date(temporal_end))
 
         # Set Frequency
         frequency = getattr(table_dataset, 'frequency', getattr(self.default_dcat_info, 'frequency', None))

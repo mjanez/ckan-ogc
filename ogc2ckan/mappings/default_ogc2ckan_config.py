@@ -44,6 +44,7 @@ OGC2CKAN_CKANINFO_CONFIG = {
     'default_license': 'http://creativecommons.org/licenses/by/4.0/',
     'default_license_id': 'cc-by',
     'parallelization': False,
+    'ssl_unverified_mode': False,
     'dir3_url': 'http://datos.gob.es/es/recurso/sector-publico/org/Organismo',
     'ckan_dataset_schema': 'geodcatap',
 }

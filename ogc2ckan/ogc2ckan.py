@@ -3,6 +3,7 @@ import logging
 from datetime import datetime   
 import os
 from joblib import Parallel, delayed
+import ssl
 
 # custom classes
 from controller import ckan_management
@@ -66,6 +67,8 @@ def launch_harvest(harvest_server=None, ckan_info=None):
     return harvester
 
 def main():
+    ssl._create_default_https_context = ssl._create_unverified_context
+    
     log_file(APP_DIR + "/log")
     logging.info(f"{log_module}:Version: {VERSION}")
     
@@ -86,12 +89,14 @@ def main():
             # Filter harvest_servers by active_harvesters
             harvest_servers = [e for e in harvest_servers if e['type'] in active_harvesters and e['active'] is True]
             if not harvest_servers:
-                error_message = f"No active harvest servers found for types: [{', '.join([OGC2CKAN_HARVESTER_CONFIG[key]['type'] for key in OGC2CKAN_HARVESTER_CONFIG])}]."
+                error_message = f"{log_module}:No active harvest servers found for types: [{', '.join([OGC2CKAN_HARVESTER_CONFIG[key]['type'] for key in OGC2CKAN_HARVESTER_CONFIG])}]."
                 raise ValueError(error_message)
 
             # Starts software
             logging.info(f"{log_module}:Number of processes: {processes}")
-            logging.info(f"{log_module}:Multicore parallel processing: {ckan_info.parallelization}")        
+            logging.info(f"{log_module}:Multicore parallel processing: {ckan_info.parallelization}")
+            if ckan_info.ssl_unverified_mode == True or ckan_info.ssl_unverified_mode == "True":
+                logging.warning(f"{log_module}:[INSECURE] SSL_UNVERIFIED_MODE:'{ckan_info.ssl_unverified_mode}'. Only if you trust the host.")    
             logging.info(f"{log_module}:Type of activated harvesters: {', '.join([h.upper() for h in active_harvesters])}")               
             logging.info(f"{log_module}:CKAN_URL: {ckan_info.ckan_site_url}")           
 
