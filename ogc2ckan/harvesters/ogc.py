@@ -141,6 +141,10 @@ class HarvesterOGC(Harvester):
         dataset = dataset(uuid_identifier, ckan_name, self.organization, ckan_info.default_license_id)
         dataset.set_ogc_workspace(ogc_workspace)
         
+        # Set private dataset
+        private = getattr(self, 'private_datasets', False)
+        dataset.set_private(private)
+        
         # Set alternate identifier (layer name)
         alternate_identifier = layer_info.id if layer_info.id else None
         dataset.set_alternate_identifier(alternate_identifier)

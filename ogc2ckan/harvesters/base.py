@@ -194,10 +194,6 @@ class Harvester:
         # Create inspireId
         inspire_id = ".".join(filter(None,[self.default_inspire_info['inspireid_nutscode'], self.default_inspire_info['inspireid_theme'], record.replace(':', '.'), self.default_inspire_info['inspireid_versionid']])).upper()
 
-        # Set Private
-        if self.private_datasets == 'True':
-            dataset.set_private(True)
- 
         return dataset, distribution, uuid_identifier, ckan_name, ckan_groups, inspire_id
  
     def get_custom_default_metadata(self, dataset_id: str, dict_property: str = 'dataset_id') -> Any:
@@ -399,7 +395,7 @@ class Harvester:
     def _set_keywords_uri(dataset, keywords_uri):
             keywords_uri= [w.replace(',', ';') for w in keywords_uri]
             dataset.set_keywords_uri(keywords_uri)
-
+        
     @staticmethod
     def _get_dir3_uri(dir3_soup: BeautifulSoup, uri_default: str, organization: str = None) -> str:
         """

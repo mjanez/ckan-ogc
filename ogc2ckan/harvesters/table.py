@@ -138,6 +138,10 @@ class HarvesterTable(Harvester):
         # Set basic info of MD
         dataset = dataset(uuid_identifier, ckan_name, self.organization, ckan_info.default_license_id)
         
+        # Set private dataset
+        private = getattr(self, 'private_datasets', False)
+        dataset.set_private(private)
+        
         # Set alternate identifier (layer name)
         alternate_identifier = getattr(table_dataset, 'alternate_identifier', None)
         dataset.set_alternate_identifier(alternate_identifier)
