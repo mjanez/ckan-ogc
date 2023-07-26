@@ -11,6 +11,7 @@ ENV DEFAULT_LICENSE=http://creativecommons.org/licenses/by/4.0/
 ENV DEFAULT_LICENSE_ID=cc-by
 ENV DEV_MODE=True
 ENV TIMEOUT=300
+ENV SSL_UNVERIFIED_MODE=False
 
 RUN apt-get -q -y update && \
     apt-get install -y wget procps && \
