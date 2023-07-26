@@ -5,6 +5,7 @@ import re
 import unicodedata
 from typing import Any
 import logging
+from datetime import datetime
 
 # third-party libraries
 from geojson import Polygon, dumps
@@ -279,8 +280,19 @@ class Harvester:
     @staticmethod
     def _normalize_date(date):
         if isinstance(date, str):
-            return date.replace('/', '-')
-        return None
+            date_formats = ['%Y-%m-%d', '%d-%m-%Y']
+            for date_format in date_formats:
+                try:
+                    date = datetime.strptime(date, date_format).strftime('%Y-%m-%d')
+                    return date
+                except ValueError:
+                    pass
+            return None
+        elif isinstance(date, datetime):
+            date = date.strftime('%Y-%m-%d')
+        else:
+            return None
+        return date
 
     @staticmethod
     def _set_min_max_coordinates(dataset, minx, maxx, miny, maxy):

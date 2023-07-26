@@ -205,17 +205,20 @@ class HarvesterOGC(Harvester):
         self.set_bounding_box(dataset, bb) if bb is not None else None
 
         # Set spatial URI      
-        spatial_uri = custom_metadata.get('spatial_uri') if custom_metadata else getattr(self.default_dcat_info, 'spatial_uri',None)
-        dataset.set_spatial_uri(spatial_uri)        
+        spatial_uri = custom_metadata.get('spatial_uri') if 'spatial_uri' in custom_metadata else getattr(self.default_dcat_info, 'spatial_uri', None)       
 
-        # Set temporal coverage (only series)
+        # Set temporal coverage
         if is_series and wms_layer_info and wms_layer_info.timepositions:
             time_extent = wms_layer_info.timepositions[0].split(",")
             dataset.set_temporal_start(time_extent[0].split("/")[0])
             dataset.set_temporal_end(time_extent[-1].split("/")[-1] if len(time_extent) > 1 else None)
         else:
-            dataset.set_temporal_start(self._normalize_date(custom_metadata.get('temporal_start')) if custom_metadata else None)
-            dataset.set_temporal_end(self._normalize_date(custom_metadata.get('temporal_end')) if custom_metadata else None)
+            time_extent = {
+                'temporal_start': custom_metadata.get('temporal_start', self.default_dcat_info.temporal_start),
+                'temporal_end': custom_metadata.get('temporal_end', self.default_dcat_info.temporal_end)
+            }
+        dataset.set_temporal_start(self._normalize_date(time_extent['temporal_start']))
+        dataset.set_temporal_end(self._normalize_date(time_extent['temporal_end']))
 
         # Set frequency
         if hasattr(wms_layer_info, 'frequency'):
@@ -316,6 +319,3 @@ class HarvesterOGC(Harvester):
             workspace = layer_info.id.split(':')[0]
             layername = layer_info.id.split(':')[1]
             json_url = self.get_wfs_url().replace('geoserver/ows', 'geoserver/' + workspace.lower() + '/ows') + '&version=1.0.0&request=GetFeature&typeName=' + layername.lower() + '&outputFormat=application/json&maxFeatures=100'
-            dist_info = self._get_distribution_info("GeoJSON", json_url, self.localized_strings_dict['distributions']['geojson'], ckan_info.default_license, ckan_info.default_license_id, dataset.access_rights, dataset.language)
-            add_distribution(distribution, dist_info)
-
