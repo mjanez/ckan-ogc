@@ -24,6 +24,7 @@ class CKANInfo:
         self.default_license = os.environ.get('DEFAULT_LICENSE', OGC2CKAN_CKANINFO_CONFIG['default_license'])
         self.default_license_id = os.environ.get('DEFAULT_LICENSE_ID', OGC2CKAN_CKANINFO_CONFIG['default_license_id'])
         self.ckan_harvester = OGC2CKAN_HARVESTER_CONFIG
+        self.ssl_unverified_mode = os.environ.get('SSL_UNVERIFIED_MODE', OGC2CKAN_CKANINFO_CONFIG['ssl_unverified_mode'])
         self.parallelization = os.environ.get('PARALLELIZATION', OGC2CKAN_CKANINFO_CONFIG['parallelization'])
         self.dir3_soup = self.get_dir3_soup()
         self.ckan_dataset_schema = os.environ.get('CKAN_DATASET_SCHEMA', OGC2CKAN_CKANINFO_CONFIG['ckan_dataset_schema'])

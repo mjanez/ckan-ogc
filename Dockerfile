@@ -11,9 +11,10 @@ ENV DEFAULT_LICENSE=http://creativecommons.org/licenses/by/4.0/
 ENV DEFAULT_LICENSE_ID=cc-by
 ENV DEV_MODE=False
 ENV TIMEOUT=300
+ENV SSL_UNVERIFIED_MODE=False
 
 RUN apt-get -q -y update && \
-    apt-get install -y wget && \
+    apt-get install -y wget curl && \
     DEBIAN_FRONTEND=noninteractive apt-get -yq install gettext-base && \
     wget -O /wait-for https://raw.githubusercontent.com/eficode/wait-for/v2.2.3/wait-for && \
     chmod +x /wait-for && \

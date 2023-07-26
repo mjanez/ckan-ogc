@@ -153,11 +153,11 @@ class Harvester:
             logging.info(f"{self.name} ({self.type.upper()}) server OGC workspaces selected: {', '.join([w.upper() for w in self.workspaces])}")
             
             # Create datasets using ckan_management
-            self.ckan_count, self.server_count = ckan_management.create_ckan_datasets(ckan_info.ckan_site_url, ckan_info.authorization_key, self.datasets, self.workspaces)
+            self.ckan_count, self.server_count = ckan_management.create_ckan_datasets(ckan_info.ckan_site_url, ckan_info.authorization_key, self.datasets, ckan_info.ssl_unverified_mode, self.workspaces)
 
         else:
             # Create datasets using ckan_management
-            self.ckan_count, self.server_count = ckan_management.create_ckan_datasets(ckan_info.ckan_site_url, ckan_info.authorization_key, self.datasets)
+            self.ckan_count, self.server_count = ckan_management.create_ckan_datasets(ckan_info.ckan_site_url, ckan_info.authorization_key, self.datasets,  ckan_info.ssl_unverified_mode)
         
     def get_dataset_common_elements(self, record: str, ckan_dataset_schema: str) -> tuple:
         """
