@@ -3,6 +3,7 @@ from datetime import datetime
 import os
 from pathlib import Path
 import logging
+import re
 
 # third-party libraries
 import pandas as pd
@@ -86,9 +87,12 @@ class HarvesterTable(Harvester):
 
                 # Group distributions by dataset_id and convert to list of dicts
                 table_distributions_grouped = table_distributions.groupby('dataset_id').apply(lambda x: x.to_dict('records')).to_dict()
-
+                
                 # Add distributions to each dataset object
-                table_data = [{**d, 'distributions': table_distributions_grouped.get(d.get('identifier') or d.get('alternate_identifier'), [])} for d in table_data]
+                table_data = [
+                    dict(d, distributions=table_distributions_grouped.get(d.get('identifier') or d.get('alternate_identifier') or d.get('inspire_id'), []))
+                    for d in table_data
+                ]
                 
                 return table_data
 
@@ -156,7 +160,10 @@ class HarvesterTable(Harvester):
         dataset.set_description(description or self.localized_strings_dict['description'])
   
         # CKAN Groups
-        dataset.set_groups(ckan_groups)
+        
+        # ckan_groups is table_dataset.groups if exists, otherwise ckan_groups is ckan_groups
+        dataset_groups = getattr(table_dataset, 'groups', ckan_groups)
+        dataset.set_groups(self._set_ckan_groups(dataset_groups))
 
         # Set inspireId (identifier)
         dataset.set_inspire_id(inspire_id)  
@@ -259,10 +266,11 @@ class HarvesterTable(Harvester):
             
             # Set reference
             reference = getattr(table_dataset, 'reference', None)
-            dataset.set_source(reference)
+            dataset.set_reference(reference)
 
             # Set process steps (INSPIRE quality)
-            lineage_process_steps = getattr(table_dataset, 'lineage_process_steps', self.localized_strings_dict.get('lineage_process_steps', None))            
+            lineage_process_steps = getattr(table_dataset, 'lineage_process_steps', self.localized_strings_dict.get('lineage_process_steps', None))
+            dataset.set_lineage_process_steps(lineage_process_steps)            
 
         # Set conformance (INSPIRE regulation)
         conformance = getattr(table_dataset, 'conformance', OGC2CKAN_HARVESTER_MD_CONFIG['conformance'])
@@ -366,11 +374,19 @@ class HarvesterTable(Harvester):
             # Iterate over each key-value pair in the element dictionary
             for key, value in element.items():
                 # Check if the key is in the filtered list
-                if key in ckan_fields_filtered:
+                if key in ckan_fields_filtered:                  
+                    # if value is a string list between "" or "'" then remove the quotes
+                    if isinstance(value, str) and value.startswith('"') and value.endswith('"') and ',' in value:
+                        # Split all values inside ""
+                        value_str = re.findall(r'"[^"]+"', value)
+                        # Split the string and remove whitespace and starts - from each item
+                        element[key] = [x.strip('"').strip().lstrip('-').strip() for x in value_str]
+
                     # Check if the value is a list-like string
-                    if isinstance(value, str) and any([char in value for char in ',]']):
+                    elif isinstance(value, str) and any([char in value for char in ',]']):
                         # Split the string and remove whitespace from each item
-                        element[key] = [x.strip() for x in value.split(',')]
+                        element[key] = [x.strip().lstrip('-').strip() for x in value.split(',')]
+
                 elif key == 'distributions':
                     # Iterate over each distribution dictionary in the 'distributions' list
                     for distribution in value:
@@ -388,4 +404,3 @@ class HarvesterTable(Harvester):
 
         # Return the updated data
         return table_datasets
-

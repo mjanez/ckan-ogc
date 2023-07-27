@@ -456,6 +456,14 @@
         "stored": "Date"
     },
     {
+        "ckan_object": "dataset",
+        "ckan_section": "dataset",
+        "new_metadata_fields": "groups",
+        "multiplicity": "0.1",
+        "codelists": null,
+        "stored": "List[Text]"
+    },
+    {
         "ckan_object": "distribution",
         "ckan_section": "distribution",
         "new_metadata_fields": "dataset_id",

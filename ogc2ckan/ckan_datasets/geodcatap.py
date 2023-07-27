@@ -135,7 +135,7 @@ class Dataset:
         self.lineage_source = []
         self.lineage_process_steps = []
         self.source = None
-        self.reference = None
+        self.reference = []
         self.conformance = []
         self.metadata_profile = [
             "http://semiceu.github.io/GeoDCAT-AP/releases/2.0.0","http://inspire.ec.europa.eu/document-tags/metadata"

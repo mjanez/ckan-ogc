@@ -438,6 +438,20 @@ class Harvester:
 
         return uri_value
 
+    @staticmethod
+    def _set_ckan_groups(groups):
+        # Normalize groups for CKAN
+        # if groups is a string, convert it to a list
+        if isinstance(groups, str):
+            ckan_groups = [{'name': g.lower().replace(" ", "-").strip()} for g in groups.split(',') or []]
+        elif isinstance(groups, list):
+            ckan_groups = [{'name': g.lower().replace(" ", "-").strip()} for g in groups or []]
+        
+        else:
+            ckan_groups = []
+        
+        return ckan_groups
+
     def get_ckan_distribution(self, distribution, record, dist_info):
         format_type, media_type, conformance, name = self._get_ckan_format(dist_info)
         format_type = format_type or "Unknown"

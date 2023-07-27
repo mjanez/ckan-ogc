@@ -158,7 +158,7 @@ class HarvesterOGC(Harvester):
         description = custom_metadata.get('description') if custom_metadata else layer_info.abstract
         dataset.set_description(description or self.localized_strings_dict['description'])
   
-        # CKAN Groups
+        # CKAN Groups defined in config.yaml
         dataset.set_groups(ckan_groups)
 
         # Set inspireId (identifier)
