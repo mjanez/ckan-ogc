@@ -97,6 +97,8 @@ def main():
             logging.info(f"{log_module}:Multicore parallel processing: {ckan_info.parallelization}")
             if ckan_info.ssl_unverified_mode == True or ckan_info.ssl_unverified_mode == "True":
                 logging.warning(f"{log_module}:[INSECURE] SSL_UNVERIFIED_MODE:'{ckan_info.ssl_unverified_mode}'. Only if you trust the host.")    
+            if ckan_info.metadata_distributions == True or ckan_info.metadata_distributions == "True":
+                logging.warning(f"{log_module}:METADATA_DISTRIBUTIONS:'{ckan_info.metadata_distributions}'. It is not necessary if you do not intend to generate distributions for geographic metadata (INSPIRE ISO19139) or Linked Open Data (GeoDCAT-AP). ckanext-scheming_dcat already links the most important metadata profiles (https://github.com/mjanez/ckanext-scheming_dcat).")
             logging.info(f"{log_module}:Type of activated harvesters: {', '.join([h.upper() for h in active_harvesters])}")               
             logging.info(f"{log_module}:CKAN_URL: {ckan_info.ckan_site_url}")           
 

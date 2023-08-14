@@ -473,15 +473,16 @@ class Harvester:
         return distribution
     
     def set_metadata_distributions(self, ckan_info, dataset, distribution, record):
-       # Add GeoDCAT-AP Metadata distribution
-        dist_info = self._get_distribution_info("geodcatap", ckan_info.ckan_site_url + "/dataset/" + dataset.name + ".rdf", self.localized_strings_dict['distributions']['geodcatap'], ckan_info.default_license, ckan_info.default_license_id, dataset.access_rights, dataset.language)
-        dataset.add_distribution(self.get_ckan_distribution(distribution, record, dist_info))
-        
-        # Add INSPIRE ISO19139 Metadata distribution
-        # http://localhost:8000/csw?service=CSW&version=2.0.2&request=GetRecordById&id=spamitma_hermes_service_0_rtig_pu&elementsetname=full&outputSchema=http://www.isotc211.org/2005/gmd
-        # http://localhost:8000/csw?service=CSW&version=2.0.2&request=GetRecordById&id=mitma_spamitma_hermes&elementsetname=full&outputSchema=http://www.isotc211.org/2005/gmd
-        dist_info = self._get_distribution_info("inspire", ckan_info.pycsw_site_url + "/?service=CSW&version=2.0.2&request=GetRecordById&id=" + dataset.name + "&elementsetname=full&outputSchema=http://www.isotc211.org/2005/gmd", self.localized_strings_dict['distributions']['inspire'], ckan_info.default_license, ckan_info.default_license_id, dataset.access_rights, dataset.language)
-        dataset.add_distribution(self.get_ckan_distribution(distribution, record, dist_info))
+        if ckan_info.metadata_distributions == True or ckan_info.metadata_distributions == "True":
+            # Add GeoDCAT-AP Metadata distribution
+            dist_info = self._get_distribution_info("geodcatap", ckan_info.ckan_site_url + "/dataset/" + dataset.name + ".rdf", self.localized_strings_dict['distributions']['geodcatap'], ckan_info.default_license, ckan_info.default_license_id, dataset.access_rights, dataset.language)
+            dataset.add_distribution(self.get_ckan_distribution(distribution, record, dist_info))
+            
+            # Add INSPIRE ISO19139 Metadata distribution
+            # http://localhost:8000/csw?service=CSW&version=2.0.2&request=GetRecordById&id=spamitma_hermes_service_0_rtig_pu&elementsetname=full&outputSchema=http://www.isotc211.org/2005/gmd
+            # http://localhost:8000/csw?service=CSW&version=2.0.2&request=GetRecordById&id=mitma_spamitma_hermes&elementsetname=full&outputSchema=http://www.isotc211.org/2005/gmd
+            dist_info = self._get_distribution_info("inspire", ckan_info.pycsw_site_url + "/?service=CSW&version=2.0.2&request=GetRecordById&id=" + dataset.name + "&elementsetname=full&outputSchema=http://www.isotc211.org/2005/gmd", self.localized_strings_dict['distributions']['inspire'], ckan_info.default_license, ckan_info.default_license_id, dataset.access_rights, dataset.language)
+            dataset.add_distribution(self.get_ckan_distribution(distribution, record, dist_info))
     
     def set_custom_responsible_parties(self, dataset, custom_metadata, ckan_site_url):
         responsible_parties = [

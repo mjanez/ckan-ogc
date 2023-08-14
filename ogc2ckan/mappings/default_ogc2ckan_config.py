@@ -47,6 +47,7 @@ OGC2CKAN_CKANINFO_CONFIG = {
     'ssl_unverified_mode': False,
     'dir3_url': 'http://datos.gob.es/es/recurso/sector-publico/org/Organismo',
     'ckan_dataset_schema': 'geodcatap',
+    'metadata_distributions': False
 }
 
 ## DBDsn class default configuration
