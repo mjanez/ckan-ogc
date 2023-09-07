@@ -2,10 +2,10 @@ version: "3"
 
 services:
   ogc2ckan:
-    container_name: ckan-ogc
+    container_name: ckan-ogc-dev
     build:
       context: ckan-ogc/
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.ghcr.dev
     env_file:
       - .env
     logging:
@@ -13,8 +13,10 @@ services:
       options:
           max-size: "100m"
           max-file: "10"
+    ports:
+      # debugpy
+      - "5678:5678"
     volumes:
         - ./log:${APP_DIR}/log
         - ./metadata:${APP_DIR}/metadata
-    restart: on-failure:3
     network_mode: host

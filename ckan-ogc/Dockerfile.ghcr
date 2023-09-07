@@ -1,0 +1,26 @@
+FROM ghcr.io/mjanez/ckan-ogc:latest
+LABEL maintainer="mnl.janez@gmail.com"
+
+ENV APP_DIR=/app
+ENV TZ=UTC
+RUN echo ${TZ} > /etc/timezone
+ENV CKAN_URL=http://localhost:5000/
+ENV PYCSW_URL=http://localhost:8000/
+ENV CKAN_API_KEY=ckan-api-key
+ENV DEFAULT_LICENSE=http://creativecommons.org/licenses/by/4.0/
+ENV DEFAULT_LICENSE_ID=cc-by
+ENV DEV_MODE=False
+ENV TIMEOUT=300
+ENV SSL_UNVERIFIED_MODE=False
+
+WORKDIR ${APP_DIR}
+COPY pyproject.toml pdm.lock .
+
+RUN pdm install --no-self --group prod
+
+COPY conf/config.yaml.template config.yaml
+COPY docker-entrypoint.d/entrypoint.sh entrypoint.sh
+COPY ogc2ckan ogc2ckan
+COPY data data
+
+ENTRYPOINT ["/bin/bash", "./entrypoint.sh"]

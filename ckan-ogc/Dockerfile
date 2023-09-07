@@ -9,29 +9,25 @@ ENV PYCSW_URL=http://localhost:8000/
 ENV CKAN_API_KEY=ckan-api-key
 ENV DEFAULT_LICENSE=http://creativecommons.org/licenses/by/4.0/
 ENV DEFAULT_LICENSE_ID=cc-by
-ENV DEV_MODE=True
+ENV DEV_MODE=False
 ENV TIMEOUT=300
 ENV SSL_UNVERIFIED_MODE=False
 
 RUN apt-get -q -y update && \
-    apt-get install -y wget procps git && \
+    apt-get install -y wget curl && \
     DEBIAN_FRONTEND=noninteractive apt-get -yq install gettext-base && \
     wget -O /wait-for https://raw.githubusercontent.com/eficode/wait-for/v2.2.3/wait-for && \
     chmod +x /wait-for && \
-    python3 -m pip install pdm debugpy
+    python3 -m pip install pdm
 
 WORKDIR ${APP_DIR}
 COPY pyproject.toml pdm.lock .
 
 RUN pdm install --no-self --group prod
 
-COPY ckan-ogc/conf/config.yaml.template config.yaml
-COPY ckan-ogc/entrypoint_dev.sh entrypoint.sh
+COPY conf/config.yaml.template config.yaml
+COPY docker-entrypoint.d/entrypoint.sh entrypoint.sh
 COPY ogc2ckan ogc2ckan
 COPY data data
 
-EXPOSE 5678/TCP
-
-# Set entrypoint with debugpy
-ENTRYPOINT ["python3", "-m", "debugpy", "--listen", "0.0.0.0:5678", "--wait-for-client", "./entrypoint_dev.sh"]
-CMD ["tail", "-f", "/dev/null"]
+ENTRYPOINT ["/bin/bash", "./entrypoint.sh"]

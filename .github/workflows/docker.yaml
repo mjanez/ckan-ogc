@@ -1,4 +1,4 @@
-name: Docker
+name: Build ckan-ogc images
 
 on:
   push:
@@ -49,3 +49,5 @@ jobs:
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+          context: ./ckan-ogc
+          file: ./ckan-ogc/Dockerfile
