@@ -6,6 +6,7 @@ import unicodedata
 from typing import Any
 import logging
 from datetime import datetime
+import html
 
 # third-party libraries
 from geojson import Polygon, dumps
@@ -17,10 +18,13 @@ from bs4 import BeautifulSoup
 # custom classes
 from controller import ckan_management
 from model.custom_organization import CustomOrganization
-from config.ogc2ckan_config import load_yaml
+from controller.mapping import get_mapping_value
+from config.ogc2ckan_config import load_yaml, get_log_module
 from mappings.default_ogc2ckan_config import OGC2CKAN_PATHS_CONFIG, OGC2CKAN_HARVESTER_MD_CONFIG, OGC2CKAN_CKANINFO_CONFIG, OGC2CKAN_MD_FORMATS
 from harvesters.harvesters import get_harvester_class
 
+
+log_module = get_log_module()
 
 class DCATInfo:
     '''Represents the information of a dataset in DCAT format.
@@ -91,8 +95,13 @@ class Harvester:
         self.default_keywords = default_keywords
         self.default_inspire_info = default_inspire_info
         self.datasets = []
-        self.ckan_count = 0
-        self.server_count = 0
+        self.datadictionaries = []
+        self.ckan_dataset_count = 0
+        self.source_dataset_count = 0
+        self.ckan_dataset_errors = []
+        self.ckan_dictionaries_count = 0
+        self.source_dictionaries_count = 0
+        self.ckan_dictionaries_errors = []
         # Additional custom organization info (ckan-harvester/src/ckan/ogc_ckan/custom/mappings)
         self.custom_organization_info = CustomOrganization(self) if custom_organization_active else None
         default_localized_strings_file = f"{self.app_dir}/{OGC2CKAN_PATHS_CONFIG['default_mappings_folder']}/{OGC2CKAN_PATHS_CONFIG['default_localized_strings_file']}"
@@ -120,15 +129,15 @@ class Harvester:
         harvester_class = get_harvester_class(harvest_server.type, harvest_server.url)
         harvester_args = inspect.signature(harvester_class).parameters.keys()
         harvester_kwargs = {k: v for k, v in harvest_server.__dict__.items() if k in harvester_args}
-        
+
         # Add app_dir to harvester_kwargs
         harvester_kwargs['app_dir'] = app_dir
-        
+
         # Create a new Harvester object of the appropriate class
         harvester = harvester_class(**harvester_kwargs)
-        
+
         return harvester
-        
+
     def create_datasets(self, ckan_info):
         '''
         Create datasets if you are only interested in creating new datasets
@@ -142,24 +151,30 @@ class Harvester:
         # Get all datasets
         self.get_datasets(ckan_info)
 
-        # Check if the dataset exists in CKAN
-        if hasattr(self, 'constraints') and self.constraints:
-            emails = set(email.lower().replace(' ','') for email in (self.constraints.get('mails') or []) if email)
-        else:
-            emails = []
-        datasets_title = [x.title for x in self.datasets if x.contact_email.lower().replace(' ','') in emails]
-        logging.info(f"{self.name} ({self.type.upper()}) server records found: {', '.join(datasets_title)}")
+        #TODO: Check if the dataset exists in CKAN use: ckan_management.get_ckan_datasets_list
+        # if hasattr(self, 'constraints') and self.constraints:
+        #     emails = set(email.lower().replace(' ','') for email in (self.constraints.get('mails') or []) if email)
+        # else:
+        #     emails = []
+
+        # if len(emails) > 0:
+        #     datasets_title = [x.title for x in self.datasets if x.contact_email.lower().replace(' ','') in emails]
+        #     logging.info(f"{self.name} ({self.type.upper()}) server records found: {', '.join(datasets_title)}")
 
         if hasattr(self, 'workspaces') and self.workspaces:
-            logging.info(f"{self.name} ({self.type.upper()}) server OGC workspaces selected: {', '.join([w.upper() for w in self.workspaces])}")
-            
+            logging.info(f"{log_module}:{self.name} ({self.type.upper()}) server OGC workspaces selected: {', '.join([w.upper() for w in self.workspaces])}")
+
             # Create datasets using ckan_management
-            self.ckan_count, self.server_count = ckan_management.create_ckan_datasets(ckan_info.ckan_site_url, ckan_info.authorization_key, self.datasets, ckan_info.ssl_unverified_mode, self.workspaces)
+            self.ckan_dataset_count, self.source_dataset_count, self.ckan_dataset_errors = ckan_management.create_ckan_datasets(ckan_info.ckan_site_url, ckan_info.authorization_key, self.datasets, ckan_info.ssl_unverified_mode, self.workspaces)
 
         else:
             # Create datasets using ckan_management
-            self.ckan_count, self.server_count = ckan_management.create_ckan_datasets(ckan_info.ckan_site_url, ckan_info.authorization_key, self.datasets,  ckan_info.ssl_unverified_mode)
-        
+            self.ckan_dataset_count, self.source_dataset_count, self.ckan_dataset_errors = ckan_management.create_ckan_datasets(ckan_info.ckan_site_url, ckan_info.authorization_key, self.datasets,  ckan_info.ssl_unverified_mode)
+
+        # Create data dictionaries using ckan_management
+        if self.datadictionaries:
+            self.ckan_dictionaries_count, self.source_dictionaries_count, self.ckan_dictionaries_errors = ckan_management.create_ckan_datadictionaries(ckan_info.ckan_site_url, ckan_info.authorization_key, self.datadictionaries, ckan_info.ssl_unverified_mode)
+
     def get_dataset_common_elements(self, record: str, ckan_dataset_schema: str) -> tuple:
         """
         Generates common elements for harvesting a dataset.
@@ -186,17 +201,19 @@ class Harvester:
         # Return the corresponding classes
         dataset = schema["dataset"]
         distribution = schema["distribution"]
-        
+        datadictionary = schema ["datadictionary"]
+        datadictionaryfield = schema ["datadictionaryfield"]
+
         uuid_identifier = self._create_uuid_identifier()
         ckan_name = uuid_identifier
-        
+
         ckan_groups = [{'name': g.lower()} for g in self.groups or []]
 
         # Create inspireId
-        inspire_id = ".".join(filter(None,[self.default_inspire_info['inspireid_nutscode'], self.default_inspire_info['inspireid_theme'], record.replace(':', '.'), self.default_inspire_info['inspireid_versionid']])).upper()
+        inspire_id = ".".join(filter(None,[self.default_inspire_info['inspireid_nutscode'], self.default_inspire_info['inspireid_theme'], record.replace(':', '.').replace(' ', ''), self.default_inspire_info['inspireid_versionid']])).upper()
 
-        return dataset, distribution, uuid_identifier, ckan_name, ckan_groups, inspire_id
- 
+        return dataset, distribution, datadictionary, datadictionaryfield, uuid_identifier, ckan_name, ckan_groups, inspire_id
+
     def get_custom_default_metadata(self, dataset_id: str, dict_property: str = 'dataset_id') -> Any:
         """
         Get the custom default metadata for a given dataset ID.
@@ -209,12 +226,47 @@ class Harvester:
             Any: The value of the specified property in the mapping dictionary, or None if the property is not found.
         """
         mapping = self.custom_organization_info.find_mapping_value(dataset_id, dict_property)
-        
+
         if mapping is None:
             mapping = self.custom_organization_info.find_similar_mapping_value(dataset_id, dict_property)
-        
+
+        if mapping is None:
+            # If 'dataset_id' property is not found, try 'dataset_group_id'
+            mapping = self.custom_organization_info.find_mapping_value(
+                dataset_id,
+                'dataset_group_id'
+                )
+
         return mapping
- 
+
+    def get_custom_metadata_value(self, custom_metadata, key, default=None):
+        """
+        Get the value associated with a key from custom metadata or a default value.
+
+        Args:
+            custom_metadata (dict): Custom metadata dictionary.
+            key (str): The key to retrieve the value for.
+            default: The default value to return if the key is not found.
+
+        Returns:
+            The value associated with the key in custom_metadata, or the default value if the key is not present in custom_metadata.
+
+        If the key is not found in custom_metadata, this function checks if the
+        'self.default_dcat_info' attribute has a value for the key and returns it.
+        If neither source has the key, the default value is returned.
+
+        Example:
+            To retrieve the 'lineage_source' from custom_metadata with a default
+            value of None:
+            >>> value = get_custom_metadata_value(custom_metadata, 'lineage_source')
+        """
+        if custom_metadata is not None and key in custom_metadata:
+            return custom_metadata[key]
+        elif hasattr(self, 'default_dcat_info') and hasattr(self.default_dcat_info, key):
+            return getattr(self.default_dcat_info, key)
+        else:
+            return default
+
     @staticmethod
     def _create_harvester_from_server(harvest_server, harvester_class):
         harvester = harvester_class(
@@ -233,7 +285,7 @@ class Harvester:
         )
 
         return harvester
-    
+
     @staticmethod
     def _get_localized_dict(yaml_dict, language):
         '''
@@ -251,18 +303,18 @@ class Harvester:
             language = language.split('/')[-1].upper()
         else:
             language = language.upper()
-        
+
         # Filter the dictionary for the desired language
         localized_dict = yaml_dict.get(language, {})
 
         return localized_dict
-    
+
     @staticmethod
     def _create_uuid_identifier():
         uuid_identifier = str(uuid.uuid4())
-        
+
         return uuid_identifier
-    
+
     @staticmethod
     def _get_ckan_name(name, organization):
         # the name of a CKAN dataset, must be between 2 and 100 characters long and contain only lowercase
@@ -400,14 +452,26 @@ class Harvester:
 
     @staticmethod
     def _set_themes_es(dataset, themes_es):
-        modified_themes = [theme.replace('https:', 'http:') for theme in themes_es]
-        dataset.set_theme_es(modified_themes)
+        eu_themes = []
+        es_themes = [theme.replace('https:', 'http:') for theme in themes_es]
+        for theme in es_themes:
+            theme_eu = get_mapping_value(theme, 'theme_es', 'theme_eu')
+            eu_themes.append(theme_eu)
+
+        dataset.set_theme_es(es_themes)
+        dataset.set_theme_eu(eu_themes)
+
+    @staticmethod
+    def _set_themes_eu(dataset, theme_eu):
+        themes = [theme.replace('https:', 'http:') for theme in theme_eu]
+
+        dataset.set_theme_eu(themes)
 
     @staticmethod
     def _set_keywords_uri(dataset, keywords_uri):
             keywords_uri= [w.replace(',', ';') for w in keywords_uri]
             dataset.set_keywords_uri(keywords_uri)
-        
+
     @staticmethod
     def _get_dir3_uri(dir3_soup: BeautifulSoup, uri_default: str, organization: str = None) -> str:
         """
@@ -438,6 +502,33 @@ class Harvester:
 
         return uri_value
 
+    @staticmethod
+    def _set_ckan_groups(groups):
+        # Normalize groups for CKAN
+        # if groups is a string, convert it to a list
+        if isinstance(groups, str):
+            ckan_groups = [{'name': g.lower().replace(" ", "-").strip()} for g in groups.split(',') or []]
+        elif isinstance(groups, list):
+            ckan_groups = [{'name': g.lower().replace(" ", "-").strip()} for g in groups or []]
+
+        else:
+            ckan_groups = []
+
+        return ckan_groups
+
+    @staticmethod
+    def _unescape_string(text):
+        if text is not None:
+            try:
+                # Unescape HTML entities and fix encoding issues
+                fixed_text = html.unescape(text).encode('utf-8').decode('utf-8')
+            
+                return fixed_text
+            
+            except Exception as e:
+                logging.error(f"{log_module}:Error fixing encoding: {e}")
+                return text
+
     def get_ckan_distribution(self, distribution, record, dist_info):
         format_type, media_type, conformance, name = self._get_ckan_format(dist_info)
         format_type = format_type or "Unknown"
@@ -457,18 +548,19 @@ class Harvester:
             conformance=conformance
         )
         return distribution
-    
+
     def set_metadata_distributions(self, ckan_info, dataset, distribution, record):
-       # Add GeoDCAT-AP Metadata distribution
-        dist_info = self._get_distribution_info("geodcatap", ckan_info.ckan_site_url + "/dataset/" + dataset.name + ".rdf", self.localized_strings_dict['distributions']['geodcatap'], ckan_info.default_license, ckan_info.default_license_id, dataset.access_rights, dataset.language)
-        dataset.add_distribution(self.get_ckan_distribution(distribution, record, dist_info))
-        
-        # Add INSPIRE ISO19139 Metadata distribution
-        # http://localhost:8000/csw?service=CSW&version=2.0.2&request=GetRecordById&id=spamitma_hermes_service_0_rtig_pu&elementsetname=full&outputSchema=http://www.isotc211.org/2005/gmd
-        # http://localhost:8000/csw?service=CSW&version=2.0.2&request=GetRecordById&id=mitma_spamitma_hermes&elementsetname=full&outputSchema=http://www.isotc211.org/2005/gmd
-        dist_info = self._get_distribution_info("inspire", ckan_info.pycsw_site_url + "/?service=CSW&version=2.0.2&request=GetRecordById&id=" + dataset.name + "&elementsetname=full&outputSchema=http://www.isotc211.org/2005/gmd", self.localized_strings_dict['distributions']['inspire'], ckan_info.default_license, ckan_info.default_license_id, dataset.access_rights, dataset.language)
-        dataset.add_distribution(self.get_ckan_distribution(distribution, record, dist_info))
-    
+        if ckan_info.metadata_distributions == True or ckan_info.metadata_distributions == "True":
+            # Add GeoDCAT-AP Metadata distribution
+            dist_info = self._get_distribution_info("geodcatap", ckan_info.ckan_site_url + "/dataset/" + dataset.name + ".rdf", self.localized_strings_dict['distributions']['geodcatap'], ckan_info.default_license, ckan_info.default_license_id, dataset.access_rights, dataset.language)
+            dataset.add_distribution(self.get_ckan_distribution(distribution, record, dist_info))
+
+            # Add INSPIRE ISO19139 Metadata distribution
+            # http://localhost:8000/csw?service=CSW&version=2.0.2&request=GetRecordById&id=spamitma_hermes_service_0_rtig_pu&elementsetname=full&outputSchema=http://www.isotc211.org/2005/gmd
+            # http://localhost:8000/csw?service=CSW&version=2.0.2&request=GetRecordById&id=mitma_spamitma_hermes&elementsetname=full&outputSchema=http://www.isotc211.org/2005/gmd
+            dist_info = self._get_distribution_info("inspire", ckan_info.pycsw_site_url + "/?service=CSW&version=2.0.2&request=GetRecordById&id=" + dataset.name + "&elementsetname=full&outputSchema=http://www.isotc211.org/2005/gmd", self.localized_strings_dict['distributions']['inspire'], ckan_info.default_license, ckan_info.default_license_id, dataset.access_rights, dataset.language)
+            dataset.add_distribution(self.get_ckan_distribution(distribution, record, dist_info))
+
     def set_custom_responsible_parties(self, dataset, custom_metadata, ckan_site_url):
         responsible_parties = [
             ('contact', ['name', 'email', 'url', 'uri']),
@@ -489,7 +581,7 @@ class Harvester:
                     attribute = f'set_{party}_{attribute}'
                     method = getattr(dataset, attribute)
                     method(value)
-                    
+
         dataset.set_publisher_uri('{}/organization/{}'.format(ckan_site_url, self.organization).casefold())
 
     def set_default_responsible_parties(self, dataset, default_dcat_info, ckan_info, source_dataset=None):
@@ -615,6 +707,7 @@ class Harvester:
         keywords = []
         themes = []
         themes_es = []
+        themes_eu = []
         keywords_uri = set()
         if self.default_keywords is not None:
             for k in self.default_keywords:
@@ -622,7 +715,7 @@ class Harvester:
                 if '/theme/' in k["uri"]:
                     # INSPIRE Theme
                     keywords.append({'name': keyword_name})
-                else: 
+                else:
                     # Keyword
                     keywords.append({'name': keyword_name})
                 keywords_uri.add(k["uri"])
@@ -638,21 +731,23 @@ class Harvester:
         # Set keywords (INSPIRE quality) and INSPIRE Themes
         inspireid_theme = self.default_inspire_info['inspireid_theme'].lower()
         theme_inspire = "http://inspire.ec.europa.eu/theme/" + inspireid_theme
-            
+
         # Insert inspireid_theme (default) as theme/keyword
         keywords.append({'name': inspireid_theme})
-        keywords_uri.add(theme_inspire)                
+        keywords_uri.add(theme_inspire)
         themes.append(inspireid_theme)
 
         # Set ISO 19115 Topic Category
         ## Insert topic (default) as topic
         default_topic = self.default_dcat_info.topic
         dataset.set_topic(default_topic)
-            
-        # Insert theme_es (default) as theme            
+
+        # Insert theme_es (default) as theme
         themes_es.append(self.default_dcat_info.theme_es)
-            
+        themes_eu.append(self.default_dcat_info.theme_eu)
+
         self._set_themes_es(dataset, list(set(themes_es)))
+        self._set_themes_eu(dataset, list(set(themes_eu)))
         self._set_themes(dataset, list(set(themes)))
         dataset.set_keywords(keywords)
         self._set_keywords_uri(dataset, list(keywords_uri))

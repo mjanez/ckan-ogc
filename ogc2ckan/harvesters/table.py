@@ -3,6 +3,8 @@ from datetime import datetime
 import os
 from pathlib import Path
 import logging
+import re
+import uuid
 
 # third-party libraries
 import pandas as pd
@@ -16,7 +18,7 @@ from config.ckan_config import CKANInfo
 
 # custom functions
 from config.ogc2ckan_config import get_log_module
-from mappings.default_ogc2ckan_config import OGC2CKAN_HARVESTER_CONFIG, OGC2CKAN_HARVESTER_MD_CONFIG
+from mappings.default_ogc2ckan_config import OGC2CKAN_HARVESTER_CONFIG, OGC2CKAN_HARVESTER_MD_CONFIG, OGC2CKAN_CKANINFO_CONFIG
 from controller.mapping import get_df_mapping_json
 
 log_module = get_log_module()
@@ -50,6 +52,7 @@ class HarvesterTable(Harvester):
         super().__init__(app_dir, url, name, groups, active, organization, type, custom_organization_active, custom_organization_mapping_file, private_datasets, default_keywords, default_inspire_info, **default_dcat_info)
         self.file_extension = Path(self.url).suffix[1:]
         self.table_data = []
+        self.datadictionaries = []
         
     def get_file_by_extension(self, harvester_formats):
         filename = os.path.basename(self.url)
@@ -68,6 +71,7 @@ class HarvesterTable(Harvester):
                     engine = 'openpyxl' if self.file_extension == 'xlsx' else None
                     table_data = pd.read_excel(self.url, sheet_name='Dataset', dtype=str, engine=engine).fillna('')
                     table_distributions = pd.read_excel(self.url, sheet_name='Distribution', dtype=str, engine=engine).fillna('')
+                    table_datadictionaries = pd.read_excel(self.url, sheet_name='DataDictionary', dtype=str, engine=engine).fillna('')
                                 
                 logging.info(f"{log_module}:Load '{self.file_extension.upper()}' file: '{filename}' with {len(table_data)} records") 
 
@@ -78,18 +82,34 @@ class HarvesterTable(Harvester):
                 # Convert table to list of dicts
                 table_data = table_data.to_dict('records')
 
-                # Extract the distribution records from the same excel sheet as datasets using a filter
-                table_distributions = table_distributions.apply(lambda x: x.str.strip() if x.dtype == 'object' else x)
-
-                # Remove the 'resource_' prefix from column names in the distributions dataframe
+                # Select only the columns of type 'object' and apply the strip() method to them
+                table_distributions.loc[:, table_distributions.dtypes == object] = table_distributions.select_dtypes(include=['object']).apply(lambda x: x.str.strip())
+                table_datadictionaries.loc[:, table_datadictionaries.dtypes == object] = table_datadictionaries.select_dtypes(include=['object']).apply(lambda x: x.str.strip())
+                
+                # Remove prefixes from column names in the distributions/datadictionaries dataframe
                 table_distributions = table_distributions.rename(columns=lambda x: x.replace('resource_', ''))
+                table_datadictionaries = table_datadictionaries.rename(columns=lambda x: re.sub(re.compile(r'datadictionary(_info)?_'), '', x).replace('info.', ''))
 
                 # Group distributions by dataset_id and convert to list of dicts
                 table_distributions_grouped = table_distributions.groupby('dataset_id').apply(lambda x: x.to_dict('records')).to_dict()
 
-                # Add distributions to each dataset object
-                table_data = [{**d, 'distributions': table_distributions_grouped.get(d.get('identifier') or d.get('alternate_identifier'), [])} for d in table_data]
-                
+                # Group datadictionaries by resource_id and convert to list of dicts
+                table_datadictionaries_grouped = table_datadictionaries.groupby('resource_id').apply(lambda x: x.to_dict('records')).to_dict()
+
+                # Add distributions and datadictionaries to each dataset object
+                table_data = [
+                    {
+                        **d,
+                        'distributions': [
+                            {**dr, 'datadictionaries': table_datadictionaries_grouped.get(dr['id'], [])}
+                            for dr in table_distributions_grouped.get(
+                                d.get('identifier') or d.get('alternate_identifier') or d.get('inspire_id'), []
+                            )
+                        ]
+                    }
+                    for d in table_data
+                ]
+
                 return table_data
 
             else:
@@ -110,7 +130,7 @@ class HarvesterTable(Harvester):
             self.datasets.append(self.get_dataset(ckan_info, table_dataset.title, table_dataset))
                
         return self.datasets
-        
+    
     def get_dataset(self, ckan_info: CKANInfo, record: str, table_dataset: object = None):
         '''
         Gets a dataset from tabular data.
@@ -124,7 +144,7 @@ class HarvesterTable(Harvester):
             Dataset: Dataset object.
         '''
         # Get basic elements for the CKAN dataset
-        dataset, distribution, uuid_identifier, ckan_name, ckan_groups, inspire_id = \
+        dataset, distribution, datadictionary, datadictionaryfield, uuid_identifier, ckan_name, ckan_groups, inspire_id = \
             self.get_dataset_common_elements(record, ckan_info.ckan_dataset_schema)
         
         # Search if exists custom organization info for the dataset
@@ -156,9 +176,12 @@ class HarvesterTable(Harvester):
         dataset.set_description(description or self.localized_strings_dict['description'])
   
         # CKAN Groups
-        dataset.set_groups(ckan_groups)
+        # ckan_groups is table_dataset.groups if exists, otherwise ckan_groups is ckan_groups
+        dataset_groups = getattr(table_dataset, 'groups', ckan_groups)
+        dataset.set_groups(self._set_ckan_groups(dataset_groups))
 
         # Set inspireId (identifier)
+        inspire_id = getattr(table_dataset, 'inspire_id', inspire_id)
         dataset.set_inspire_id(inspire_id)  
 
         # Creation/Publication/Revision dates
@@ -259,10 +282,11 @@ class HarvesterTable(Harvester):
             
             # Set reference
             reference = getattr(table_dataset, 'reference', None)
-            dataset.set_source(reference)
+            dataset.set_reference(reference)
 
             # Set process steps (INSPIRE quality)
-            lineage_process_steps = getattr(table_dataset, 'lineage_process_steps', self.localized_strings_dict.get('lineage_process_steps', None))            
+            lineage_process_steps = getattr(table_dataset, 'lineage_process_steps', self.localized_strings_dict.get('lineage_process_steps', None))
+            dataset.set_lineage_process_steps(lineage_process_steps)            
 
         # Set conformance (INSPIRE regulation)
         conformance = getattr(table_dataset, 'conformance', OGC2CKAN_HARVESTER_MD_CONFIG['conformance'])
@@ -293,7 +317,7 @@ class HarvesterTable(Harvester):
         dataset.set_license(ckan_info.default_license)
         
         # Set distributions
-        self.get_distribution(ckan_info, dataset, distribution, record, table_dataset)
+        self.get_distribution(ckan_info, dataset, distribution, datadictionary, datadictionaryfield, record, table_dataset)
         
         # Metadata distributions (INSPIRE & GeoDCAT-AP)
         self.set_metadata_distributions(ckan_info, dataset, distribution, record)
@@ -303,11 +327,17 @@ class HarvesterTable(Harvester):
         
         return dataset
     
-    def get_distribution(self, ckan_info: CKANInfo, dataset, distribution, record: str, table_dataset: object = None):
+    def get_distribution(self, ckan_info: CKANInfo, dataset, distribution, datadictionary, datadictionaryfield, record: str, table_dataset: object = None):
         # Add distributions
         dataset.set_distributions([])
+        datadictionaries = []
         
         for i, r in enumerate(table_dataset.distributions):
+            distribution_id = r.get('id', str(uuid.uuid4()))
+            # Get data dictionaries
+            if r.datadictionaries:
+                self.get_datadictionary(datadictionary, datadictionaryfield, r.datadictionaries, distribution_id)
+            
             try:
                 # Set distribution format from MD
                 dist_info = self._get_distribution_info(
@@ -329,6 +359,7 @@ class HarvesterTable(Harvester):
 
             try:
                 distribution_data = {
+                    'id': distribution_id,
                     'url': r.get('url', ''),
                     'name': dist_name,
                     'format': format_type,
@@ -346,6 +377,27 @@ class HarvesterTable(Harvester):
             except Exception as e:
                 logging.error(f"Error adding distribution {dist_name} to dataset: {e}")
 
+    def get_datadictionary(self, datadictionary, datadictionaryfield, table_datadictionary: object = None, distribution_id: str = None):
+        # Set Data dictionaries of distributions
+        datadictionary = datadictionary(distribution_id)
+        try:
+            for field in table_datadictionary:
+                datadictionary_fields = {
+                    'id': field.get('id', 'Unknown field'),
+                    'type': field.get('type', 'text').lower(),
+                    'label': field.get('label', ''),
+                    'notes': field.get('notes', ''),
+                    'type_override': field.get('type_override', ''),
+                }
+                
+                datadictionary.add_datadictionary_field(datadictionaryfield(**datadictionary_fields))
+            
+            # Append datadictionaries to object list in harvester object
+            self.datadictionaries.append(datadictionary)
+            
+        except Exception as e:
+            logging.error(f"Error adding data dictionary {distribution_id}: {e}")
+
     @staticmethod
     def _update_object_lists(data):
         """
@@ -358,19 +410,30 @@ class HarvesterTable(Harvester):
             list: The updated list of objects.
         """
         # Read the CKAN fields mapping file and filter only the fields that contain 'List' in the 'stored' field
-        ckan_fields = get_df_mapping_json('ckan_fields.json')
-        ckan_fields_filtered = ckan_fields.loc[ckan_fields['stored'].str.contains('List'), 'new_metadata_fields'].tolist()
+        if OGC2CKAN_CKANINFO_CONFIG['ckan_fields_json']:
+            ckan_fields = get_df_mapping_json(OGC2CKAN_CKANINFO_CONFIG['ckan_fields_json'])
+        else:
+            ckan_fields = get_df_mapping_json()
+        ckan_fields_filtered = ckan_fields.loc[ckan_fields['stored'].str.contains('List'), 'new_metadata_field'].tolist()
 
         # Iterate over each element in the data list
         for element in data:
             # Iterate over each key-value pair in the element dictionary
             for key, value in element.items():
                 # Check if the key is in the filtered list
-                if key in ckan_fields_filtered:
+                if key in ckan_fields_filtered:                  
+                    # if value is a string list between "" or "'" then remove the quotes
+                    if isinstance(value, str) and value.startswith('"') and value.endswith('"') and ',' in value:
+                        # Split all values inside ""
+                        value_str = re.findall(r'"[^"]+"', value)
+                        # Split the string and remove whitespace and starts - from each item
+                        element[key] = [x.strip('"').strip().lstrip('-').strip() for x in value_str]
+
                     # Check if the value is a list-like string
-                    if isinstance(value, str) and any([char in value for char in ',]']):
+                    elif isinstance(value, str) and any([char in value for char in ',]']):
                         # Split the string and remove whitespace from each item
-                        element[key] = [x.strip() for x in value.split(',')]
+                        element[key] = [x.strip().lstrip('-').strip() for x in value.split(',')]
+
                 elif key == 'distributions':
                     # Iterate over each distribution dictionary in the 'distributions' list
                     for distribution in value:
@@ -388,4 +451,3 @@ class HarvesterTable(Harvester):
 
         # Return the updated data
         return table_datasets
-
