@@ -57,13 +57,19 @@ Then configure your custom `ckan-ogc/conf/config.yaml.template`. Define the harv
 
 
 ### With docker compose
-To deploy the environment, `docker compose` will build the latest image ([`ghcr.io/mjanez/ckan-ogc:latest`](https://github.com/mjanez/ckan-ogc/pkgs/container/ckan-ogc)).
+To deploy the environment, `docker compose` will build the latest source in the repo.
+
+To deploy a `5 minutes` image, use the latest ([`ghcr.io/mjanez/ckan-ogc:latest`](https://github.com/mjanez/ckan-ogc/pkgs/container/ckan-ogc)) with [`docker-compose.ghcr.yml`](/docker-compose.ghcr.yml)
+
 
 ```bash
 git clone https://github.com/mjanez/ckan-ogc
 cd ckan-ogc
 
 docker compose up --build
+
+# Github latest registry image
+docker compose -f docker-compose.ghcr.yml --build
 
 # Or detached mode
 docker compose up -d --build
@@ -119,9 +125,10 @@ List of *containers*:
 ### Built images
 | Repository | Type | Docker tag | Size | Notes |
 | --- | --- | --- | --- | --- |
-| mjanez/ckan-ogc| custom image | `mjanez/ckan-ogc:v*.*.*` | 448 MB |  Tag version. |
-| mjanez/ckan-ogc| custom image | `mjanez/ckan-ogc:latest` | 448 MB |  Latest stable version. |
-| mjanez/ckan-ogc| custom image | `mjanez/ckan-ogc:main` | 448 MB |  Dev version.  |
+| mjanez/ckan-ogc| custom image | `mjanez/ckan-ogc:latest-dev` | 582 MB |  Latest stable version from Registry. |
+| mjanez/ckan-ogc| custom image | `mjanez/ckan-ogc:main-dev` | 582 MB |  Dev version from Registry.  |
+| mjanez/ckan-ogc| custom image | `mjanez/ckan-ogc:latest` | 457 MB |  Latest stable version. |
+| mjanez/ckan-ogc| custom image | `mjanez/ckan-ogc:main` | 457 MB |  Development branch version.  |
 
 
 [^1]: A custom installation of Docker Compose with specific extensions for spatial data and [GeoDCAT-AP](https://github.com/SEMICeu/GeoDCAT-AP)/[INSPIRE](https://github.com/INSPIRE-MIF/technical-guidelines) metadata [profiles](https://en.wikipedia.org/wiki/Geospatial_metadata).
