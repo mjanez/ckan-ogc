@@ -4,12 +4,13 @@ from datetime import datetime
 import os
 from joblib import Parallel, delayed
 import ssl
+import json
 
 # custom classes
 from controller import ckan_management
-from harvesters.base import Harvester
 
 # custom functions
+from model.harvest_schema import validate_config_file
 from config.ckan_config import config_getParameters, config_getConnection
 from config.log import log_file
 from mappings.default_ogc2ckan_config import OGC2CKAN_HARVESTER_CONFIG
@@ -35,9 +36,11 @@ def launch_harvest(harvest_server=None, ckan_info=None):
 
     :return: CSW Records and CKAN New records counters
     """
+    from harvesters.base import Harvester
     start = datetime.now()
 
-    logging.info(f"{log_module}:Server: {harvest_server.name} ({harvest_server.type.upper()}) with url: '{harvest_server.url}' and CKAN organization: {ckan_info.ckan_site_url}/organization/{harvest_server.organization}") 
+    logging.info(f"{log_module}:Server: '{harvest_server.name}' ('{harvest_server.type.upper()}') with url: '{harvest_server.url}' and CKAN organization: {ckan_info.ckan_site_url}/organization/{harvest_server.organization}") 
+
 
     harvester = Harvester.from_harvest_server(harvest_server, APP_DIR)
 
@@ -48,14 +51,16 @@ def launch_harvest(harvest_server=None, ckan_info=None):
         end = datetime.now()
         diff = end - start
 
-        logging.info(harvest_server["name"] + " (" + harvester.type.upper() + ") server records retrieved (" + str(harvester.server_count) + ") with conflicts: (" + str(harvester.server_count - harvester.ckan_count) + ") from (" + harvester.type.upper() + "): [" + ', '.join([d.title for d in harvester.datasets]) + "]")
+        # Log CKAN Datasets with conflicts
+        logging.info(harvest_server["name"] + " (" + harvester.type.upper() + ") dataset records retrieved (" + str(harvester.source_dataset_count) + ") with conflicts: (" + str(harvester.source_dataset_count - harvester.ckan_dataset_count) + ") from ('" + harvester.type.upper() + "'). Check Datasets with conflicts by 'title': " + json.dumps(harvester.ckan_dataset_errors, ensure_ascii=False))
+        
+        # Log CKAN Data Dictionaries with conflicts
+        logging.info(harvest_server["name"] + " (" + harvester.type.upper() + ") data dictionaries retrieved (" + str(harvester.source_dictionaries_count) + ") with conflicts: (" + str(harvester.source_dictionaries_count - harvester.ckan_dictionaries_count) + ") from ('" + harvester.type.upper() + "'). Check Data dictionaries with conflicts by 'resource_id': " + json.dumps(harvester.ckan_dictionaries_errors, ensure_ascii=False))
+        
         logging.info(harvest_server["name"] + " (" + harvester.type.upper() + ") server time elapsed: " + str(diff).split(".")[0])
     
     except Exception as e:
         logging.exception("An exception occurred!")
-        self.ckan_count = 0
-        self.server_count = 0
-        self.datasets = None
 
         # Output info
         end = datetime.now()
@@ -66,81 +71,79 @@ def launch_harvest(harvest_server=None, ckan_info=None):
 
     return harvester
 
-def main():
+def setup_logging(log_module, VERSION):
     ssl._create_default_https_context = ssl._create_unverified_context
-    
     log_file(APP_DIR + "/log")
     logging.info(f"{log_module}:Version: {VERSION}")
-    
-    
-    # Retrieve parameters and init log
-    harvester_start = datetime.now()
+    return datetime.now()
+
+def validate_configuration(config_file):
+    if not validate_config_file(config_file):
+        raise Exception(f"{log_module}:'{config_file}' does not comply with the schemas  of: 'ogc2ckan/model/harvest_schema.py'. Check it!")
+    else:
+        logging.info(f"{log_module}:The 'config_file': '{config_file}' comply with the schemas of: 'ogc2ckan/model/harvest_schema.py'")
+
+def start_harvesting(config_file):
     ckan_info, harvest_servers, db_dsn = config_getParameters(config_file)
-    
-    # Processes
     processes = os.cpu_count() - 1
     new_records = []
 
-    # Type of server to harvest
     if ckan_info.ckan_harvester is not None:
+        active_harvesters = [h["type"] for h in ckan_info.ckan_harvester.values() if h['active'] is True]
+        harvest_servers = [e for e in harvest_servers if e['type'] in active_harvesters and e['active'] is True]
+        
+        if not harvest_servers:
+            error_message = f"{log_module}:No active harvest servers found for types: [{', '.join([OGC2CKAN_HARVESTER_CONFIG[key]['type'] for key in OGC2CKAN_HARVESTER_CONFIG])}]."
+            raise ValueError(error_message)
+
+        logging.info(f"{log_module}:Number of processes: {processes}")
+        logging.info(f"{log_module}:Multicore parallel processing: '{ckan_info.parallelization}'")
+        
+        if ckan_info.ssl_unverified_mode == True or ckan_info.ssl_unverified_mode == "True":
+            logging.warning(f"{log_module}:[INSECURE] SSL_UNVERIFIED_MODE:'{ckan_info.ssl_unverified_mode}'. Only if you trust the host.")    
+        
+        if ckan_info.metadata_distributions == True or ckan_info.metadata_distributions == "True":
+            logging.warning(f"{log_module}:METADATA_DISTRIBUTIONS:'{ckan_info.metadata_distributions}'. It is not necessary if you do not intend to generate distributions for geographic metadata (INSPIRE ISO19139) or Linked Open Data (GeoDCAT-AP). ckanext-scheming_dcat already links the most important metadata profiles (https://github.com/mjanez/ckanext-scheming_dcat).")
+        
+        logging.info(f"{log_module}:Type of activated harvesters: {', '.join([f'{h.upper()}' for h in active_harvesters])}")               
+        logging.info(f"{log_module}:CKAN_URL: {ckan_info.ckan_site_url}")
+
         try:
-            active_harvesters = [h["type"] for h in ckan_info.ckan_harvester.values() if h['active'] is True]
-            
-            # Filter harvest_servers by active_harvesters
-            harvest_servers = [e for e in harvest_servers if e['type'] in active_harvesters and e['active'] is True]
-            if not harvest_servers:
-                error_message = f"{log_module}:No active harvest servers found for types: [{', '.join([OGC2CKAN_HARVESTER_CONFIG[key]['type'] for key in OGC2CKAN_HARVESTER_CONFIG])}]."
-                raise ValueError(error_message)
-
-            # Starts software
-            logging.info(f"{log_module}:Number of processes: {processes}")
-            logging.info(f"{log_module}:Multicore parallel processing: {ckan_info.parallelization}")
-            if ckan_info.ssl_unverified_mode == True or ckan_info.ssl_unverified_mode == "True":
-                logging.warning(f"{log_module}:[INSECURE] SSL_UNVERIFIED_MODE:'{ckan_info.ssl_unverified_mode}'. Only if you trust the host.")    
-            if ckan_info.metadata_distributions == True or ckan_info.metadata_distributions == "True":
-                logging.warning(f"{log_module}:METADATA_DISTRIBUTIONS:'{ckan_info.metadata_distributions}'. It is not necessary if you do not intend to generate distributions for geographic metadata (INSPIRE ISO19139) or Linked Open Data (GeoDCAT-AP). ckanext-scheming_dcat already links the most important metadata profiles (https://github.com/mjanez/ckanext-scheming_dcat).")
-            logging.info(f"{log_module}:Type of activated harvesters: {', '.join([h.upper() for h in active_harvesters])}")               
-            logging.info(f"{log_module}:CKAN_URL: {ckan_info.ckan_site_url}")           
-
-            # Check invalid 'type' parameter in config.yaml         
             if harvest_servers is not None:
-                try:
-                    #TODO: DB use
-                    #conn = config_getConnection(db_dsn[host], db_dsn[port], db_dsn[username], db_dsn[password], db_dsn[dbname])
-
-                    if ckan_info.parallelization is True:
-                        #TODO: Fix multicore parallel processing
-                        parallel_count = Parallel(n_jobs=processes)(delayed(launch_harvest)( harvest_server=endpoint, ckan_info=ckan_info) for endpoint in harvest_servers)
-                        new_records.append(sum(i[0] for i in parallel_count))
-
-                    else:
-                        # Single core processing
-                        for endpoint in harvest_servers:
-                            harvester = launch_harvest(harvest_server=endpoint, ckan_info=ckan_info)
-                            new_records.append(harvester.ckan_count)
-                            
-                except Exception as e:
-                        logging.error(f"{log_module}:Check invalid 'type' and 'active: True' in 'harvest_servers/{{my-harvest-server}}'at {config_file} Error: {e}")
-                        new_records = 0
-        
-        
-        
+                if ckan_info.parallelization is True:
+                    #TODO: Fix multicore parallel processing
+                    parallel_count = Parallel(n_jobs=processes)(delayed(launch_harvest)(harvest_server=endpoint, ckan_info=ckan_info) for endpoint in harvest_servers)
+                    new_records.append(sum(i[0] for i in parallel_count))
+                else:
+                    for endpoint in harvest_servers:
+                        harvester = launch_harvest(harvest_server=endpoint, ckan_info=ckan_info)
+                        new_records.append(harvester.ckan_dataset_count)
         except Exception as e:
-            logging.error(f"{log_module}:Activate at least one of the options of 'ckan_info/ckan_harvester' in the configuration file: {config_file} Error: {e}")
+            logging.error(f"{log_module}:Check invalid 'type' and 'active: True' in 'harvest_servers/{{my-harvest-server}}'at {config_file} Error: {e}")
             new_records = 0
 
-    # ogc_ckan outputinfo
-    harvester_end = datetime.now()
-    hrvst_diff =  harvester_end - harvester_start
+    return new_records, harvest_servers
 
+def main():
+    harvester_start = setup_logging(log_module, VERSION)
+    
     try:
-        new_records = sum(new_records)
-    except:
-        new_records = 0
+        validate_configuration(config_file)
+        new_records, harvest_servers = start_harvesting(config_file)
 
-    logging.info(f"{log_module}:config.yaml endpoints: {str(len(harvest_servers))} and new CKAN Datasets: {str(new_records)} | Total time elapsed: {str(hrvst_diff).split('.')[0]})" )
-                 
-                     
+        harvester_end = datetime.now()
+        hrvst_diff = harvester_end - harvester_start
+
+        if isinstance(new_records, list):
+            new_records = sum(new_records)
+        else:
+            new_records = 0
+
+        logging.info(f"{log_module}:config.yaml endpoints: {str(len(harvest_servers))} and new CKAN Datasets: {str(new_records)} | Total time elapsed: {str(hrvst_diff).split('.')[0]})" )
+
+    except Exception as e:
+        logging.error(f"{log_module}: Error reading configuration file: {e}")
+             
 if __name__ == "__main__":
     if DEV_MODE == True or DEV_MODE == "True":
         # Allow other computers to attach to ptvsd at this IP address and port.

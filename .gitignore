@@ -21,3 +21,4 @@ log/*
 ckan-ogc/conf/*
 !ckan-ogc/conf/config.yaml.template
 .pdm-python
+.env.*
