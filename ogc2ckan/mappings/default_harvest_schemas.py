@@ -25,9 +25,19 @@ SCHEMA_HARVESTER = {
                 "publisher_email": {"type": "string"},
                 "publisher_identifier": {"type": "string"},
                 "publisher_url": {"type": "string"},
-                "publisher_type": {"type": "string"}
+                "publisher_type": {"type": "string"},
+                "contact_name": {"type": "string"},
+                "contact_email": {"type": "string"},
+                "contact_uri": {"type": "string"},
+                "contact_url": {"type": "string"},
+                "topic": {"type": "string"},
+                "theme_es": {"type": "string"},
+                "theme_eu": {"type": "string"},
+                "spatial": {"type": "string"},
+                "spatial_uri": {"type": "string"},
+                "language": {"type": "string"},
             },
-            "required": ["publisher_name", "publisher_email", "publisher_identifier", "publisher_url", "publisher_type"]
+            "required": ["publisher_name", "publisher_email", "publisher_identifier", "publisher_url", "publisher_type", "contact_name", "contact_email", "contact_uri", "contact_url", "topic", "theme_es", "theme_eu", "spatial", "spatial_uri", "language"]
         },
         "default_keywords": {
             "type": "array",

@@ -9,7 +9,6 @@ import psycopg2
 from bs4 import BeautifulSoup
 
 # custom functions
-from model.harvest_schema import validate_config_file
 from config.ogc2ckan_config import get_log_module, load_yaml
 from mappings.default_ogc2ckan_config import OGC2CKAN_CKANINFO_CONFIG, OGC2CKAN_DBDSN_CONFIG, OGC2CKAN_HARVESTER_CONFIG
 
@@ -93,23 +92,18 @@ def config_getParameters(config_file):
             - ckan_info: Default CKAN configuration dictionary
             - harvest_servers: Harvest servers information
     '''    
-    if not validate_config_file(config_file):
-        raise Exception(f"{log_module}:{config_file} does not comply with the schemas  of: 'ogc2ckan/model/harvest_schema.py'")
-    
-    else:
-        logging.info(f"{log_module}:The 'config_file': {config_file} comply with the schemas of: 'ogc2ckan/model/harvest_schema.py'")
-        with open(config_file, encoding='utf-8') as stream:
-            config = yaml.safe_load(stream)
-            
-            ckan_info = CKANInfo()
-            db_dsn = DBDsn()
-            harvest_servers = [ObjectFromListDicts(**d) for d in config.get('harvest_servers')]
-            
-            return (
-                ckan_info,
-                harvest_servers,
-                db_dsn,
-            )
+    with open(config_file, encoding='utf-8') as stream:
+        config = yaml.safe_load(stream)
+        
+        ckan_info = CKANInfo()
+        db_dsn = DBDsn()
+        harvest_servers = [ObjectFromListDicts(**d) for d in config.get('harvest_servers')]
+        
+        return (
+            ckan_info,
+            harvest_servers,
+            db_dsn,
+        )
 
 def config_getConnection(host, port, username, password, dbname):
     '''

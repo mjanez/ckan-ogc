@@ -8,8 +8,9 @@ import json
 
 class Distribution:
     # Dataset Distribution Fields: https://github.com/project-open-data/project-open-data.github.io/blob/master/v1.1/metadata-resources.md#dataset-distribution-fields
-    def __init__(self, url, name, format, created=None, issued=None, modified=None, media_type=None, license=None, license_id=None, rights=None, description=None, language=None, conformance=None, reference_system=None, encoding='UTF-8'):
+    def __init__(self, url, name, format, id=None, created=None, issued=None, modified=None, media_type=None, license=None, license_id=None, rights=None, description=None, language=None, conformance=None, reference_system=None, encoding='UTF-8'):
         self.url = url
+        self.id = id
         self.name = name
         self.format = format
         self.media_type = media_type
@@ -23,9 +24,13 @@ class Distribution:
         self.modified = modified
         self.conformance = conformance
         self.encoding = encoding
+        self.reference_system = reference_system
 
     def set_url(self, url):
         self.url = url
+
+    def set_id(self, id):
+        self.id = id
 
     def set_name(self, name):
         self.name = name
@@ -63,12 +68,16 @@ class Distribution:
     def set_conformance(self, conformance):
         self.conformance = conformance
 
+    def set_reference_system(self, reference_system):
+        self.reference_system = reference_system
+
     def set_encoding(self, encoding):
         self.encoding = encoding
 
     def to_dict(self):
         return {'url': self.url,
                 'name': self.name,
+                'id': self.id,
                 'format': self.format,
                 'mimetype': self.media_type,
                 'license': self.license,
@@ -80,7 +89,8 @@ class Distribution:
                 'issued': self.issued,
                 'modified': self.modified,  
                 'conforms_to': self.conformance,
-                'encoding': self.encoding,       
+                'encoding': self.encoding,
+                'reference_system': self.reference_system,           
                 }
 
 class Dataset:
