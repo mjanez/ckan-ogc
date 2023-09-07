@@ -61,9 +61,9 @@ def get_mapping_value(
     return value
 
 
-def get_df_mapping_json(mapping_file: str, mappings_folder: str = default_mappings_folder) -> pd.DataFrame:
+def get_df_mapping_json(mapping_file: str = 'default.json', mappings_folder: str = default_mappings_folder) -> pd.DataFrame:
     """
-    Imports the JSON mapping file from the specified file path.
+    Imports the JSON CKAN fields mapping file from the specified file path.
 
     Parameters:
         mapping_file (str): The name of the JSON mapping file to import.
@@ -74,7 +74,7 @@ def get_df_mapping_json(mapping_file: str, mappings_folder: str = default_mappin
     """
     if not mapping_file.endswith('.json'):
         mapping_file += '.json'
-    file_path = os.path.join(mappings_folder, mapping_file)
+    file_path = os.path.join(mappings_folder, 'ckan_fields', mapping_file)
     json_dataframe = pd.read_json(file_path, encoding='utf-8', dtype=str)
     
     return json_dataframe

@@ -7,8 +7,9 @@ import json
 
 class Distribution:
     # Dataset Distribution Fields: https://github.com/project-open-data/project-open-data.github.io/blob/master/v1.1/metadata-resources.md#dataset-distribution-fields
-    def __init__(self, url, name, format, created=None, issued=None, modified=None, media_type=None, license=None, license_id=None, rights=None, description=None, language=None, conformance=None, reference_system=None, encoding='UTF-8'):
+    def __init__(self, url, name, format, id=None, created=None, issued=None, modified=None, media_type=None, license=None, license_id=None, rights=None, description=None, language=None, conformance=None, reference_system=None, encoding='UTF-8'):
         self.url = url
+        self.id = id
         self.name = name
         self.format = format
         self.media_type = media_type
@@ -26,6 +27,9 @@ class Distribution:
 
     def set_url(self, url):
         self.url = url
+
+    def set_id(self, id):
+        self.id = id
 
     def set_name(self, name):
         self.name = name
@@ -72,6 +76,7 @@ class Distribution:
     def to_dict(self):
         return {'url': self.url,
                 'name': self.name,
+                'id': self.id,
                 'format': self.format,
                 'mimetype': self.media_type,
                 'license': self.license,
@@ -118,6 +123,7 @@ class Dataset:
         self.language = None
         self.theme = None
         self.theme_es = None
+        self.theme_eu = None
         self.topic = "http://inspire.ec.europa.eu/metadata-codelist/TopicCategory/biota"
         self.keywords = []
         self.keywords_uri = []
@@ -132,6 +138,7 @@ class Dataset:
         self.modified = None
         self.valid = None
         self.provenance = None
+        self.purpose = None
         self.lineage_source = []
         self.lineage_process_steps = []
         self.source = None
@@ -227,6 +234,9 @@ class Dataset:
 
     def set_theme_es(self, theme_es):
         self.theme_es = theme_es
+        
+    def set_theme_eu(self, theme_eu):
+        self.theme_eu = theme_eu
 
     def set_topic(self, topic):
         self.topic = topic
@@ -269,6 +279,9 @@ class Dataset:
 
     def set_provenance(self, provenance):
         self.provenance = provenance
+
+    def set_purpose(self, purpose):
+        self.purpose = purpose
 
     def set_lineage_source(self, lineage_source):
         self.lineage_source = lineage_source
@@ -392,9 +405,11 @@ class Dataset:
             'spatial_resolution_in_meters': self.spatial_resolution_in_meters,
             'language': self.language,
             'theme_es': self.theme_es,
+            'theme_eu': self.theme_eu,
             'theme': self.theme,
             'identifier': self.identifier,
             'provenance': self.provenance,
+            'purpose': self.purpose,
             'lineage_source': self.lineage_source,
             'lineage_process_steps': self.lineage_process_steps,
             'source': self.source,

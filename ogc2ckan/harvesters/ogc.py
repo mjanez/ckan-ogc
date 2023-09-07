@@ -90,7 +90,7 @@ class HarvesterOGC(Harvester):
         self.wmts = self.connect_wmts()
         
         for record in self.wcs.contents:
-            self.datasets.append(self.get_dataset(ckan_info, record, 'wcs', ckan_info))
+            self.datasets.append(self.get_dataset(ckan_info, record, 'wcs'))
         for record in self.wfs.contents:
             self.datasets.append(self.get_dataset(ckan_info, record, 'wfs'))
                 
@@ -109,7 +109,7 @@ class HarvesterOGC(Harvester):
             Dataset: Dataset object.
         '''
         # Get basic elements for the CKAN dataset
-        dataset, distribution, uuid_identifier, ckan_name, ckan_groups, inspire_id = \
+        dataset, distribution, datadictionary, datadictionaryfield, uuid_identifier, ckan_name, ckan_groups, inspire_id = \
             self.get_dataset_common_elements(record, ckan_info.ckan_dataset_schema)
         
         # CONNECT
@@ -123,14 +123,11 @@ class HarvesterOGC(Harvester):
         wms = self.connect_wms()
         wmts = self.connect_wmts()
 
-        # Search if exists custom organization info for the dataset
+        # Search if custom organization info exists for the dataset
         custom_metadata = None
         if self.custom_organization_active:
-            try:
-                custom_metadata = self.get_custom_default_metadata(layer_info.id.split(':')[1])
-            except:
-                custom_metadata = self.get_custom_default_metadata(layer_info.id.split(':')[1], "dataset_group_id")
-        
+            custom_metadata = self.get_custom_default_metadata(layer_info.id.split(':')[1])
+
         # OGC Workspace and OGC services info
         ogc_workspace = layer_info.id.split(':')[0] if layer_info.id else None
         wms_layer_info = wms.contents.get(record)
@@ -186,15 +183,16 @@ class HarvesterOGC(Harvester):
         else:
             valid_date = None
 
-        if valid_date:
+        if valid_date and valid_date is not None:
             dataset.set_valid(self._normalize_date(valid_date))
 
         # Set access rights (Dataset)
         ## Unnecesary. Default rights in Dataset
 
-        # Set SpatialResolutionInMeters
-        if hasattr(layer_info, 'denominators') and layer_info.denominators:
-            dataset.set_spatial_resolution_in_meters(layer_info.denominators[0])
+        # Set SpatialResolutionInMeters if denominators exist
+        denominators = getattr(layer_info, 'denominators', [])
+        if denominators:
+            dataset.set_spatial_resolution_in_meters(denominators[0])
 
         # Set language
         language = getattr(self.default_dcat_info, 'language', OGC2CKAN_HARVESTER_MD_CONFIG['language']).replace('https:', 'http:')
@@ -205,7 +203,8 @@ class HarvesterOGC(Harvester):
         self.set_bounding_box(dataset, bb) if bb is not None else None
 
         # Set spatial URI      
-        spatial_uri = custom_metadata.get('spatial_uri') if 'spatial_uri' in custom_metadata else getattr(self.default_dcat_info, 'spatial_uri', None)       
+        spatial_uri = custom_metadata.get('spatial_uri') if custom_metadata else getattr(self.default_dcat_info, 'spatial_uri', None)
+        dataset.set_spatial_uri(spatial_uri)       
 
         # Set temporal coverage
         if is_series and wms_layer_info and wms_layer_info.timepositions:
@@ -214,11 +213,11 @@ class HarvesterOGC(Harvester):
             dataset.set_temporal_end(time_extent[-1].split("/")[-1] if len(time_extent) > 1 else None)
         else:
             time_extent = {
-                'temporal_start': custom_metadata.get('temporal_start', self.default_dcat_info.temporal_start),
-                'temporal_end': custom_metadata.get('temporal_end', self.default_dcat_info.temporal_end)
+                'temporal_start': custom_metadata.get('temporal_start') if custom_metadata else self.default_dcat_info.temporal_start if self.default_dcat_info and hasattr(self.default_dcat_info, 'temporal_start') else None,
+                'temporal_end': custom_metadata.get('temporal_end') if custom_metadata else self.default_dcat_info.temporal_end if self.default_dcat_info and hasattr(self.default_dcat_info, 'temporal_end') else None
             }
-        dataset.set_temporal_start(self._normalize_date(time_extent['temporal_start']))
-        dataset.set_temporal_end(self._normalize_date(time_extent['temporal_end']))
+            dataset.set_temporal_start(self._normalize_date(time_extent['temporal_start']))
+            dataset.set_temporal_end(self._normalize_date(time_extent['temporal_end']))
 
         # Set frequency
         if hasattr(wms_layer_info, 'frequency'):
