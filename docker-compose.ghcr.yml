@@ -4,8 +4,8 @@ services:
   ogc2ckan:
     container_name: ckan-ogc
     build:
-      context: ckan-ogc/
-      dockerfile: Dockerfile.ghcr
+      context: .
+      dockerfile: ckan-ogc/Dockerfile.ghcr
     env_file:
       - .env
     logging:
