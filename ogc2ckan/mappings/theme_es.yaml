@@ -1,0 +1,176 @@
+-
+   id: http://datos.gob.es/kos/sector-publico/sector/ciencia-tecnologia
+   label: Science and technology
+   theme_eu: http://publications.europa.eu/resource/authority/data-theme/TECH
+-
+   id: http://datos.gob.es/kos/sector-publico/sector/comercio
+   label: Commerce
+   theme_eu: http://publications.europa.eu/resource/authority/data-theme/ECON
+-
+   id: http://datos.gob.es/kos/sector-publico/sector/cultura-ocio
+   label: Culture and leisure
+   theme_eu: http://publications.europa.eu/resource/authority/data-theme/EDUC
+-
+   id: http://datos.gob.es/kos/sector-publico/sector/demografia
+   label: Demography
+   theme_eu: http://publications.europa.eu/resource/authority/data-theme/SOCI
+-
+   id: http://datos.gob.es/kos/sector-publico/sector/deporte
+   label: Sport
+   theme_eu: http://publications.europa.eu/resource/authority/data-theme/EDUC
+-
+   id: http://datos.gob.es/kos/sector-publico/sector/economia
+   label: Economy
+   theme_eu: http://publications.europa.eu/resource/authority/data-theme/ECON
+-
+   id: http://datos.gob.es/kos/sector-publico/sector/educacion
+   label: Education
+   theme_eu: http://publications.europa.eu/resource/authority/data-theme/EDUC
+-
+   id: http://datos.gob.es/kos/sector-publico/sector/empleo
+   label: Employment
+   theme_eu: http://publications.europa.eu/resource/authority/data-theme/ECON
+-
+   id: http://datos.gob.es/kos/sector-publico/sector/energia
+   label: Energy
+   theme_eu: http://publications.europa.eu/resource/authority/data-theme/ENER
+-
+   id: http://datos.gob.es/kos/sector-publico/sector/hacienda
+   label: Treasury
+   theme_eu: http://publications.europa.eu/resource/authority/data-theme/GOVE
+-
+   id: http://datos.gob.es/kos/sector-publico/sector/industria
+   label: Industry
+   theme_eu: http://publications.europa.eu/resource/authority/data-theme/ECON
+-
+   id: http://datos.gob.es/kos/sector-publico/sector/legislacion-justicia
+   label: Legislation and justice
+   theme_eu: http://publications.europa.eu/resource/authority/data-theme/JUST
+-
+   id: http://datos.gob.es/kos/sector-publico/sector/medio-ambiente
+   label: Environment
+   theme_eu: http://publications.europa.eu/resource/authority/data-theme/ENVI
+-
+   id: http://datos.gob.es/kos/sector-publico/sector/medio-rural-pesca
+   label: Rural environment
+   theme_eu: http://publications.europa.eu/resource/authority/data-theme/AGRI
+-
+   id: http://datos.gob.es/kos/sector-publico/sector/salud
+   label: Healthcare
+   theme_eu: http://publications.europa.eu/resource/authority/data-theme/HEAL
+-
+   id: http://datos.gob.es/kos/sector-publico/sector/sector-publico
+   label: Public sector
+   theme_eu: http://publications.europa.eu/resource/authority/data-theme/GOVE
+-
+   id: http://datos.gob.es/kos/sector-publico/sector/seguridad
+   label: Security
+   theme_eu: http://publications.europa.eu/resource/authority/data-theme/JUST
+-
+   id: http://datos.gob.es/kos/sector-publico/sector/sociedad-bienestar
+   label: Society and welfare
+   theme_eu: http://publications.europa.eu/resource/authority/data-theme/SOCI
+-
+   id: http://datos.gob.es/kos/sector-publico/sector/transporte
+   label: Transport
+   theme_eu: http://publications.europa.eu/resource/authority/data-theme/TRAN
+-
+   id: http://datos.gob.es/kos/sector-publico/sector/turismo
+   label: Tourism
+   theme_eu: http://publications.europa.eu/resource/authority/data-theme/ECON
+-
+   id: http://datos.gob.es/kos/sector-publico/sector/urbanismo-infraestructuras
+   label: Town planning and infrastructures
+   theme_eu: http://publications.europa.eu/resource/authority/data-theme/REGI
+-
+   id: http://datos.gob.es/kos/sector-publico/sector/vivienda
+   label: Housing
+   theme_eu: http://publications.europa.eu/resource/authority/data-theme/REGI
+-
+   id: http://datos.gob.es/kos/sector-publico/sector/ciencia-tecnologia
+   label: Ciencia y tecnología
+   theme_eu: http://publications.europa.eu/resource/authority/data-theme/TECH
+-
+   id: http://datos.gob.es/kos/sector-publico/sector/comercio
+   label: Comercio
+   theme_eu: http://publications.europa.eu/resource/authority/data-theme/ECON
+-
+   id: http://datos.gob.es/kos/sector-publico/sector/cultura-ocio
+   label: Cultura y ocio
+   theme_eu: http://publications.europa.eu/resource/authority/data-theme/EDUC
+-
+   id: http://datos.gob.es/kos/sector-publico/sector/demografia
+   label: Demografía
+   theme_eu: http://publications.europa.eu/resource/authority/data-theme/SOCI
+-
+   id: http://datos.gob.es/kos/sector-publico/sector/deporte
+   label: Deporte
+   theme_eu: http://publications.europa.eu/resource/authority/data-theme/EDUC
+-
+   id: http://datos.gob.es/kos/sector-publico/sector/economia
+   label: Economía
+   theme_eu: http://publications.europa.eu/resource/authority/data-theme/ECON
+-
+   id: http://datos.gob.es/kos/sector-publico/sector/educacion
+   label: Educación
+   theme_eu: http://publications.europa.eu/resource/authority/data-theme/EDUC
+-
+   id: http://datos.gob.es/kos/sector-publico/sector/empleo
+   label: Empleo
+   theme_eu: http://publications.europa.eu/resource/authority/data-theme/ECON
+-
+   id: http://datos.gob.es/kos/sector-publico/sector/energia
+   label: Energía
+   theme_eu: http://publications.europa.eu/resource/authority/data-theme/ENER
+-
+   id: http://datos.gob.es/kos/sector-publico/sector/hacienda
+   label: Hacienda
+   theme_eu: http://publications.europa.eu/resource/authority/data-theme/GOVE
+-
+   id: http://datos.gob.es/kos/sector-publico/sector/industria
+   label: Industria
+   theme_eu: http://publications.europa.eu/resource/authority/data-theme/ECON
+-
+   id: http://datos.gob.es/kos/sector-publico/sector/legislacion-justicia
+   label: Legislación y justicia
+   theme_eu: http://publications.europa.eu/resource/authority/data-theme/JUST
+-
+   id: http://datos.gob.es/kos/sector-publico/sector/medio-ambiente
+   label: Medio ambiente
+   theme_eu: http://publications.europa.eu/resource/authority/data-theme/ENVI
+-
+   id: http://datos.gob.es/kos/sector-publico/sector/medio-rural-pesca
+   label: Medio Rural
+   theme_eu: http://publications.europa.eu/resource/authority/data-theme/AGRI
+-
+   id: http://datos.gob.es/kos/sector-publico/sector/salud
+   label: Salud
+   theme_eu: http://publications.europa.eu/resource/authority/data-theme/HEAL
+-
+   id: http://datos.gob.es/kos/sector-publico/sector/sector-publico
+   label: Sector público
+   theme_eu: http://publications.europa.eu/resource/authority/data-theme/GOVE
+-
+   id: http://datos.gob.es/kos/sector-publico/sector/seguridad
+   label: Seguridad
+   theme_eu: http://publications.europa.eu/resource/authority/data-theme/JUST
+-
+   id: http://datos.gob.es/kos/sector-publico/sector/sociedad-bienestar
+   label: Sociedad y bienestar
+   theme_eu: http://publications.europa.eu/resource/authority/data-theme/SOCI
+-
+   id: http://datos.gob.es/kos/sector-publico/sector/transporte
+   label: Transporte
+   theme_eu: http://publications.europa.eu/resource/authority/data-theme/TRAN
+-
+   id: http://datos.gob.es/kos/sector-publico/sector/turismo
+   label: Turismo
+   theme_eu: http://publications.europa.eu/resource/authority/data-theme/ECON
+-
+   id: http://datos.gob.es/kos/sector-publico/sector/urbanismo-infraestructuras
+   label: Urbanismo e infraestructuras
+   theme_eu: http://publications.europa.eu/resource/authority/data-theme/REGI
+-
+   id: http://datos.gob.es/kos/sector-publico/sector/vivienda
+   label: Vivienda
+   theme_eu: http://publications.europa.eu/resource/authority/data-theme/REGI

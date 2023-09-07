@@ -25,6 +25,12 @@ OGC2CKAN_HARVESTER_CONFIG = {
         'keywords': ['xls', 'csv'],
         'formats': ['csv', 'xls', 'xlsx', 'tsv']
     },
+    'metadata_file': {
+        'type': 'metadata_file',
+        'active': True,
+        'keywords': ['xml', 'iso', 'gmd', 'inspire'],
+        'formats': ['xml']
+    },
 }
 
 ## CKAN Api routes
@@ -33,7 +39,10 @@ OGC2CKAN_CKAN_API_ROUTES = {
     'update_ckan_dataset': '/api/3/action/package_update',
     'create_ckan_resource': '/api/3/action/resource_create',
     'update_ckan_resource': '/api/3/action/resource_update',
-    'create_ckan_resource_view': '/api/3/action/resource_view_create'
+    'create_ckan_resource_view': '/api/3/action/resource_view_create',
+    'create_ckan_resource_dictionary': '/api/3/action/resource_dictionary_create',
+    'get_ckan_datasets_list': '/api/3/action/package_search?fl={fields}&rows={rows}',
+    'get_ckan_dataset_info': '/api/3/action/package_search?q={field}:"{field_value}"',
 }
 
 ## CKANInfo class default configuration
@@ -47,7 +56,8 @@ OGC2CKAN_CKANINFO_CONFIG = {
     'ssl_unverified_mode': False,
     'dir3_url': 'http://datos.gob.es/es/recurso/sector-publico/org/Organismo',
     'ckan_dataset_schema': 'geodcatap',
-    'metadata_distributions': False
+    'metadata_distributions': False,
+    'ckan_fields_json': 'geodcatap.json'
 }
 
 ## DBDsn class default configuration
@@ -69,18 +79,24 @@ OGC2CKAN_HARVESTER_MD_CONFIG = {
     'contact_email': 'admin@localhost',
     'contact_url': 'http://localhost:5000/organization/test',
     'contact_uri': 'http://localhost:5000/organization/test',
-    'publisher_uri': 'http://localhost:5000/organization/test',
     'dcat_type': {
         'series': 'http://inspire.ec.europa.eu/metadata-codelist/ResourceType/series',
         'dataset': 'http://inspire.ec.europa.eu/metadata-codelist/ResourceType/dataset',
-        'default': 'http://inspire.ec.europa.eu/metadata-codelist/ResourceType/dataset'
+        'service': 'http://inspire.ec.europa.eu/metadata-codelist/ResourceType/service',
+        'default': 'http://inspire.ec.europa.eu/metadata-codelist/ResourceType/dataset',
     },
     'frequency' : 'http://publications.europa.eu/resource/authority/frequency/UNKNOWN',
     'language': 'http://publications.europa.eu/resource/authority/language/ENG',
     'spatial_representation_type': {
             'wfs': 'http://inspire.ec.europa.eu/metadata-codelist/SpatialRepresentationType/vector',
             'wcs': 'http://inspire.ec.europa.eu/metadata-codelist/SpatialRepresentationType/grid',
-            'default': 'http://inspire.ec.europa.eu/metadata-codelist/SpatialRepresentationType/vector'
+            'default': 'http://inspire.ec.europa.eu/metadata-codelist/SpatialRepresentationType/vector',
+            'grid': 'http://inspire.ec.europa.eu/metadata-codelist/SpatialRepresentationType/grid',
+            'vector': 'http://inspire.ec.europa.eu/metadata-codelist/SpatialRepresentationType/vector',
+            'textTable': 'http://inspire.ec.europa.eu/metadata-codelist/SpatialRepresentationType/textTable',
+            'tin': 'http://inspire.ec.europa.eu/metadata-codelist/SpatialRepresentationType/tin',
+            'stereoModel': 'http://inspire.ec.europa.eu/metadata-codelist/SpatialRepresentationType/stereoModel',
+            'video': 'http://inspire.ec.europa.eu/metadata-codelist/SpatialRepresentationType/video',
     },
     'metadata_profile': [
         "http://semiceu.github.io/GeoDCAT-AP/releases/2.0.0","http://inspire.ec.europa.eu/document-tags/metadata"
@@ -125,4 +141,10 @@ OGC2CKAN_MD_FORMATS = {
     'geodcatap': ('RDF', 'http://www.iana.org/assignments/media-types/application/rdf+xml', 'http://semiceu.github.io/GeoDCAT-AP/releases/2.0.0/', 'GeoDCAT-AP 2.0 Metadata')
     ,
     'inspire': ('XML', 'http://www.iana.org/assignments/media-types/application/xml', ['http://inspire.ec.europa.eu/documents/inspire-metadata-regulation','http://inspire.ec.europa.eu/documents/commission-regulation-eu-no-13122014-10-december-2014-amending-regulation-eu-no-10892010-0', 'http://www.isotc211.org/2005/gmd/'], 'INSPIRE ISO 19139 Metadata')
+}
+
+OGC2CKAN_ISO_MD_ELEMENTS = {
+    'lineage_source': 'gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:source/gmd:LI_Source/gmd:description/gco:CharacterString',
+    'lineage_process_steps': 'gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:processStep'
+    
 }
