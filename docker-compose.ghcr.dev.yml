@@ -5,7 +5,7 @@ services:
     container_name: ckan-ogc-dev
     build:
       context: .
-      dockerfile: ckan-ogc/Dockerfile.dev
+      dockerfile: ckan-ogc/Dockerfile.ghcr.dev
     env_file:
       - .env
     logging:

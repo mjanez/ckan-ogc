@@ -1,4 +1,4 @@
-FROM ghcr.io/mjanez/ckan-ogc:latest
+FROM ghcr.io/mjanez/ckan-ogc-dev:latest
 LABEL maintainer="mnl.janez@gmail.com"
 
 ENV APP_DIR=/app
@@ -19,8 +19,12 @@ COPY pyproject.toml pdm.lock .
 RUN pdm install --no-self --group prod
 
 COPY ckan-ogc/conf/config.yaml.template config.yaml
-COPY ckan-ogc/entrypoint.sh entrypoint.sh
+COPY ckan-ogc/docker-entrypoint.d/entrypoint_dev.sh entrypoint.sh
 COPY ogc2ckan ogc2ckan
 COPY data data
 
-ENTRYPOINT ["/bin/bash", "./entrypoint.sh"]
+EXPOSE 5678/TCP
+
+# Set entrypoint with debugpy
+ENTRYPOINT ["python3", "-m", "debugpy", "--listen", "0.0.0.0:5678", "--wait-for-client", "./entrypoint_dev.sh"]
+CMD ["tail", "-f", "/dev/null"]

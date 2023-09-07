@@ -1,11 +1,11 @@
-name: ckan-ogc
+version: "3"
+
 services:
   ogc2ckan:
     container_name: ckan-ogc
     build:
       context: .
-      dockerfile: Dockerfile
-    #image: ghcr.io/mjanez/ckan-ogc:latest
+      dockerfile: ckan-ogc/Dockerfile
     env_file:
       - .env
     logging:
