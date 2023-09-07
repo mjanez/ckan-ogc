@@ -1,4 +1,5 @@
-name: ckan-ogc
+version: "3"
+
 services:
   ogc2ckan:
     container_name: ckan-ogc-dev
