@@ -12,7 +12,9 @@ samples
 .env
 data/*
 !data/README.md
-!data/template-table.xlsx
+!data/samples/table-sample.xlsx
+!data/samples/xml/xml-metadata_file_1.xml
+!data/samples/xml/xml-metadata_file_2.xml
 ogc2ckan/mappings/organizations/*
 !ogc2ckan/mappings/organizations/README.md
 !ogc2ckan/mappings/organizations/template-org.yaml
