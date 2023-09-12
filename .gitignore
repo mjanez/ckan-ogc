@@ -12,7 +12,7 @@ samples
 .env
 !data/README.md
 !data/sample
-data/xml
+data/*
 ogc2ckan/mappings/organizations/*
 !ogc2ckan/mappings/organizations/README.md
 !ogc2ckan/mappings/organizations/template-org.yaml
