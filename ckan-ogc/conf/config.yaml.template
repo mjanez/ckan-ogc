@@ -1,113 +1,163 @@
 # Servers to Harvest [Mandatory] | URL Endpoint 
 harvest_servers:
   # Geoserver Example
-  - url: 'http://192.23.82.29:8080/geoserver/ows'
-    name: 'Example'
+  - url: 'http://www.example.eu/geoserver/ows'
+    name: 'Example OGC'
     groups: []
-    active: True
+    active: False
     type: 'ogc'
-    organization: 'Example'
-    # If the org has a custom mappings: ckan-harvester/src/ckan/ogc_ckan/custom/mappings
+    organization: 'test'
+    # If the org has a custom mappings: ckan-ogc/ogc2ckan/mappings/organizations/*
     custom_organization_active: True
-    custom_organization_mapping_file: 'Example.yaml'
+    custom_organization_mapping_file: 'template-org.yaml'
     private_datasets: False
     default_dcat_info:
-      publisher_name: 'Example Project'
-      publisher_email: 'info@example.es'
-      publisher_identifier: 'https://example.eu/'
-      publisher_url: 'https://example.eu/'
+      publisher_name: 'Example project'
+      publisher_email: 'info@example.eu'
+      publisher_identifier: 'https://www.example.eu/org/E05068001'
+      publisher_url: 'https://www.example.eu'
       publisher_type: 'http://purl.org/adms/publishertype/NationalAuthority'
       # Default URIs of metadata contact point and resource maintainer
-      maintainer_uri: 'https://example.eu/'
-      contact_uri: 'https://example.eu/'
-      contact_name: 'Example'
-      contact_email: 'info@example.es'
-      contact_url: 'https://example.eu/'
-      topic: 'http://inspire.ec.europa.eu/metadata-codelist/TopicCategory/farming'
-      lineage_process_steps: 'Spatial dataset generated from the original cartography provided by the competent national agency of the Integrated Administration and Control System (IACS) in ESRI Shapefile format at different administrative levels. Transformed and homogenised at national level, stored in a spatial component database (Postgres-PostGIS) and published via a Geoserver-type map server.'
-      language: 'http://publications.europa.eu/resource/authority/language/ENG'
-      theme_es: 'http://datos.gob.es/kos/sector-publico/sector/medio-ambiente'
+      maintainer_uri: 'https://www.example.eu/org/E05068001'
+      contact_name: 'Example Organization'
+      contact_email: 'info@example.eu'
+      contact_uri: 'https://www.example.eu/org/E05068001'
+      contact_url: 'https://www.example.eu'
+      lineage_process_steps: 'Spatial dataset generated from the original cartography provided by the competent national agency.'
+      topic: 'http://inspire.ec.europa.eu/metadata-codelist/TopicCategory/environment'
+      theme_es: 'http://datos.gob.es/kos/sector-publico/sector/transporte'
+      theme_eu: http://publications.europa.eu/resource/authority/data-theme/ENVI
       spatial: '{"coordinates": [[[-32.17,26.79],[44.49,26.79],[44.49,71.30],[-32.17,71.30],[-32.17,26.79]]], "type": "Polygon"}'
-      provenance: 'The spatial data has been produced as part of the Example project (CEF: Action No: 2018-EU-IA-0086).'
+      spatial_uri: 'http://datos.gob.es/es/recurso/sector-publico/territorio/Pais/España'
+      language:  http://publications.europa.eu/resource/authority/language/SPA
+      provenance: 'The spatial data has been produced as part of the Example project.'
     default_keywords: 
-      - name: "Example"
-        uri: "http://localhost:80/catalog/organization/Example"
-      - name: "farming"
-        uri: "http://inspire.ec.europa.eu/metadata-codelist/TopicCategory/farming"
-      - name: "european"
-        uri: "http://inspire.ec.europa.eu/metadata-codelist/SpatialScope/european"
+      - name: "test"
+        uri: "https://www.example.eu/catalog/organization/test"
+      - name: "environment"
+        uri: "http://inspire.ec.europa.eu/metadata-codelist/TopicCategory/environment"
     default_inspire_info:
-      inspireid_theme: 'LC'
+      inspireid_theme: 'HB'
       inspireid_nutscode: 'ES' 
-      inspireid_versionid: ''
+      inspireid_versionid: '2023'
     constraints: 
-      keywords: ['Example', 'farming', 'iacs', 'gsaa', 'lpis', 'european']
-      mails: ['info@example.es']
+      keywords: ['Example', 'farming', 'gsaa', 'lpis', 'european']
+      mails: ['info@example.eu']
     workspaces: ['iacs']  
 
-  # codsi csw
+  # CSW Catalog Example
   - url: 'https://www.idee.es/csw-codsi-idee/srv/spa/csw'
-    name: 'CODSI'
+    name: 'Spanish INSPIRE Catalog - CODSI'
     groups: []
     active: False
     type: 'csw'
     organization: 'test'
     custom_organization_active: False
     custom_organization_mapping_file: ''
-    private_datasets: False
+    private_datasets: True
     default_dcat_info:
-      publisher_name: 'Ministerio de Transportes, Movilidad y Agenda Urbana'
-      publisher_email: 'buzon-hermes@mitma.es'
-      publisher_identifier: 'http://datos.gob.es/recurso/sector-publico/org/Organismo/E05065601'
-      publisher_url: 'https://www.mitma.gob.es'
+      publisher_name: 'Example Organization'
+      publisher_email: 'info@example.eu'
+      publisher_identifier: 'https://www.example.eu/org/E05068001'
+      publisher_url: 'https://www.example.eu'
       publisher_type: 'http://purl.org/adms/publishertype/NationalAuthority'
       # Default URIs of metadata contact point and resource maintainer
-      maintainer_uri: 'http://datos.gob.es/recurso/sector-publico/org/Organismo/E05065601'
-      contact_uri: 'http://datos.gob.es/recurso/sector-publico/org/Organismo/E05065601'
-      topic: 'http://inspire.ec.europa.eu/metadata-codelist/TopicCategory/transportation'
+      maintainer_uri: 'https://www.example.eu/org/E05068001'
+      contact_name: 'Example Organization'
+      contact_email: 'info@example.eu'
+      contact_uri: 'https://www.example.eu/org/E05068001'
+      contact_url: 'https://www.example.eu'
+      topic: 'http://inspire.ec.europa.eu/metadata-codelist/TopicCategory/environment'
       theme_es: 'http://datos.gob.es/kos/sector-publico/sector/transporte'
+      theme_eu: http://publications.europa.eu/resource/authority/data-theme/ENVI
       spatial: '{"coordinates": [[[-32.17,26.79],[44.49,26.79],[44.49,71.30],[-32.17,71.30],[-32.17,26.79]]], "type": "Polygon"}'
-      spatial_uri: 'https://datos.gob.es/es/recurso/sector-publico/territorio/Pais/España'
+      spatial_uri: 'http://datos.gob.es/es/recurso/sector-publico/territorio/Pais/España'
+      language:  http://publications.europa.eu/resource/authority/language/SPA
     default_keywords: 
-      - name: "mitma"
-        uri: "http://localhost:80/catalog/organization/test"
-      - name: "transportation"
-        uri: "http://inspire.ec.europa.eu/metadata-codelist/TopicCategory/transportation"
+      - name: "test"
+        uri: "https://www.example.eu/catalog/organization/test"
+      - name: "environment"
+        uri: "http://inspire.ec.europa.eu/metadata-codelist/TopicCategory/environment"
     default_inspire_info:
-      inspireid_theme: 'TN'
+      inspireid_theme: 'HB'
       inspireid_nutscode: 'ES' 
-      inspireid_versionid: ''
+      inspireid_versionid: '2023'
     constraints: 
-      keywords: ['transporte']
-      mails: ['ign@mitma.es', 'buzon-hermes@mitma.es']
+      keywords: ['biota']
+      mails: []
 
-  # XLSX Metadata
-  - url: '/app/data/template-table.xlsx'
+  # Folder contains Metadata files (url==path) Example
+  - url: '/app/data/sample/xml'
+    name: 'XML Folder'
+    groups: []
+    active: False
+    type: 'xml'
+    organization: 'test'
+    custom_organization_active: False
+    custom_organization_mapping_file: ''
+    private_datasets: True
+    default_dcat_info:
+      publisher_name: 'Example Organization'
+      publisher_email: 'info@example.eu'
+      publisher_identifier: 'https://www.example.eu/org/E05068001'
+      publisher_url: 'https://www.example.eu'
+      publisher_type: 'http://purl.org/adms/publishertype/NationalAuthority'
+      # Default URIs of metadata contact point and resource maintainer
+      maintainer_uri: 'https://www.example.eu/org/E05068001'
+      contact_name: 'Example Organization'
+      contact_email: 'info@example.eu'
+      contact_uri: 'https://www.example.eu/org/E05068001'
+      contact_url: 'https://www.example.eu'
+      topic: 'http://inspire.ec.europa.eu/metadata-codelist/TopicCategory/environment'
+      theme_es: 'http://datos.gob.es/kos/sector-publico/sector/transporte'
+      theme_eu: http://publications.europa.eu/resource/authority/data-theme/ENVI
+      spatial: '{"coordinates": [[[-32.17,26.79],[44.49,26.79],[44.49,71.30],[-32.17,71.30],[-32.17,26.79]]], "type": "Polygon"}'
+      spatial_uri: 'http://datos.gob.es/es/recurso/sector-publico/territorio/Pais/España'
+      language:  http://publications.europa.eu/resource/authority/language/SPA
+    default_keywords: 
+      - name: "test"
+        uri: "https://www.example.eu/catalog/organization/test"
+      - name: "environment"
+        uri: "http://inspire.ec.europa.eu/metadata-codelist/TopicCategory/environment"
+    default_inspire_info:
+      inspireid_theme: 'HB'
+      inspireid_nutscode: 'ES' 
+      inspireid_versionid: '2023'
+    constraints: 
+      keywords: []
+      mails: []
+
+  # XLSX Metadata Example
+  - url: '/app/data/sample/table-sample.xlsx'
     name: 'MITMA XLSX'
     groups: []
     active: False
     type: 'table'
-    organization: 'mitma'
+    organization: 'test'
     custom_organization_active: False
     custom_organization_mapping_file: ''
     private_datasets: False
     default_dcat_info:
-      publisher_name: 'Ministerio de Transporte, Movilidad y Agenda Urbana (MITMA)'
-      publisher_email: 'buzon-hermes@mitma.es'
-      publisher_identifier: 'http://datos.gob.es/recurso/sector-publico/org/Organismo/E05065601'
-      publisher_url: 'https://www.mitma.gob.es'
+      publisher_name: 'Example Organization'
+      publisher_email: 'info@example.eu'
+      publisher_identifier: 'https://www.example.eu/org/E05068001'
+      publisher_url: 'https://www.example.eu'
       publisher_type: 'http://purl.org/adms/publishertype/NationalAuthority'
       # Default URIs of metadata contact point and resource maintainer
-      maintainer_uri: 'http://datos.gob.es/recurso/sector-publico/org/Organismo/E05065601'
-      contact_uri: 'http://datos.gob.es/recurso/sector-publico/org/Organismo/E05065601'
-      topic: 'http://inspire.ec.europa.eu/metadata-codelist/TopicCategory/transportation'
+      maintainer_uri: 'https://www.example.eu/org/E05068001'
+      contact_name: 'Example Organization'
+      contact_email: 'info@example.eu'
+      contact_uri: 'https://www.example.eu/org/E05068001'
+      contact_url: 'https://www.example.eu'
+      topic: 'http://inspire.ec.europa.eu/metadata-codelist/TopicCategory/environment'
       theme_es: 'http://datos.gob.es/kos/sector-publico/sector/transporte'
+      theme_eu: http://publications.europa.eu/resource/authority/data-theme/ENVI
       spatial: '{"coordinates": [[[-32.17,26.79],[44.49,26.79],[44.49,71.30],[-32.17,71.30],[-32.17,26.79]]], "type": "Polygon"}'
       spatial_uri: 'https://datos.gob.es/es/recurso/sector-publico/territorio/Pais/España'
       language: 'http://publications.europa.eu/resource/authority/language/SPA'
     default_keywords: 
-      - name: "mitma"
-        uri: "http://localhost:80/catalog/organization/test"
+      - name: "test"
+        uri: "https://www.example.eu/catalog/organization/test"
       - name: "transportation"
         uri: "http://inspire.ec.europa.eu/metadata-codelist/TopicCategory/transportation"
     default_inspire_info:

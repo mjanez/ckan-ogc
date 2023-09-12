@@ -10,9 +10,9 @@ metadata/*
 !metadata/README.md
 samples
 .env
-data/*
 !data/README.md
-!data/template-table.xlsx
+!data/sample
+data/*
 ogc2ckan/mappings/organizations/*
 !ogc2ckan/mappings/organizations/README.md
 !ogc2ckan/mappings/organizations/template-org.yaml

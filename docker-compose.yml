@@ -16,5 +16,6 @@ services:
     volumes:
         - ./log:${APP_DIR}/log
         - ./metadata:${APP_DIR}/metadata
+        - ./data:${APP_DIR}/data
     restart: on-failure:3
     network_mode: host

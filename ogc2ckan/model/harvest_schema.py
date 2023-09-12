@@ -2,15 +2,17 @@
 # inbuilt libraries
 import logging
 import yaml
+import os
 
 # third-party libraries
 from jsonschema import validate, ValidationError
 
 # custom functions
 from config.ogc2ckan_config import get_log_module
+from mappings.default_ogc2ckan_config import OGC2CKAN_HARVESTER_CONFIG
 
 
-log_module = get_log_module()
+log_module = get_log_module(os.path.abspath(__file__))
 
 # Harvester Schema
 class HarvesterSchema:
@@ -26,7 +28,7 @@ class HarvesterSchema:
             "active": {"type": "boolean"},
             "type": {
                 "type": "string", 
-                "enum": ["csw", "ogc", "table"]
+                "enum": [value['type'] for key, value in OGC2CKAN_HARVESTER_CONFIG.items()]
                 },
             "organization": {"type": "string"},
             "custom_organization_active": {"type": "boolean"},
@@ -51,7 +53,7 @@ class HarvesterSchema:
                     "spatial_uri": {"type": "string"},
                     "language": {"type": "string"},
                 },
-                "required": ["publisher_name", "publisher_email", "publisher_identifier", "publisher_url", "publisher_type", "contact_name", "contact_email", "contact_uri", "contact_url", "topic", "theme_es", "theme_eu", "spatial", "spatial_uri", "language"]
+                "required": ["publisher_name", "publisher_email", "publisher_identifier", "publisher_url", "publisher_type", "contact_name", "contact_email", "contact_uri", "contact_url", "topic", "theme_eu", "spatial", "spatial_uri", "language"]
             },
             "default_keywords": {
                 "type": "array",
@@ -117,6 +119,7 @@ def validate_config_file(file_name):
     schema_dict = {
         "csw": HarvesterSchemaCSW.schema,
         "ogc": HarvesterSchemaOGC.schema,
+        "xml": HarvesterSchema.schema,
         "table": HarvesterSchema.schema
     }
 

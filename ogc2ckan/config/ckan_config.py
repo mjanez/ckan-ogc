@@ -3,6 +3,7 @@ import yaml
 import os
 import logging
 import requests
+import os
 
 # third-party libraries
 import psycopg2
@@ -12,7 +13,7 @@ from bs4 import BeautifulSoup
 from config.ogc2ckan_config import get_log_module, load_yaml
 from mappings.default_ogc2ckan_config import OGC2CKAN_CKANINFO_CONFIG, OGC2CKAN_DBDSN_CONFIG, OGC2CKAN_HARVESTER_CONFIG
 
-log_module = get_log_module()
+log_module = get_log_module(os.path.abspath(__file__))
 
 
 class CKANInfo:

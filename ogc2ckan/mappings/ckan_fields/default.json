@@ -47,10 +47,10 @@
     {
         "ckan_object": "Dataset",
         "ckan_section": "Basic Info",
-        "metadata_info": "NTI-RISP Theme (M)",
-        "new_metadata_field": "theme_es",
+        "metadata_info": "MDR Themes (M)",
+        "new_metadata_field": "theme_eu",
         "multiplicity": "1.*",
-        "codelist": "http://datos.gob.es/kos/sector-publico/sector",
+        "codelist": "http://publications.europa.eu/resource/authority/data-theme/ENVI",
         "stored": "List[URI]"
     },
     {

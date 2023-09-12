@@ -1,5 +1,6 @@
 # inbuilt libraries
 from datetime import datetime
+from urllib.parse import urlencode
 
 # third-party libraries
 from owslib.wms import WebMapService
@@ -173,15 +174,13 @@ class HarvesterOGC(Harvester):
         dataset.set_resource_type(dcat_type['series'] if is_series else dcat_type['dataset'])
 
         # Set SpatialRepresentationType
-        dataset.set_representation_type(OGC2CKAN_HARVESTER_MD_CONFIG['spatial_representation_type'].get(service_type))
+        dataset.set_representation_type(OGC2CKAN_HARVESTER_MD_CONFIG['representation_type'].get(service_type))
 
         # Set valid date
         if hasattr(wms_layer_info, 'valid'):
             valid_date = wms_layer_info.valid
-        elif hasattr(self.default_dcat_info, 'valid'):
-            valid_date = self.default_dcat_info.valid
         else:
-            valid_date = None
+            valid_date = self.get_default_dcat_info_attribute("valid")
 
         if valid_date and valid_date is not None:
             dataset.set_valid(self._normalize_date(valid_date))
@@ -195,7 +194,7 @@ class HarvesterOGC(Harvester):
             dataset.set_spatial_resolution_in_meters(denominators[0])
 
         # Set language
-        language = getattr(self.default_dcat_info, 'language', OGC2CKAN_HARVESTER_MD_CONFIG['language']).replace('https:', 'http:')
+        language = self.get_default_dcat_info_attribute("language").replace('https:', 'http:')
         dataset.set_language(language)
 
         # Set spatial coverage
@@ -203,7 +202,7 @@ class HarvesterOGC(Harvester):
         self.set_bounding_box(dataset, bb) if bb is not None else None
 
         # Set spatial URI      
-        spatial_uri = custom_metadata.get('spatial_uri') if custom_metadata else getattr(self.default_dcat_info, 'spatial_uri', None)
+        spatial_uri = custom_metadata.get('spatial_uri') if custom_metadata else self.get_default_dcat_info_attribute("spatial_uri")
         dataset.set_spatial_uri(spatial_uri)       
 
         # Set temporal coverage
@@ -253,7 +252,7 @@ class HarvesterOGC(Harvester):
         self._set_conformance(dataset, epsg_text=epsg_text)
 
         # Set Metadata profile
-        metadata_profile = getattr(self.default_dcat_info, 'metadata_profile', OGC2CKAN_HARVESTER_MD_CONFIG['metadata_profile'])
+        metadata_profile = self.get_default_dcat_info_attribute("metadata_profile")
         dataset.set_metadata_profile(metadata_profile)         
 
         # Set Responsible Parties (Point of contact, Resource publisher, Resource creator/author and Resource contact/maintainer)
@@ -278,7 +277,7 @@ class HarvesterOGC(Harvester):
         self.set_metadata_distributions(ckan_info, dataset, distribution, record)
         
         # Set keywords/themes/topic categories
-        self.set_keywords_themes_topic(dataset, custom_metadata)
+        self.set_default_keywords_themes_topic(dataset, custom_metadata, ckan_info.ckan_dataset_schema)
         
         return dataset
     
@@ -291,30 +290,33 @@ class HarvesterOGC(Harvester):
 
         # WMS
         if wms_layer_info is not None:
-            wms_url = self.get_wms_url() + '&request=GetCapabilities' + '#' + record
+            wms_url = f"{self.get_wms_url()}&request=GetCapabilities#{record}"
             dist_info = self._get_distribution_info("WMS", wms_url, self.localized_strings_dict['distributions']['wms'], ckan_info.default_license, ckan_info.default_license_id, dataset.access_rights, dataset.language)
             add_distribution(distribution, dist_info)
 
         # WMTS
         if wmts_layer_info is not None:
-            wmts_url = self.get_wmts_url() + "?request=GetCapabilities"
+            wmts_url = f"{self.get_wmts_url()}?request=GetCapabilities"
             dist_info = self._get_distribution_info("WMTS", wmts_url, self.localized_strings_dict['distributions']['wmts'], ckan_info.default_license, ckan_info.default_license_id, dataset.access_rights, dataset.language)
             add_distribution(distribution, dist_info)
 
         # WFS
         if service_type == "wfs":
-            wfs_url = self.get_wfs_url() + "&request=GetCapabilities" + "#" + record
+            wfs_url = f"{self.get_wfs_url()}&request=GetCapabilities#{record}"
             dist_info = self._get_distribution_info("WFS", wfs_url, self.localized_strings_dict['distributions']['wfs'], ckan_info.default_license, ckan_info.default_license_id, dataset.access_rights, dataset.language)
             add_distribution(distribution, dist_info)
 
         # WCS
         if service_type == "wcs":
-            wcs_url = self.get_wcs_url() + "&request=GetCapabilities" + "#" + record
+            wcs_url = f"{self.get_wcs_url()}&request=GetCapabilities#{record}"
             dist_info = self._get_distribution_info("WCS", wcs_url, self.localized_strings_dict['distributions']['wcs'], ckan_info.default_license, ckan_info.default_license_id, dataset.access_rights, dataset.language)
             add_distribution(distribution, dist_info)
 
         # GeoJSON
         if json_info is not None:
-            workspace = layer_info.id.split(':')[0]
-            layername = layer_info.id.split(':')[1]
-            json_url = self.get_wfs_url().replace('geoserver/ows', 'geoserver/' + workspace.lower() + '/ows') + '&version=1.0.0&request=GetFeature&typeName=' + layername.lower() + '&outputFormat=application/json&maxFeatures=100'
+            layer_id_parts = layer_info.id.split(':')
+            workspace = layer_id_parts[0]
+            layername = layer_id_parts[1]
+            json_url = f"{self.get_wfs_url().replace('geoserver/ows', f'geoserver/{workspace.lower()}/ows')}&version=1.0.0&request=GetFeature&typeName={layername.lower()}&outputFormat=application/json&maxFeatures=100"
+            dist_info = self._get_distribution_info("GeoJSON", json_url, self.localized_strings_dict['distributions']['geojson'], ckan_info.default_license, ckan_info.default_license_id, dataset.access_rights, dataset.language)
+            add_distribution(distribution, dist_info)

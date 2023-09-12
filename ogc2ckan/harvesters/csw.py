@@ -2,14 +2,12 @@
 from datetime import datetime
 import logging
 import uuid
+import os
 
 # third-party libraries
 from owslib.csw import CatalogueServiceWeb
-from owslib.fes import PropertyIsEqualTo, PropertyIsLike, SortBy, SortProperty
-from owslib.iso import MD_Metadata, MD_Keywords
+from owslib.fes import PropertyIsLike, SortBy, SortProperty
 from owslib.namespaces import Namespaces
-from owslib import util
-from owslib.etree import etree
 
 # custom classes
 from harvesters.base import Harvester
@@ -19,8 +17,9 @@ from config.ckan_config import CKANInfo
 # custom functions
 from config.ogc2ckan_config import get_log_module
 from mappings.default_ogc2ckan_config import OGC2CKAN_HARVESTER_MD_CONFIG, OGC2CKAN_ISO_MD_ELEMENTS
+from controller.mapping import get_mapping_value
 
-log_module = get_log_module()
+log_module = get_log_module(os.path.abspath(__file__))
 
 
 # Custom exceptions.
@@ -34,16 +33,6 @@ class ObjectFromListDicts:
                 setattr(self, key, [ObjectFromListDicts(**d) for d in value])
             else:
                 setattr(self, key, value)
-
-# default variables
-def get_namespaces():
-    n = Namespaces()
-    ns = n.get_namespaces(["gco", "gfc", "gmd", "gmi", "gml", "gml32", "gmx", "gts", "srv", "xlink"])
-    ns[None] = n.get_namespace("gmd")
-    return ns
-
-
-namespaces = get_namespaces()
 
 class HarvesterCSW(Harvester):
     def __init__(self, app_dir, url, name, groups, active, organization, type, custom_organization_active, custom_organization_mapping_file, private_datasets, default_keywords, default_inspire_info, constraints, **default_dcat_info):
@@ -61,7 +50,7 @@ class HarvesterCSW(Harvester):
         return [PropertyIsLike("csw:anyText", keyword) for keyword in constraints["keywords"]]
 
     def set_constraint_mails(self, constraints):
-        return [mail.lower().replace(' ','') for mail in self.constraints["mails"]]
+        return [mail.lower().replace(' ','') for mail in constraints["mails"]]
 
     def get_csw_url_value(self):
         return self.csw_url
@@ -172,7 +161,8 @@ class HarvesterCSW(Harvester):
             kwa["startposition"] = startposition
 
         # Filter in x.contact[0].email for existing elements in constraints.mails
-        csw.records = {k: v for k, v in csw.records.items() if v.contact[0].email.lower().replace(' ','') in self.constraint_mails}
+        if self.constraint_mails:
+            csw.records = {k: v for k, v in csw.records.items() if v.contact[0].email.lower().replace(' ','') in self.constraint_mails}
         logging.info(f"{log_module}:CSW records matches with constraints: {len(csw.records)}")
 
         return csw
@@ -183,7 +173,7 @@ class HarvesterCSW(Harvester):
 
         Args:
             ckan_info (CKANInfo): CKANInfo object containing the CKAN URL and API key.
-            record (str): Name of the dataset to retrieve.
+            record (str): identifier of the dataset to retrieve.
             service_type (str): Type of OGC service ('csw' for Catalog endpoints).
 
         Returns:
@@ -196,8 +186,8 @@ class HarvesterCSW(Harvester):
         # Get CSW record info
         if service_type == 'csw':
             layer_info = self.csw.records[record]
-            self.update_metadata_sections(layer_info)
-            layer_info.md_not_owslib = self.get_metadata_not_owslib(layer_info)
+        self.ows_update_metadata_sections(layer_info)
+        layer_info.md_not_owslib = self.ows_get_metadata_not_owslib(layer_info)
 
         # Search if custom organization info exists for the dataset
         custom_metadata = None
@@ -207,6 +197,10 @@ class HarvesterCSW(Harvester):
         # Set basic info of MD
         dataset = dataset(uuid_identifier, ckan_name, self.organization, ckan_info.default_license_id)
 
+        # Set inspireId (identifier)
+        inspire_id = layer_info.uricode
+        dataset.set_inspire_id(inspire_id)
+
         # Set private dataset
         private = getattr(self, 'private_datasets', False)
         dataset.set_private(private)
@@ -214,7 +208,7 @@ class HarvesterCSW(Harvester):
         # Set alternate identifier (layer name)
         alternate_identifier = layer_info.identifier if layer_info.identifier else None
         dataset.set_alternate_identifier(alternate_identifier)
-
+        
         # Title
         title = custom_metadata.get('title') if custom_metadata else layer_info.identification.title
         dataset_title = title or self.localized_strings_dict['title'] if title is not None else f"{self.localized_strings_dict['title']} {inspire_id}"
@@ -227,11 +221,8 @@ class HarvesterCSW(Harvester):
         # CKAN Groups defined in config.yaml
         dataset.set_groups(ckan_groups)
 
-        # Set inspireId (identifier)
-        dataset.set_inspire_id(inspire_id)
-
         # Creation/Publication/Revision dates
-        issued_date, modified_date = self.set_metadata_dates(
+        issued_date, modified_date = self.ows_set_metadata_dates(
                                                             dataset,
                                                             layer_info.identification
                                                             )
@@ -244,23 +235,21 @@ class HarvesterCSW(Harvester):
             else dcat_type['dataset'])
 
         # Set SpatialRepresentationType
-        spatial_representation_type = (
+        representation_type = (
             layer_info.identification.spatialrepresentationtype[0]
             if layer_info.identification.spatialrepresentationtype
             else 'default'
         )
         dataset.set_representation_type(
-            OGC2CKAN_HARVESTER_MD_CONFIG['spatial_representation_type'].get(
-                spatial_representation_type)
+            OGC2CKAN_HARVESTER_MD_CONFIG['representation_type'].get(
+                representation_type)
             )
 
         # Set valid date
         if hasattr(layer_info, 'valid'):
             valid_date = layer_info.valid
-        elif hasattr(self.default_dcat_info, 'valid'):
-            valid_date = self.default_dcat_info.valid
         else:
-            valid_date = None
+            valid_date = self.get_default_dcat_info_attribute("valid")
 
         if valid_date and valid_date is not None:
             dataset.set_valid(self._normalize_date(valid_date))
@@ -283,7 +272,7 @@ class HarvesterCSW(Harvester):
         if bb is not None:
             self.set_bounding_box_from_iso(dataset, bb)
         else:
-            dataset.set_spatial(getattr(self.default_dcat_info, 'spatial', None))
+            dataset.set_spatial(self.get_default_dcat_info_attribute("spatial"))
 
         # Set spatial URI
         dataset.set_spatial_uri(self.get_custom_metadata_value(custom_metadata, 'spatial_uri'))
@@ -350,7 +339,7 @@ class HarvesterCSW(Harvester):
         self._set_conformance(dataset, epsg_text=epsg_text)
 
         # Set Metadata profile
-        metadata_profile = getattr(self.default_dcat_info, 'metadata_profile', OGC2CKAN_HARVESTER_MD_CONFIG['metadata_profile'])
+        metadata_profile = self.get_default_dcat_info_attribute("metadata_profile")
         dataset.set_metadata_profile(metadata_profile)
 
         # Set Responsible Parties (Point of contact, Resource publisher, Resource creator/author and Resource contact/maintainer)
@@ -386,11 +375,19 @@ class HarvesterCSW(Harvester):
         # Metadata distributions (INSPIRE & GeoDCAT-AP)
         self.set_metadata_distributions(ckan_info, dataset, distribution, record)
 
-        # Set keywords/themes/topic categories
-        self.set_keywords_themes_topic(dataset, custom_metadata)
-        
-        #TODO: Set keywords from CSW
+        # Set default keywords/themes/topic categories
+        self.set_default_keywords_themes_topic(dataset, custom_metadata, ckan_info.ckan_dataset_schema)
 
+        # Set topic category ISO19115
+        topiccategory = getattr(layer_info, "topiccategory", None)
+        if topiccategory:
+            dataset.keywords.append({'name': topiccategory})
+            topiccategory = "/".join(["http://inspire.ec.europa.eu/metadata-codelist/TopicCategory", topiccategory])
+            dataset.keywords_uri.append(topiccategory)
+
+        # Set keywords from CSW
+        self.ows_get_keywords(dataset, layer_info.identification.keywords)
+                
         return dataset
 
     def get_distribution(self, ckan_info: CKANInfo, dataset, distribution, record: str, service_type: str, layer_info):
@@ -449,137 +446,3 @@ class HarvesterCSW(Harvester):
 
             except Exception as e:
                 logging.error(f"{log_module}:Error adding distribution '{dist_name}' to dataset '{dataset.title}': {e}")
-
-    def update_metadata_sections(self, layer_info):
-        def get_first_element_from_list(lst):
-            return lst[0] if isinstance(lst, list) and lst else None
-
-        layer_info.identification = get_first_element_from_list(layer_info.identification) if layer_info.identification else None
-        layer_info.distributor = get_first_element_from_list(layer_info.distribution.distributor) if layer_info.distribution and layer_info.distribution.distributor else None
-        layer_info.distribution = layer_info.distribution.online if hasattr(layer_info.distribution, 'online') else None
-        layer_info.contact = get_first_element_from_list(layer_info.contact) if layer_info.contact else None
-        layer_info.identification.publisher = get_first_element_from_list(layer_info.identification.publisher) if layer_info.identification and layer_info.identification.publisher else None
-
-        try:
-            if not layer_info.identification:
-                raise AttributeError("identification")
-            if not layer_info.distribution:
-                raise AttributeError("distribution")
-            if not layer_info.contact:
-                raise AttributeError("contact")
-
-        except AttributeError as e:
-            logging.error(f"{log_module}:An error occurred in update_metadata_sections: {e}")
-            setattr(layer_info, e.args[0], None)
-
-    def get_metadata_not_owslib(self, layer_info):
-        """Gets metadata values that are not retrieved by OWSLib from an MD_Metadata object.
-
-        Args:
-            layer_info (object): Object containing metadata information.
-
-        Returns:
-            dict: Dictionary containing metadata values.
-        """
-        return {
-            "lineage_source": self._findall_metadata_elements(layer_info, OGC2CKAN_ISO_MD_ELEMENTS['lineage_source'])
-        }
-
-    def set_metadata_dates(self, dataset, record_id):
-        """
-        Sets the metadata dates for a CKAN dataset from an ISO metadata record.
-
-        Args:
-            dataset: The CKAN dataset to set the metadata dates for.
-            record_id: The ISO metadata record to get the metadata dates from.
-        """
-        # Default values
-        issued_date = datetime.now().strftime('%Y-%m-%d')
-        created_date = '1900-01-01'
-        modified_date = issued_date
-
-        for date in record_id.date:
-            if date.type == "creation":
-                created_date = self._normalize_date(date.date)
-            elif date.type == "publication":
-                issued_date = self._normalize_date(date.date)
-            elif date.type == "revision":
-                modified_date = self._normalize_date(date.date)
-
-        dataset.set_issued(issued_date)
-        dataset.set_created(created_date)
-        dataset.set_modified(modified_date)
-
-        return issued_date, modified_date
-
-    @staticmethod
-    def _findall_metadata_elements(layer_info, tag):
-        """
-        Finds all elements in an ISO metadata record (md).
-
-        Args:
-            layer_info: The MD_Metadata object that contains ISO metadata record to search in.
-            tag: The tag of the element to search for.
-
-        Returns:
-            The elements if founds, otherwise None.
-        """
-        results = []
-        val = layer_info.md.findall(util.nspath_eval(tag, namespaces))
-
-        for i in val:
-            if hasattr(i, 'text'):
-                i = util.testXMLValue(i)
-            results.append(i)
-
-        return results
-
-    @staticmethod
-    def _find_metadata_element(layer_info, tag):
-        """
-        Finds element in an ISO metadata record (md).
-
-        Args:
-            layer_info: The MD_Metadata object that contains ISO metadata record to search in.
-            tag: The tag of the element to search for.
-
-        Returns:
-            The element if found, otherwise None.
-        """
-        val = layer_info.md.find(util.nspath_eval(tag, namespaces))
-        if hasattr(val, 'text'):
-            val = util.testXMLValue(val.text)
-        return val
-
-    @staticmethod
-    def _convert_keyword(keywords, iso2dict=False, theme="theme"):
-        """
-        Convert keywords to a standardized format.
-
-        Args:
-            keywords (list): The list of keywords to convert.
-            iso2dict (bool, optional): Whether to convert ISO keywords to a dictionary format. Default is False.
-            theme (str, optional): The theme/category for the keywords. Default is "theme".
-
-        Returns:
-            list or dict: The converted keywords in a standardized format. If `iso2dict` is True, returns a list of dictionaries.
-                        Otherwise, returns a list of lists.
-        """
-        def convert_iso_keywords(keywords):
-            _keywords = []
-            for kw in keywords:
-                if isinstance(kw, MD_Keywords):
-                    _keywords.append([_kw.name for _kw in kw.keywords])
-                else:
-                    _keywords.append(kw)
-            return _keywords
-
-        if not iso2dict and keywords:
-            return [
-                {
-                    "keywords": convert_iso_keywords(keywords),
-                    "thesaurus": {"date": None, "datetype": None, "title": None},
-                    "type": theme,
-                }
-            ]
-        return convert_iso_keywords(keywords)

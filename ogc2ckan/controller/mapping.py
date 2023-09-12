@@ -18,32 +18,30 @@ class MappingValueNotFoundError(Exception):
             f"Mapping value {self.value}  not found in {self.codelist}.yaml"
             )
 
-# TODO: Retornar valor de un YAML, sabiendo valor y campo que se ha de retornar.
 def get_mapping_value(
     value: str,
     codelist: str,
-    field_map: str,
-    mappings_folder: str = default_mappings_folder):
+    field_output: str = 'label',
+    field_input: str = 'id',
+    mappings_folder: str = default_mappings_folder) -> str:
     """
-    Returns the mapping value in YAML for a given codelist value. 
+    Returns the mapping value in YAML for a given codelist value.
 
     This function loads a YAML file from the specified mappings folder and returns the value
     for the specified codelist value. If the value is not found in the YAML file, the category itself is returned.
-    
-    Parameters
-    ----------
-    value: str. The source value that needs to be mapped to a codelist value.
-    codelist : str. The name of the YAML file (without the extension) in which the codelist is defined.
-    field_map: str. Name of the field to return.
-    mappings_folder: str (default="ckan2pycsw/mappings"). The folder path containing the YAML files for the mappings.
 
-    Return
-    ----------
-    The value of the codelist value if found in the YAML file, else the value itself.
+    Args:
+        value: The source value that needs to be mapped to a codelist value.
+        codelist: The name of the YAML file (without the extension) in which the codelist is defined.
+        field_output: Name of the field to return. Defaults to 'label'.
+        field_input: Name of the field to search for. Defaults to 'id'.
+        mappings_folder: The folder path containing the YAML files for the mappings. Defaults to 'ckan2pycsw/mappings'.
 
-    Raises
-    ------
-    MappingValueNotFoundError: ValueError. If the given value is not found in the mapping.
+    Returns:
+        The value of the codelist value if found in the YAML file, else the value itself.
+
+    Raises:
+        MappingValueNotFoundError: If the given value is not found in the mapping.
     """
     try:
         yaml_path = os.path.join(mappings_folder, codelist + ".yaml")
@@ -55,8 +53,8 @@ def get_mapping_value(
         raise MappingValueNotFoundError(value, codelist) from None
 
     for mapping in map_yaml:
-        if isinstance(mapping, dict) and 'id' in mapping and mapping['id'] == value:
-            return mapping.get(field_map, value)
+        if isinstance(mapping, dict) and field_input in mapping and mapping[field_input] == value:
+            return mapping.get(field_output, value)
 
     return value
 

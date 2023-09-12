@@ -21,7 +21,7 @@ from config.ogc2ckan_config import get_log_module
 from mappings.default_ogc2ckan_config import OGC2CKAN_HARVESTER_CONFIG, OGC2CKAN_HARVESTER_MD_CONFIG, OGC2CKAN_CKANINFO_CONFIG
 from controller.mapping import get_df_mapping_json
 
-log_module = get_log_module()
+log_module = get_log_module(os.path.abspath(__file__))
 
 class ObjectFromListDicts:
     """
@@ -146,17 +146,21 @@ class HarvesterTable(Harvester):
         # Get basic elements for the CKAN dataset
         dataset, distribution, datadictionary, datadictionaryfield, uuid_identifier, ckan_name, ckan_groups, inspire_id = \
             self.get_dataset_common_elements(record, ckan_info.ckan_dataset_schema)
+                
+        # Set basic info of MD
+        dataset = dataset(uuid_identifier, ckan_name, self.organization, ckan_info.default_license_id)
+        
+        # Set inspireId (identifier)
+        inspire_id = getattr(table_dataset, 'inspire_id', inspire_id)
+        dataset.set_inspire_id(inspire_id)  
         
         # Search if exists custom organization info for the dataset
         custom_metadata = None
         if self.custom_organization_active:
             try:
-                custom_metadata = self.get_custom_default_metadata(layer_info.id.split(':')[1])
+                custom_metadata = self.get_custom_default_metadata(inspire_id)
             except:
-                custom_metadata = self.get_custom_default_metadata(layer_info.id.split(':')[1], 'dataset_group_id')
-        
-        # Set basic info of MD
-        dataset = dataset(uuid_identifier, ckan_name, self.organization, ckan_info.default_license_id)
+                custom_metadata = self.get_custom_default_metadata(inspire_id, 'dataset_group_id')
         
         # Set private dataset
         private = getattr(self, 'private_datasets', False)
@@ -180,10 +184,6 @@ class HarvesterTable(Harvester):
         dataset_groups = getattr(table_dataset, 'groups', ckan_groups)
         dataset.set_groups(self._set_ckan_groups(dataset_groups))
 
-        # Set inspireId (identifier)
-        inspire_id = getattr(table_dataset, 'inspire_id', inspire_id)
-        dataset.set_inspire_id(inspire_id)  
-
         # Creation/Publication/Revision dates
         issued_date = datetime.now().strftime('%Y-%m-%d')
         created_date = self._normalize_date(table_dataset.created) or issued_date
@@ -201,16 +201,14 @@ class HarvesterTable(Harvester):
         dataset.set_resource_type(dcat_type['series' if is_series else 'default'])
 
         # Set SpatialRepresentationType
-        representation_type = getattr(table_dataset, 'representation_type', OGC2CKAN_HARVESTER_MD_CONFIG['spatial_representation_type']['default']).replace('https:', 'http:')
+        representation_type = getattr(table_dataset, 'representation_type', OGC2CKAN_HARVESTER_MD_CONFIG['representation_type']['default']).replace('https:', 'http:')
         dataset.set_representation_type(representation_type)
 
         # Set valid date
         if hasattr(table_dataset, 'valid'):
             valid_date = table_dataset.valid
-        elif hasattr(self.default_dcat_info, 'valid'):
-            valid_date = self.default_dcat_info.valid
         else:
-            valid_date = None
+            valid_date = self.get_default_dcat_info_attribute("valid")
 
         if valid_date:
             dataset.set_valid(self._normalize_date(valid_date))
@@ -228,21 +226,21 @@ class HarvesterTable(Harvester):
         dataset.set_language(language)
 
         # Set spatial coverage
-        spatial = getattr(table_dataset, 'spatial', getattr(self.default_dcat_info, 'spatial', None))
+        spatial = getattr(table_dataset, 'spatial', self.get_default_dcat_info_attribute("spatial"))
         dataset.set_spatial(spatial)
 
         # Set spatial URI
-        spatial_uri = getattr(table_dataset, 'spatial_uri', getattr(self.default_dcat_info, 'spatial_uri', None))
+        spatial_uri = getattr(table_dataset, 'spatial_uri', self.get_default_dcat_info_attribute("spatial_uri"))
         dataset.set_spatial_uri(spatial_uri)        
 
         # Set temporal coverage
-        temporal_start = getattr(table_dataset, 'temporal_start', getattr(self.default_dcat_info, 'temporal_start', None))
-        temporal_end = getattr(table_dataset, 'temporal_end', getattr(self.default_dcat_info, 'temporal_end', None))
+        temporal_start = getattr(table_dataset, 'temporal_start', self.get_default_dcat_info_attribute("temporal_start"))
+        temporal_end = getattr(table_dataset, 'temporal_end', self.get_default_dcat_info_attribute("temporal_end"))
         dataset.set_temporal_start(self._normalize_date(temporal_start))
         dataset.set_temporal_end(self._normalize_date(temporal_end))
 
         # Set Frequency
-        frequency = getattr(table_dataset, 'frequency', getattr(self.default_dcat_info, 'frequency', None))
+        frequency = getattr(table_dataset, 'frequency', self.get_default_dcat_info_attribute("frequency"))
         dataset.set_frequency(frequency)   
 
         # Set info if exists custom metadata
@@ -323,7 +321,7 @@ class HarvesterTable(Harvester):
         self.set_metadata_distributions(ckan_info, dataset, distribution, record)
         
         # Set keywords/themes/topic categories
-        self.set_keywords_themes_topic(dataset, custom_metadata)
+        self.set_default_keywords_themes_topic(dataset, custom_metadata, ckan_info.ckan_dataset_schema)
         
         return dataset
     

@@ -1,0 +1,1059 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gmd:MD_Metadata xmlns:gmd="http://www.isotc211.org/2005/gmd"
+                 xmlns:gco="http://www.isotc211.org/2005/gco"
+                 xmlns:gml="http://www.opengis.net/gml"
+                 xmlns:gmx="http://www.isotc211.org/2005/gmx"
+                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xmlns:xlink="http://www.w3.org/1999/xlink"
+                 xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://schemas.opengis.net/csw/2.0.2/profiles/apiso/1.0.0/apiso.xsd">
+  <gmd:fileIdentifier>
+      <gco:CharacterString>spaign_cartociudad_addresses</gco:CharacterString>
+  </gmd:fileIdentifier>
+  <gmd:language>
+      <gmd:LanguageCode codeList="http://www.loc.gov/standards/iso639-2/" codeListValue="spa">Español</gmd:LanguageCode>
+  </gmd:language>
+  <gmd:characterSet>
+      <gmd:MD_CharacterSetCode codeList="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_CharacterSetCode"
+                               codeListValue="utf8">utf8</gmd:MD_CharacterSetCode>
+  </gmd:characterSet>
+  <gmd:parentIdentifier gco:nilReason="missing"/>
+  <gmd:hierarchyLevel>
+      <gmd:MD_ScopeCode codeList="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_ScopeCode"
+                        codeListValue="dataset">Conjunto de datos</gmd:MD_ScopeCode>
+  </gmd:hierarchyLevel>
+  <gmd:hierarchyLevelName gco:nilReason="missing"/>
+  <gmd:contact>
+      <gmd:CI_ResponsibleParty>
+         <gmd:individualName gco:nilReason="missing"/>
+         <gmd:organisationName xsi:type="gmd:PT_FreeText_PropertyType">
+            <gco:CharacterString>Infraestructura de Datos Espaciales de España (IDEE)</gco:CharacterString>
+            <gmd:PT_FreeText>
+               <gmd:textGroup>
+                  <gmd:LocalisedCharacterString locale="#eng">Spanish Spatial Data Infrastructure (IDEE)</gmd:LocalisedCharacterString>
+               </gmd:textGroup>
+            </gmd:PT_FreeText>
+         </gmd:organisationName>
+         <gmd:positionName gco:nilReason="missing"/>
+         <gmd:contactInfo>
+            <gmd:CI_Contact>
+               <gmd:address>
+                  <gmd:CI_Address>
+                     <gmd:deliveryPoint>
+                        <gco:CharacterString>C/ General Ibáñez de Ibero, 3</gco:CharacterString>
+                     </gmd:deliveryPoint>
+                     <gmd:city>
+                        <gco:CharacterString>Madrid</gco:CharacterString>
+                     </gmd:city>
+                     <gmd:postalCode>
+                        <gco:CharacterString>28003</gco:CharacterString>
+                     </gmd:postalCode>
+                     <gmd:country>
+                        <gco:CharacterString>España</gco:CharacterString>
+                     </gmd:country>
+                     <gmd:electronicMailAddress>
+                        <gco:CharacterString>ign@mitma.es</gco:CharacterString>
+                     </gmd:electronicMailAddress>
+                  </gmd:CI_Address>
+               </gmd:address>
+               <gmd:onlineResource>
+                  <gmd:CI_OnlineResource>
+                     <gmd:linkage>
+                        <gmd:URL>https://www.idee.es</gmd:URL>
+                     </gmd:linkage>
+                  </gmd:CI_OnlineResource>
+               </gmd:onlineResource>
+            </gmd:CI_Contact>
+         </gmd:contactInfo>
+         <gmd:role>
+            <gmd:CI_RoleCode codeList="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_RoleCode"
+                             codeListValue="pointOfContact">Punto de contacto</gmd:CI_RoleCode>
+         </gmd:role>
+      </gmd:CI_ResponsibleParty>
+  </gmd:contact>
+  <gmd:dateStamp>
+      <gco:Date>2023-04-10</gco:Date>
+  </gmd:dateStamp>
+  <gmd:metadataStandardName xsi:type="gmd:PT_FreeText_PropertyType">
+      <gco:CharacterString>Reglamento (CE) Nº 1205/2008 de INSPIRE</gco:CharacterString>
+      <gmd:PT_FreeText>
+         <gmd:textGroup>
+            <gmd:LocalisedCharacterString locale="#eng">INSPIRE Regulation Nº1205/2008</gmd:LocalisedCharacterString>
+         </gmd:textGroup>
+      </gmd:PT_FreeText>
+  </gmd:metadataStandardName>
+  <gmd:metadataStandardVersion>
+      <gco:CharacterString>TG 2.0</gco:CharacterString>
+  </gmd:metadataStandardVersion>
+  <gmd:locale>
+      <gmd:PT_Locale id="eng">
+         <gmd:languageCode>
+            <gmd:LanguageCode codeList="http://www.loc.gov/standards/iso639-2/" codeListValue="eng"/>
+         </gmd:languageCode>
+         <gmd:characterEncoding>
+            <gmd:MD_CharacterSetCode codeListValue="utf8"
+                                     codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_CharacterSetCode">UTF-8</gmd:MD_CharacterSetCode>
+         </gmd:characterEncoding>
+      </gmd:PT_Locale>
+  </gmd:locale>
+  <gmd:referenceSystemInfo>
+      <gmd:MD_ReferenceSystem>
+         <gmd:referenceSystemIdentifier>
+            <gmd:RS_Identifier>
+               <gmd:code>
+                  <gmx:Anchor xlink:href="http://www.opengis.net/def/crs/EPSG/0/4258">ETRS89 coordenadas geográficas longitud y latitud.</gmx:Anchor>
+               </gmd:code>
+            </gmd:RS_Identifier>
+         </gmd:referenceSystemIdentifier>
+      </gmd:MD_ReferenceSystem>
+  </gmd:referenceSystemInfo>
+  <gmd:identificationInfo>
+      <gmd:MD_DataIdentification>
+         <gmd:citation>
+            <gmd:CI_Citation>
+               <gmd:title xsi:type="gmd:PT_FreeText_PropertyType">
+                  <gco:CharacterString>Direcciones del proyecto Cartociudad de España</gco:CharacterString>
+                  <gmd:PT_FreeText>
+                     <gmd:textGroup>
+                        <gmd:LocalisedCharacterString locale="#eng">Addresses of CartoCity project of Spain</gmd:LocalisedCharacterString>
+                     </gmd:textGroup>
+                  </gmd:PT_FreeText>
+               </gmd:title>
+               <gmd:alternateTitle>
+                  <gco:CharacterString>Cartociudad</gco:CharacterString>
+               </gmd:alternateTitle>
+               <gmd:date>
+                  <gmd:CI_Date>
+                     <gmd:date>
+                        <gco:Date>2006-12-31</gco:Date>
+                     </gmd:date>
+                     <gmd:dateType>
+                        <gmd:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode"
+                                             codeListValue="creation"/>
+                     </gmd:dateType>
+                  </gmd:CI_Date>
+               </gmd:date>
+               <gmd:identifier>
+                  <gmd:RS_Identifier>
+                     <gmd:code>
+                        <gco:CharacterString>cartociudad_addresses</gco:CharacterString>
+                     </gmd:code>
+                     <gmd:codeSpace>
+                        <gco:CharacterString>SCNE</gco:CharacterString>
+                     </gmd:codeSpace>
+                  </gmd:RS_Identifier>
+               </gmd:identifier>
+               <gmd:identifier>
+                  <gmd:RS_Identifier>
+                     <gmd:code>
+                        <gco:CharacterString>AD_Address</gco:CharacterString>
+                     </gmd:code>
+                     <gmd:codeSpace>
+                        <gco:CharacterString>Cartociudad</gco:CharacterString>
+                     </gmd:codeSpace>
+                  </gmd:RS_Identifier>
+               </gmd:identifier>
+               <gmd:identifier>
+                  <gmd:RS_Identifier>
+                     <gmd:code>
+                        <gco:CharacterString>codigo_postal</gco:CharacterString>
+                     </gmd:code>
+                     <gmd:codeSpace>
+                        <gco:CharacterString>GrupoCorreos</gco:CharacterString>
+                     </gmd:codeSpace>
+                  </gmd:RS_Identifier>
+               </gmd:identifier>
+               <gmd:presentationForm>
+                  <gmd:CI_PresentationFormCode codeList="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_PresentationFormCode"
+                                               codeListValue="mapDigital">mapa digital</gmd:CI_PresentationFormCode>
+               </gmd:presentationForm>
+            </gmd:CI_Citation>
+         </gmd:citation>
+         <gmd:abstract xsi:type="gmd:PT_FreeText_PropertyType">
+            <gco:CharacterString>Cartociudad ofrece direcciones postales, topónimos, poblaciones y límites administrativos de España, a través de servicios web, estos datos son complementados con la asignación de los códigos postales. Las fuentes oficiales son: Red de Transporte de la Información Geográfica de Referencia (IGR‐RT) del Sistema Cartográfico Nacional (SCN), Eusko Jaurlaritza - Gobierno Vasco, Dirección General de Catastro, Gobierno de Navarra, Instituto de Estadística y Cartografía de Andalucía (CDAU), Comunidad de Madrid, Gobierno de La Rioja, Diputació de Barcelona, Ayuntamiento de Cáceres, Instituto Cartográfico Valenciano (Generalitat Valenciana), Grupo Correos, Instituto Geográfico Nacional (IGN), e Instituto Nacional de Estadística (INE).
+					Más información sobre el producto en www.cartociudad.es/portal/.</gco:CharacterString>
+            <gmd:PT_FreeText>
+               <gmd:textGroup>
+                  <gmd:LocalisedCharacterString locale="#eng">CartoCiudad provides postal addresses, place names, population and administrative units of Spain, through web services, these data are complemented by the assignment of the postal code. The official sources are: Reference Geographic Information Transport Network (IGR-RT) of the National Cartographic System, Eusko Jaurlaritza - Basque Government, General Directorate of Cadastre, Government of Navarre, Andalusian Institute of Statistics and Cartography (CDAU), the Community of Madrid and the Government of La Rioja and, Barcelona Provincial Council, Cáceres City Council, Valencian Cartographic Institute (Generalitat Valenciana), Correos Group, National Geographic Institute, and National Institute of Statistics.
+							More information on the product at www.cartociudad.es/portal/.</gmd:LocalisedCharacterString>
+               </gmd:textGroup>
+            </gmd:PT_FreeText>
+         </gmd:abstract>
+         <gmd:purpose xsi:type="gmd:PT_FreeText_PropertyType">
+            <gco:CharacterString>El propósito de la cartografía digital generada con el proyecto CartoCiudad es su utilización como cartografía urbana de base y la posibilidad de realizar las siguientes operaciones de consulta y navegación:
+					-Localización directa de objetos:
+					--Asignar coordenadas a una dirección postal
+					--Asignar coordenadas a una población
+					--Asignar coordenadas a un código postal
+					--Asignar coordenadas a un punto de interés (POI).
+					-Localización inversa de objetos:
+					--Asignar una dirección postal a un par de coordenadas
+					--Asignar un punto de interés a un par de  coordenadas
+					--Asignar una población a un par de coordenadas.
+					-Calcular distancias a pie entre dos puntos.
+					-Calcular áreas de proximidad a un punto.
+					-Calcular puntos de interés más cercanos a una dirección dada.
+					-Calcular puntos de interés en el entorno definido de una posición dada.
+					El objetivo del proyecto de CartoCiudad es tener una base de datos lo más completa y actualizada posible, para que el usuario pueda geolocalizar cualquier propiedad sobre el territorio español con información oficial, y así que dicha información sea utilizada también en los diferentes servicios que tiene CartoCiudad, como son los servicios de descarga (Web Feature Service, WFS) y de visualización (Web Map Service, WMS) conformes al Reglamento de Servicios de Red y el servicio de procesamiento (Web Procesing Service, WPS) de OGC y los servicios REST: services y geocodificador que se describirán en los siguientes puntos.</gco:CharacterString>
+            <gmd:PT_FreeText>
+               <gmd:textGroup>
+                  <gmd:LocalisedCharacterString locale="#eng">The purpose of the digital cartography generated by the CartoCiudad project is its use as basic urban cartography and the possibility of carrying out the following consultation and navigation operations:
+							-Direct location of objects:
+							--Assigning coordinates to a postal address
+							--Assigning coordinates to a population
+							--Assign coordinates to a postcode
+							-Assigning coordinates to a point of interest (POI).
+							-Inverse location of objects:
+							-Assigning a postal address to a pair of coordinates
+							-Assigning a point of interest to a pair of coordinates
+							-Assign a population to a pair of coordinates.
+							-Calculate walking distances between two points.
+							-Calculate areas of proximity to a point.
+							-Calculate points of interest closest to a given direction.
+							-Calculate points of interest in the defined environment of a given position.
+							The aim of the CartoCiudad project is to have a database that is as complete and up-to-date as possible, so that the user can geolocate any property on Spanish territory with official information, and so that this information can also be used in the different services that CartoCiudad has, such as Web Feature Service, (WFS) and Web Map Service, (WMS) in accordance with the Network Services Regulations and the processing service (Web Processing Service, WPS) and the REST services: services and geocoder.</gmd:LocalisedCharacterString>
+               </gmd:textGroup>
+            </gmd:PT_FreeText>
+         </gmd:purpose>
+         <gmd:credit>
+            <gco:CharacterString>Sitema Cartográfico Nacional http://www.scne.es/#IGR-RT</gco:CharacterString>
+         </gmd:credit>
+         <gmd:credit>
+            <gco:CharacterString>Instituto Geográfico Nacional (IGN)</gco:CharacterString>
+         </gmd:credit>
+         <gmd:credit>
+            <gco:CharacterString>Dirección General del Catastro</gco:CharacterString>
+         </gmd:credit>
+         <gmd:credit>
+            <gco:CharacterString>Instituto Nacional de Estadística (INE)</gco:CharacterString>
+         </gmd:credit>
+         <gmd:credit>
+            <gco:CharacterString>Grupo Correos</gco:CharacterString>
+         </gmd:credit>
+         <gmd:credit>
+            <gco:CharacterString>Instituto Cartográfico Valenciano (Generalitat Valenciana)</gco:CharacterString>
+         </gmd:credit>
+         <gmd:credit>
+            <gco:CharacterString>Gobierno de Navarra</gco:CharacterString>
+         </gmd:credit>
+         <gmd:credit>
+            <gco:CharacterString>Eusko Jaurlaritza/Gobierno Vasco</gco:CharacterString>
+         </gmd:credit>
+         <gmd:credit>
+            <gco:CharacterString>Gobienro de La Rioja</gco:CharacterString>
+         </gmd:credit>
+         <gmd:credit>
+            <gco:CharacterString>Instituto de Estadística y Cartografía de Andalucía (CDAU)</gco:CharacterString>
+         </gmd:credit>
+         <gmd:credit>
+            <gco:CharacterString>Comunidad de Madrid</gco:CharacterString>
+         </gmd:credit>
+         <gmd:credit>
+            <gco:CharacterString>Diputació de Barcelona</gco:CharacterString>
+         </gmd:credit>
+         <gmd:credit>
+            <gco:CharacterString>Ayuntamiento de Cáceres</gco:CharacterString>
+         </gmd:credit>
+         <gmd:credit>
+            <gco:CharacterString>Centro Nacional de Información Geográfica (CNIG)</gco:CharacterString>
+         </gmd:credit>
+         <gmd:pointOfContact>
+            <gmd:CI_ResponsibleParty>
+               <gmd:organisationName xsi:type="gmd:PT_FreeText_PropertyType">
+                  <gco:CharacterString>Instituto Geográfico Nacional</gco:CharacterString>
+                  <gmd:PT_FreeText>
+                     <gmd:textGroup>
+                        <gmd:LocalisedCharacterString locale="#eng">National Geographic Institute</gmd:LocalisedCharacterString>
+                     </gmd:textGroup>
+                  </gmd:PT_FreeText>
+               </gmd:organisationName>
+               <gmd:contactInfo>
+                  <gmd:CI_Contact>
+                     <gmd:address>
+                        <gmd:CI_Address>
+                           <gmd:electronicMailAddress>
+                              <gco:CharacterString>ign@mitma.es</gco:CharacterString>
+                           </gmd:electronicMailAddress>
+                        </gmd:CI_Address>
+                     </gmd:address>
+                     <gmd:onlineResource>
+                        <gmd:CI_OnlineResource>
+                           <gmd:linkage>
+                              <gmd:URL>https://www.ign.es</gmd:URL>
+                           </gmd:linkage>
+                        </gmd:CI_OnlineResource>
+                     </gmd:onlineResource>
+                  </gmd:CI_Contact>
+               </gmd:contactInfo>
+               <gmd:role>
+                  <gmd:CI_RoleCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_RoleCode"
+                                   codeListValue="pointOfContact">Punto de Contacto</gmd:CI_RoleCode>
+               </gmd:role>
+            </gmd:CI_ResponsibleParty>
+         </gmd:pointOfContact>
+         <gmd:pointOfContact>
+            <gmd:CI_ResponsibleParty>
+               <gmd:organisationName xsi:type="gmd:PT_FreeText_PropertyType">
+                  <gco:CharacterString>Centro Nacional de Información Geográfica (CNIG)</gco:CharacterString>
+                  <gmd:PT_FreeText>
+                     <gmd:textGroup>
+                        <gmd:LocalisedCharacterString locale="#eng">Centro Nacional de Información Geográfica (CNIG)</gmd:LocalisedCharacterString>
+                     </gmd:textGroup>
+                  </gmd:PT_FreeText>
+               </gmd:organisationName>
+               <gmd:contactInfo>
+                  <gmd:CI_Contact>
+                     <gmd:address>
+                        <gmd:CI_Address>
+                           <gmd:electronicMailAddress>
+                              <gco:CharacterString>consulta@cnig.es</gco:CharacterString>
+                           </gmd:electronicMailAddress>
+                        </gmd:CI_Address>
+                     </gmd:address>
+                     <gmd:onlineResource>
+                        <gmd:CI_OnlineResource>
+                           <gmd:linkage>
+                              <gmd:URL>https://www.cnig.es</gmd:URL>
+                           </gmd:linkage>
+                        </gmd:CI_OnlineResource>
+                     </gmd:onlineResource>
+                  </gmd:CI_Contact>
+               </gmd:contactInfo>
+               <gmd:role>
+                  <gmd:CI_RoleCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_RoleCode"
+                                   codeListValue="publisher">Publicador</gmd:CI_RoleCode>
+               </gmd:role>
+            </gmd:CI_ResponsibleParty>
+         </gmd:pointOfContact>
+         <gmd:resourceMaintenance>
+            <gmd:MD_MaintenanceInformation>
+               <gmd:maintenanceAndUpdateFrequency>
+                  <gmd:MD_MaintenanceFrequencyCode codeList="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_MaintenanceFrequencyCode"
+                                                   codeListValue="monthly"/>
+               </gmd:maintenanceAndUpdateFrequency>
+               <gmd:updateScope>
+                  <gmd:MD_ScopeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_ScopeCode"
+                                    codeListValue="dataset"/>
+               </gmd:updateScope>
+               <gmd:maintenanceNote>
+                  <gco:CharacterString>Actualización trimestral</gco:CharacterString>
+               </gmd:maintenanceNote>
+            </gmd:MD_MaintenanceInformation>
+         </gmd:resourceMaintenance>
+         <gmd:graphicOverview>
+            <gmd:MD_BrowseGraphic>
+               <gmd:fileName>
+                  <gco:CharacterString>https://www.ign.es/resources/img/metadata/CNIG_AD.jpg</gco:CharacterString>
+               </gmd:fileName>
+            </gmd:MD_BrowseGraphic>
+         </gmd:graphicOverview>
+         <gmd:descriptiveKeywords>
+            <gmd:MD_Keywords>
+               <gmd:keyword>
+                  <gmx:Anchor xlink:href="http://inspire.ec.europa.eu/theme/ad">Direcciones</gmx:Anchor>
+               </gmd:keyword>
+               <gmd:type>
+                  <gmd:MD_KeywordTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_KeywordTypeCode"
+                                          codeListValue="theme">theme</gmd:MD_KeywordTypeCode>
+               </gmd:type>
+               <gmd:thesaurusName>
+                  <gmd:CI_Citation>
+                     <gmd:title>
+                        <gmx:Anchor xlink:href="http://www.eionet.europa.eu/gemet/inspire_themes">GEMET - INSPIRE themes, version 1.0</gmx:Anchor>
+                     </gmd:title>
+                     <gmd:date>
+                        <gmd:CI_Date>
+                           <gmd:date>
+                              <gco:Date>2008-06-01</gco:Date>
+                           </gmd:date>
+                           <gmd:dateType>
+                              <gmd:CI_DateTypeCode codeList="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode"
+                                                   codeListValue="publication">publication</gmd:CI_DateTypeCode>
+                           </gmd:dateType>
+                        </gmd:CI_Date>
+                     </gmd:date>
+                  </gmd:CI_Citation>
+               </gmd:thesaurusName>
+            </gmd:MD_Keywords>
+         </gmd:descriptiveKeywords>
+         <gmd:descriptiveKeywords>
+            <gmd:MD_Keywords>
+               <gmd:keyword>
+                  <gmx:Anchor xlink:href="http://inspire.ec.europa.eu/metadata-codelist/SpatialScope/national">Nacional</gmx:Anchor>
+               </gmd:keyword>
+               <gmd:thesaurusName>
+                  <gmd:CI_Citation>
+                     <gmd:title>
+                        <gmx:Anchor xlink:href="http://inspire.ec.europa.eu/metadata-codelist/SpatialScope">Ámbito Espacial</gmx:Anchor>
+                     </gmd:title>
+                     <gmd:date>
+                        <gmd:CI_Date>
+                           <gmd:date>
+                              <gco:Date>2019-05-22</gco:Date>
+                           </gmd:date>
+                           <gmd:dateType>
+                              <gmd:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode"
+                                                   codeListValue="publication">Publicación</gmd:CI_DateTypeCode>
+                           </gmd:dateType>
+                        </gmd:CI_Date>
+                     </gmd:date>
+                  </gmd:CI_Citation>
+               </gmd:thesaurusName>
+            </gmd:MD_Keywords>
+         </gmd:descriptiveKeywords>
+         <gmd:descriptiveKeywords>
+            <gmd:MD_Keywords>
+               <gmd:keyword>
+                  <gco:CharacterString>IGN</gco:CharacterString>
+               </gmd:keyword>
+               <gmd:keyword>
+                  <gco:CharacterString>CNIG</gco:CharacterString>
+               </gmd:keyword>
+               <gmd:keyword>
+                  <gco:CharacterString>España</gco:CharacterString>
+               </gmd:keyword>
+               <gmd:keyword>
+                  <gco:CharacterString>Spain</gco:CharacterString>
+               </gmd:keyword>
+               <gmd:keyword>
+                  <gco:CharacterString>D. G. Catastro</gco:CharacterString>
+               </gmd:keyword>
+               <gmd:keyword>
+                  <gco:CharacterString>Código Postal</gco:CharacterString>
+               </gmd:keyword>
+               <gmd:keyword>
+                  <gco:CharacterString>Callejero</gco:CharacterString>
+               </gmd:keyword>
+               <gmd:keyword>
+                  <gco:CharacterString>Postal code</gco:CharacterString>
+               </gmd:keyword>
+               <gmd:keyword>
+                  <gco:CharacterString>Thorughfare name</gco:CharacterString>
+               </gmd:keyword>
+               <gmd:keyword>
+                  <gco:CharacterString>Administrative unit name</gco:CharacterString>
+               </gmd:keyword>
+            </gmd:MD_Keywords>
+         </gmd:descriptiveKeywords>
+         <gmd:resourceSpecificUsage>
+            <gmd:MD_Usage>
+               <gmd:specificUsage xsi:type="gmd:PT_FreeText_PropertyType">
+                  <gco:CharacterString>Visualización de un callejero, con utilidades de búsqueda de direcciones, topónimos, unidades administrativas, códigos postales, y cálculo de distancias mínimas y áreas de influencia, a través del geoportal de CartoCiudad http://www.cartociudad.es o de servicios web estándar.</gco:CharacterString>
+                  <gmd:PT_FreeText>
+                     <gmd:textGroup>
+                        <gmd:LocalisedCharacterString locale="#eng">Visualization of a street map, with utilities for searching addresses, place names, administrative units,  postal codes, and calculation of minimum distances and areas of influence, through the CartoCiudad geoportal http://www.cartociudad.es or standard web services.</gmd:LocalisedCharacterString>
+                     </gmd:textGroup>
+                  </gmd:PT_FreeText>
+               </gmd:specificUsage>
+               <gmd:userContactInfo>
+                  <gmd:CI_ResponsibleParty>
+                     <gmd:individualName gco:nilReason="inapplicable"/>
+                     <gmd:organisationName xsi:type="gmd:PT_FreeText_PropertyType">
+                        <gco:CharacterString>Centro Nacional de Información Geográfica (CNIG)</gco:CharacterString>
+                        <gmd:PT_FreeText>
+                           <gmd:textGroup>
+                              <gmd:LocalisedCharacterString locale="#eng">National Centre of Geographic Information (CNIG)</gmd:LocalisedCharacterString>
+                           </gmd:textGroup>
+                        </gmd:PT_FreeText>
+                     </gmd:organisationName>
+                     <gmd:positionName gco:nilReason="inapplicable"/>
+                     <gmd:contactInfo>
+                        <gmd:CI_Contact>
+                           <gmd:address>
+                              <gmd:CI_Address>
+                                 <gmd:electronicMailAddress>
+                                    <gco:CharacterString>cartociudad@mitma.es</gco:CharacterString>
+                                 </gmd:electronicMailAddress>
+                              </gmd:CI_Address>
+                           </gmd:address>
+                        </gmd:CI_Contact>
+                     </gmd:contactInfo>
+                     <gmd:role>
+                        <gmd:CI_RoleCode codeList="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_RoleCode"
+                                         codeListValue="distributor">distributor</gmd:CI_RoleCode>
+                     </gmd:role>
+                  </gmd:CI_ResponsibleParty>
+               </gmd:userContactInfo>
+            </gmd:MD_Usage>
+         </gmd:resourceSpecificUsage>
+         <gmd:resourceConstraints>
+            <gmd:MD_LegalConstraints>
+               <gmd:accessConstraints>
+                  <gmd:MD_RestrictionCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_RestrictionCode"
+                                          codeListValue="otherRestrictions"/>
+               </gmd:accessConstraints>
+               <gmd:otherConstraints>
+                  <gmx:Anchor xlink:href="http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/noLimitations">Sin limitaciones al acceso público.</gmx:Anchor>
+               </gmd:otherConstraints>
+            </gmd:MD_LegalConstraints>
+         </gmd:resourceConstraints>
+         <gmd:resourceConstraints>
+            <gmd:MD_LegalConstraints>
+               <gmd:useConstraints>
+                  <gmd:MD_RestrictionCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_RestrictionCode"
+                                          codeListValue="otherRestrictions"/>
+               </gmd:useConstraints>
+               <gmd:otherConstraints>
+                  <gmx:Anchor xlink:href="http://inspire.ec.europa.eu/metadata-codelist/ConditionsApplyingToAccessAndUse/noConditionsApply">No se aplican condiciones de acceso y uso.</gmx:Anchor>
+               </gmd:otherConstraints>
+               <gmd:otherConstraints>
+                  <gmx:Anchor xlink:href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</gmx:Anchor>
+               </gmd:otherConstraints>
+               <gmd:otherConstraints>
+                  <gco:CharacterString>http://www.ign.es/resources/licencia/Condiciones_licenciaUso_IGN.pdf</gco:CharacterString>
+               </gmd:otherConstraints>
+            </gmd:MD_LegalConstraints>
+         </gmd:resourceConstraints>
+         <gmd:spatialRepresentationType>
+            <gmd:MD_SpatialRepresentationTypeCode codeList="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_SpatialRepresentationTypeCode"
+                                                  codeListValue="vector">vector</gmd:MD_SpatialRepresentationTypeCode>
+         </gmd:spatialRepresentationType>
+         <gmd:spatialResolution>
+            <gmd:MD_Resolution>
+               <gmd:equivalentScale>
+                  <gmd:MD_RepresentativeFraction>
+                     <gmd:denominator>
+                        <gco:Integer>500</gco:Integer>
+                     </gmd:denominator>
+                  </gmd:MD_RepresentativeFraction>
+               </gmd:equivalentScale>
+            </gmd:MD_Resolution>
+         </gmd:spatialResolution>
+         <gmd:spatialResolution>
+            <gmd:MD_Resolution>
+               <gmd:equivalentScale>
+                  <gmd:MD_RepresentativeFraction>
+                     <gmd:denominator>
+                        <gco:Integer>1000</gco:Integer>
+                     </gmd:denominator>
+                  </gmd:MD_RepresentativeFraction>
+               </gmd:equivalentScale>
+            </gmd:MD_Resolution>
+         </gmd:spatialResolution>
+         <gmd:spatialResolution>
+            <gmd:MD_Resolution>
+               <gmd:equivalentScale>
+                  <gmd:MD_RepresentativeFraction>
+                     <gmd:denominator>
+                        <gco:Integer>25000</gco:Integer>
+                     </gmd:denominator>
+                  </gmd:MD_RepresentativeFraction>
+               </gmd:equivalentScale>
+            </gmd:MD_Resolution>
+         </gmd:spatialResolution>
+         <gmd:language>
+            <gmd:LanguageCode codeList="http://www.loc.gov/standards/iso639-2/" codeListValue="spa">Español</gmd:LanguageCode>
+         </gmd:language>
+         <gmd:language>
+            <gmd:LanguageCode codeList="http://www.loc.gov/standards/iso639-2/" codeListValue="cat">Catalán</gmd:LanguageCode>
+         </gmd:language>
+         <gmd:language>
+            <gmd:LanguageCode codeList="http://www.loc.gov/standards/iso639-2/" codeListValue="baq">Euskera</gmd:LanguageCode>
+         </gmd:language>
+         <gmd:language>
+            <gmd:LanguageCode codeList="http://www.loc.gov/standards/iso639-2/" codeListValue="glg">Gallego</gmd:LanguageCode>
+         </gmd:language>
+         <gmd:characterSet>
+            <gmd:MD_CharacterSetCode codeList="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_CharacterSetCode"
+                                     codeListValue="utf8">utf8</gmd:MD_CharacterSetCode>
+         </gmd:characterSet>
+         <gmd:topicCategory>
+            <gmd:MD_TopicCategoryCode>location</gmd:MD_TopicCategoryCode>
+         </gmd:topicCategory>
+         <gmd:topicCategory>
+            <gmd:MD_TopicCategoryCode>transportation</gmd:MD_TopicCategoryCode>
+         </gmd:topicCategory>
+         <gmd:extent>
+            <gmd:EX_Extent>
+               <gmd:description gco:nilReason="missing"/>
+               <gmd:geographicElement>
+                  <gmd:EX_GeographicBoundingBox>
+                     <gmd:westBoundLongitude>
+                        <gco:Decimal>-19.00</gco:Decimal>
+                     </gmd:westBoundLongitude>
+                     <gmd:eastBoundLongitude>
+                        <gco:Decimal>4.30</gco:Decimal>
+                     </gmd:eastBoundLongitude>
+                     <gmd:southBoundLatitude>
+                        <gco:Decimal>27.60</gco:Decimal>
+                     </gmd:southBoundLatitude>
+                     <gmd:northBoundLatitude>
+                        <gco:Decimal>44.00</gco:Decimal>
+                     </gmd:northBoundLatitude>
+                  </gmd:EX_GeographicBoundingBox>
+               </gmd:geographicElement>
+               <gmd:temporalElement gco:nilReason="missing"/>
+               <gmd:verticalElement gco:nilReason="missing"/>
+            </gmd:EX_Extent>
+         </gmd:extent>
+         <gmd:supplementalInformation>
+            <gco:CharacterString>https://centrodedescargas.cnig.es/CentroDescargas/documentos/Cartociudad_documentacion.zip</gco:CharacterString>
+         </gmd:supplementalInformation>
+      </gmd:MD_DataIdentification>
+  </gmd:identificationInfo>
+  <gmd:distributionInfo>
+      <gmd:MD_Distribution>
+         <gmd:distributionFormat>
+            <gmd:MD_Format>
+               <gmd:name>
+                  <gmx:Anchor xlink:href="http://inspire.ec.europa.eu/media-types/application/x-shapefile">x-shapefile</gmx:Anchor>
+               </gmd:name>
+               <gmd:version>
+                  <gco:CharacterString>Desconocida</gco:CharacterString>
+               </gmd:version>
+               <gmd:specification xsi:type="gmd:PT_FreeText_PropertyType">
+                  <gco:CharacterString>Ficheros shapefile por provincias</gco:CharacterString>
+                  <gmd:PT_FreeText>
+                     <gmd:textGroup>
+                        <gmd:LocalisedCharacterString locale="#eng">Shapefiles of provinces</gmd:LocalisedCharacterString>
+                     </gmd:textGroup>
+                  </gmd:PT_FreeText>
+               </gmd:specification>
+            </gmd:MD_Format>
+         </gmd:distributionFormat>
+         <gmd:distributionFormat>
+            <gmd:MD_Format>
+               <gmd:name>
+                  <gmx:Anchor xlink:href="https://www.iana.org/assignments/media-types/application/gml+xml">gml+xml</gmx:Anchor>
+               </gmd:name>
+               <gmd:version>
+                  <gco:CharacterString>4.0</gco:CharacterString>
+               </gmd:version>
+               <gmd:specification xsi:type="gmd:PT_FreeText_PropertyType">
+                  <gco:CharacterString>Especificaciones de datos de Direcciones https://inspire.ec.europa.eu/id/document/tg/ad</gco:CharacterString>
+                  <gmd:PT_FreeText>
+                     <gmd:textGroup>
+                        <gmd:LocalisedCharacterString locale="#eng">INSPIRE Data Specification on Addresses – Technical Guidelines https://inspire.ec.europa.eu/id/document/tg/ad</gmd:LocalisedCharacterString>
+                     </gmd:textGroup>
+                  </gmd:PT_FreeText>
+               </gmd:specification>
+               <gmd:fileDecompressionTechnique xsi:type="gmd:PT_FreeText_PropertyType">
+                  <gco:CharacterString>Archivos GML que contiene los objetos espaciales de direcciones según la especificación de datos de Direcciones de la Directiva Inspire</gco:CharacterString>
+                  <gmd:PT_FreeText>
+                     <gmd:textGroup>
+                        <gmd:LocalisedCharacterString locale="#eng">GML files containing the Addresses objects according to INSPIRE Data Specification on Addresses</gmd:LocalisedCharacterString>
+                     </gmd:textGroup>
+                  </gmd:PT_FreeText>
+               </gmd:fileDecompressionTechnique>
+            </gmd:MD_Format>
+         </gmd:distributionFormat>
+         <gmd:distributionFormat>
+            <gmd:MD_Format>
+               <gmd:name>
+                  <gmx:Anchor xlink:href="https://www.iana.org/assignments/media-types/application/geo+json">geo+json a través de API Features</gmx:Anchor>
+               </gmd:name>
+               <gmd:version>
+                  <gco:CharacterString>1.0.2</gco:CharacterString>
+               </gmd:version>
+               <gmd:specification xsi:type="gmd:PT_FreeText_PropertyType">
+                  <gco:CharacterString>UNE-EN ISO 19168-1:2020 Información geográfica. API geoespacial para objetos geográficos. Parte 1: Núcleo https://www.une.org/encuentra-tu-norma/busca-tu-norma/norma?c=N0068527</gco:CharacterString>
+                  <gmd:PT_FreeText>
+                     <gmd:textGroup>
+                        <gmd:LocalisedCharacterString locale="#eng">ISO 19168-1:2020 Geographic information — Geospatial API for features — Part 1: Core https://www.iso.org/standard/32586.html</gmd:LocalisedCharacterString>
+                     </gmd:textGroup>
+                  </gmd:PT_FreeText>
+               </gmd:specification>
+            </gmd:MD_Format>
+         </gmd:distributionFormat>
+         <gmd:distributor>
+            <gmd:MD_Distributor>
+               <gmd:distributorContact>
+                  <gmd:CI_ResponsibleParty>
+                     <gmd:individualName gco:nilReason="missing"/>
+                     <gmd:organisationName xsi:type="gmd:PT_FreeText_PropertyType">
+                        <gco:CharacterString>Centro Nacional de Información Geográfica (CNIG)</gco:CharacterString>
+                        <gmd:PT_FreeText>
+                           <gmd:textGroup>
+                              <gmd:LocalisedCharacterString locale="#eng">Centro Nacional de Información Geográfica (CNIG)</gmd:LocalisedCharacterString>
+                           </gmd:textGroup>
+                        </gmd:PT_FreeText>
+                     </gmd:organisationName>
+                     <gmd:positionName gco:nilReason="missing"/>
+                     <gmd:role>
+                        <gmd:CI_RoleCode codeList="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_RoleCode"
+                                         codeListValue="distributor">distributor</gmd:CI_RoleCode>
+                     </gmd:role>
+                  </gmd:CI_ResponsibleParty>
+               </gmd:distributorContact>
+               <gmd:distributionOrderProcess>
+                  <gmd:MD_StandardOrderProcess>
+                     <gmd:fees xsi:type="gmd:PT_FreeText_PropertyType">
+                        <gco:CharacterString>Descarga gratuita a través del centro de descargas de los servicios de descarga WFS, ATOM Feed, API Features o a través de la web del Centro de Descargas del CNIG.</gco:CharacterString>
+                        <gmd:PT_FreeText>
+                           <gmd:textGroup>
+                              <gmd:LocalisedCharacterString locale="#eng">Free download through the CNIG's download centre or through  network services of INSPIRE Directive (WFS, ATOM Feed, API Features)</gmd:LocalisedCharacterString>
+                           </gmd:textGroup>
+                        </gmd:PT_FreeText>
+                     </gmd:fees>
+                  </gmd:MD_StandardOrderProcess>
+               </gmd:distributionOrderProcess>
+               <gmd:distributorFormat gco:nilReason="missing"/>
+            </gmd:MD_Distributor>
+         </gmd:distributor>
+         <gmd:transferOptions>
+            <gmd:MD_DigitalTransferOptions>
+               <gmd:unitsOfDistribution xsi:type="gmd:PT_FreeText_PropertyType">
+                  <gco:CharacterString>Provincias en shapefile y ficheros GML por consultas al WFS de direcciones.</gco:CharacterString>
+                  <gmd:PT_FreeText>
+                     <gmd:textGroup>
+                        <gmd:LocalisedCharacterString locale="#eng">Shapefiles of provinces and GML files for queries through Addresses WFS.</gmd:LocalisedCharacterString>
+                     </gmd:textGroup>
+                  </gmd:PT_FreeText>
+               </gmd:unitsOfDistribution>
+               <gmd:onLine>
+                  <gmd:CI_OnlineResource>
+                     <gmd:linkage>
+                        <gmd:URL>https://www.cartociudad.es/wms-inspire/direcciones-ccpp?REQUEST=GetCapabilities&amp;SERVICE=WMS&amp;VERSION=1.3.0</gmd:URL>
+                     </gmd:linkage>
+                     <gmd:protocol>
+                        <gmx:Anchor xlink:href="http://inspire.ec.europa.eu/metadata-codelist/ProtocolValue/">OGC Web Map Service</gmx:Anchor>
+                     </gmd:protocol>
+                     <gmd:applicationProfile>
+                        <gmx:Anchor xlink:href="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceType/view">View Service</gmx:Anchor>
+                     </gmd:applicationProfile>
+                     <gmd:name xsi:type="gmd:PT_FreeText_PropertyType">
+                        <gco:CharacterString>Servicio de visualzación (WMS), Direcciones y códigos postales</gco:CharacterString>
+                        <gmd:PT_FreeText>
+                           <gmd:textGroup>
+                              <gmd:LocalisedCharacterString locale="#eng">View Services (WMS) for the Addresses</gmd:LocalisedCharacterString>
+                           </gmd:textGroup>
+                        </gmd:PT_FreeText>
+                     </gmd:name>
+                     <gmd:description>
+                        <gmx:Anchor xlink:href="http://inspire.ec.europa.eu/metadata-codelist/OnLineDescriptionCode/accessPoint">URL de Acceso</gmx:Anchor>
+                     </gmd:description>
+                  </gmd:CI_OnlineResource>
+               </gmd:onLine>
+               <gmd:onLine>
+                  <gmd:CI_OnlineResource>
+                     <gmd:linkage>
+                        <gmd:URL>https://www.cartociudad.es/wfs-inspire/direcciones?request=GetCapabilities&amp;service=WFS&amp;VERSION=2.0.0</gmd:URL>
+                     </gmd:linkage>
+                     <gmd:protocol>
+                        <gmx:Anchor xlink:href="http://defs.opengis.net/vocprez/object?uri=http://www.opengis.net/def/serviceType/ogc/wfs">OGC Web Feature Service</gmx:Anchor>
+                     </gmd:protocol>
+                     <gmd:applicationProfile>
+                        <gmx:Anchor xlink:href="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceType/download">Download Service</gmx:Anchor>
+                     </gmd:applicationProfile>
+                     <gmd:name xsi:type="gmd:PT_FreeText_PropertyType">
+                        <gco:CharacterString>Servicio de descarga (WFS) de direcciones</gco:CharacterString>
+                        <gmd:PT_FreeText>
+                           <gmd:textGroup>
+                              <gmd:LocalisedCharacterString locale="#eng">Download service (WFS) for the Addresses</gmd:LocalisedCharacterString>
+                           </gmd:textGroup>
+                        </gmd:PT_FreeText>
+                     </gmd:name>
+                     <gmd:description>
+                        <gmx:Anchor xlink:href="http://inspire.ec.europa.eu/metadata-codelist/OnLineDescriptionCode/accessPoint">URL de Acceso</gmx:Anchor>
+                     </gmd:description>
+                  </gmd:CI_OnlineResource>
+               </gmd:onLine>
+               <gmd:onLine>
+                  <gmd:CI_OnlineResource>
+                     <gmd:linkage>
+                        <gmd:URL>http://www.cartociudad.es/geocoder/api/geocoder/candidatesJsonp?</gmd:URL>
+                     </gmd:linkage>
+                     <gmd:name xsi:type="gmd:PT_FreeText_PropertyType">
+                        <gco:CharacterString>Servicio de Geocodificación de direcciones</gco:CharacterString>
+                        <gmd:PT_FreeText>
+                           <gmd:textGroup>
+                              <gmd:LocalisedCharacterString locale="#eng">Geocoder service for the Addresses</gmd:LocalisedCharacterString>
+                           </gmd:textGroup>
+                        </gmd:PT_FreeText>
+                     </gmd:name>
+                     <gmd:description>
+                        <gmx:Anchor xlink:href="http://inspire.ec.europa.eu/metadata-codelist/OnLineDescriptionCode/accessPoint">URL de Acceso</gmx:Anchor>
+                     </gmd:description>
+                  </gmd:CI_OnlineResource>
+               </gmd:onLine>
+               <gmd:onLine>
+                  <gmd:CI_OnlineResource>
+                     <gmd:linkage>
+                        <gmd:URL>https://centrodedescargas.cnig.es/CentroDescargas/buscadorCatalogo.do?codFamilia=02122</gmd:URL>
+                     </gmd:linkage>
+                     <gmd:name xsi:type="gmd:PT_FreeText_PropertyType">
+                        <gco:CharacterString>Centro de Descargas del CNIG</gco:CharacterString>
+                        <gmd:PT_FreeText>
+                           <gmd:textGroup>
+                              <gmd:LocalisedCharacterString locale="#eng">Download portal of CNIG</gmd:LocalisedCharacterString>
+                           </gmd:textGroup>
+                        </gmd:PT_FreeText>
+                     </gmd:name>
+                     <gmd:description xsi:type="gmd:PT_FreeText_PropertyType">
+                        <gco:CharacterString>Permite la descarga de provincias en shapefile y ficheros GML por consultas al WFS de direcciones, así como la descarga de las manzanas catastrales.</gco:CharacterString>
+                        <gmd:PT_FreeText>
+                           <gmd:textGroup>
+                              <gmd:LocalisedCharacterString locale="#eng">Website allows to download shapefiles of provinces and GML files for queries through Addresses WFS, as well as the download of the cadastral blocks.</gmd:LocalisedCharacterString>
+                           </gmd:textGroup>
+                        </gmd:PT_FreeText>
+                     </gmd:description>
+                     <gmd:function>
+                        <gmd:CI_OnLineFunctionCode codeList="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_OnLineFunctionCode"
+                                                   codeListValue="download">Descarga</gmd:CI_OnLineFunctionCode>
+                     </gmd:function>
+                  </gmd:CI_OnlineResource>
+               </gmd:onLine>
+               <gmd:onLine>
+                  <gmd:CI_OnlineResource>
+                     <gmd:linkage>
+                        <gmd:URL>https://tms-ign-base.idee.es/1.0.0/IGNBaseTodo/{z}/{x}/{-y}.jpeg</gmd:URL>
+                     </gmd:linkage>
+                     <gmd:applicationProfile>
+                        <gmx:Anchor xlink:href="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceType/other">Otros servicios</gmx:Anchor>
+                     </gmd:applicationProfile>
+                     <gmd:name xsi:type="gmd:PT_FreeText_PropertyType">
+                        <gco:CharacterString>Servicio TMS del Callejero</gco:CharacterString>
+                        <gmd:PT_FreeText>
+                           <gmd:textGroup>
+                              <gmd:LocalisedCharacterString locale="#eng">TMS service of Street map</gmd:LocalisedCharacterString>
+                           </gmd:textGroup>
+                        </gmd:PT_FreeText>
+                     </gmd:name>
+                     <gmd:description>
+                        <gmx:Anchor xlink:href="http://inspire.ec.europa.eu/metadata-codelist/OnLineDescriptionCode/accessPoint">URL de acceso</gmx:Anchor>
+                     </gmd:description>
+                     <gmd:function>
+                        <gmd:CI_OnLineFunctionCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_OnLineFunctionCode"
+                                                   codeListValue="information"/>
+                     </gmd:function>
+                  </gmd:CI_OnlineResource>
+               </gmd:onLine>
+               <gmd:onLine>
+                  <gmd:CI_OnlineResource>
+                     <gmd:linkage>
+                        <gmd:URL>https://tms-ign-base.idee.es/1.0.0/IGNBaseOrto/{z}/{x}/{-y}.png</gmd:URL>
+                     </gmd:linkage>
+                     <gmd:applicationProfile>
+                        <gmx:Anchor xlink:href="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceType/other">Otros servicios</gmx:Anchor>
+                     </gmd:applicationProfile>
+                     <gmd:name xsi:type="gmd:PT_FreeText_PropertyType">
+                        <gco:CharacterString>Servicio TMS del Callejero para ortoimágen</gco:CharacterString>
+                        <gmd:PT_FreeText>
+                           <gmd:textGroup>
+                              <gmd:LocalisedCharacterString locale="#eng">TMS service of Street map to orthoimagery</gmd:LocalisedCharacterString>
+                           </gmd:textGroup>
+                        </gmd:PT_FreeText>
+                     </gmd:name>
+                     <gmd:description>
+                        <gmx:Anchor xlink:href="http://inspire.ec.europa.eu/metadata-codelist/OnLineDescriptionCode/accessPoint">URL de acceso</gmx:Anchor>
+                     </gmd:description>
+                     <gmd:function>
+                        <gmd:CI_OnLineFunctionCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_OnLineFunctionCode"
+                                                   codeListValue="information"/>
+                     </gmd:function>
+                  </gmd:CI_OnlineResource>
+               </gmd:onLine>
+               <gmd:onLine>
+                  <gmd:CI_OnlineResource>
+                     <gmd:linkage>
+                        <gmd:URL>https://api-features.idee.es/collections/direcciones/Address</gmd:URL>
+                     </gmd:linkage>
+                     <gmd:protocol>
+                        <gmx:Anchor xlink:href="http://www.opengis.net/def/docs/17-069r3">OGC API - Features - Part 1: Core</gmx:Anchor>
+                     </gmd:protocol>
+                     <gmd:applicationProfile>
+                        <gmx:Anchor xlink:href="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceType/download">Servicio de descarga de objetos geográficos (API-Features)</gmx:Anchor>
+                     </gmd:applicationProfile>
+                     <gmd:name xsi:type="gmd:PT_FreeText_PropertyType">
+                        <gco:CharacterString>API de descarga de Direcciones del proyecto Cartociudad de España (API-Features)</gco:CharacterString>
+                        <gmd:PT_FreeText>
+                           <gmd:textGroup>
+                              <gmd:LocalisedCharacterString locale="#eng">API for downloading Address of Cartociudad Project (API-Features)</gmd:LocalisedCharacterString>
+                           </gmd:textGroup>
+                        </gmd:PT_FreeText>
+                     </gmd:name>
+                     <gmd:description>
+                        <gmx:Anchor xlink:href="http://inspire.ec.europa.eu/metadata-codelist/OnLineDescriptionCode/accessPoint">URL de acceso</gmx:Anchor>
+                     </gmd:description>
+                  </gmd:CI_OnlineResource>
+               </gmd:onLine>
+            </gmd:MD_DigitalTransferOptions>
+         </gmd:transferOptions>
+      </gmd:MD_Distribution>
+  </gmd:distributionInfo>
+  <gmd:dataQualityInfo>
+      <gmd:DQ_DataQuality>
+         <gmd:scope>
+            <gmd:DQ_Scope>
+               <gmd:level>
+                  <gmd:MD_ScopeCode codeList="https://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_ScopeCode"
+                                    codeListValue="dataset">dataset</gmd:MD_ScopeCode>
+               </gmd:level>
+            </gmd:DQ_Scope>
+         </gmd:scope>
+         <gmd:report>
+            <gmd:DQ_DomainConsistency>
+               <gmd:result>
+                  <gmd:DQ_ConformanceResult>
+                     <gmd:specification>
+                        <gmd:CI_Citation>
+                           <gmd:title>
+                              <gmx:Anchor xlink:href="https://eur-lex.europa.eu/eli/reg/2010/1089">Reglamento (UE) n o 1089/2010 de la Comisión de 23 de noviembre de 2010 por el que se aplica la Directiva 2007/2/CE del Parlamento Europeo y del Consejo en lo que se refiere a la interoperabilidad de los conjuntos y los servicios de datos espaciales</gmx:Anchor>
+                           </gmd:title>
+                           <gmd:date>
+                              <gmd:CI_Date>
+                                 <gmd:date>
+                                    <gco:Date>2010-12-08</gco:Date>
+                                 </gmd:date>
+                                 <gmd:dateType>
+                                    <gmd:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode"
+                                                         codeListValue="publication"/>
+                                 </gmd:dateType>
+                              </gmd:CI_Date>
+                           </gmd:date>
+                        </gmd:CI_Citation>
+                     </gmd:specification>
+                     <gmd:explanation>
+                        <gmx:Anchor xlink:href="http://inspire.ec.europa.eu/metadata-codelist/DegreeOfConformity/conformant">Conforme</gmx:Anchor>
+                     </gmd:explanation>
+                     <gmd:pass>
+                        <gco:Boolean>true</gco:Boolean>
+                     </gmd:pass>
+                  </gmd:DQ_ConformanceResult>
+               </gmd:result>
+            </gmd:DQ_DomainConsistency>
+         </gmd:report>
+         <gmd:report>
+            <gmd:DQ_DomainConsistency>
+               <gmd:result>
+                  <gmd:DQ_ConformanceResult>
+                     <gmd:specification>
+                        <gmd:CI_Citation>
+                           <gmd:title>
+                              <gmx:Anchor xlink:href="https://eur-lex.europa.eu/eli/reg/2008/1205">REGLAMENTO (CE) Nº 1205/2008 DE LA COMISIÓN de 3 de diciembre de 2008 por el que se ejecuta la Directiva 2007/2/CE del Parlamento Europeo y del Consejo en lo que se refiere a los metadatos</gmx:Anchor>
+                           </gmd:title>
+                           <gmd:date>
+                              <gmd:CI_Date>
+                                 <gmd:date>
+                                    <gco:Date>2008-12-24</gco:Date>
+                                 </gmd:date>
+                                 <gmd:dateType>
+                                    <gmd:CI_DateTypeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode"
+                                                         codeListValue="publication"/>
+                                 </gmd:dateType>
+                              </gmd:CI_Date>
+                           </gmd:date>
+                        </gmd:CI_Citation>
+                     </gmd:specification>
+                     <gmd:explanation>
+                        <gmx:Anchor xlink:href="http://inspire.ec.europa.eu/metadata-codelist/DegreeOfConformity/conformant">Conforme</gmx:Anchor>
+                     </gmd:explanation>
+                     <gmd:pass>
+                        <gco:Boolean>true</gco:Boolean>
+                     </gmd:pass>
+                  </gmd:DQ_ConformanceResult>
+               </gmd:result>
+            </gmd:DQ_DomainConsistency>
+         </gmd:report>
+         <gmd:lineage>
+            <gmd:LI_Lineage>
+               <gmd:statement xsi:type="gmd:PT_FreeText_PropertyType">
+                  <gco:CharacterString>CartoCiudad es un conjunto de datos de direcciones de tipo portal y puntos kilómetricos sobre todo el territorio nacional, generado a partir de datos oficiales.
+							En líneas generales, los procesos productivos que se llevan a cabo para obtener el producto CartoCiudad son:
+							- Extracción de datos de la red viaria de la  Información Geográfica de Referencia de Redes de Transporte (RT) del IGN.
+							- Cálculo de la relación entre viales y municipios (municipios que atraviesa cada vial).
+							- Asignación, por intersección geométrica, de población a la dirección (portal y punto kilométrico) y al topónimo.
+							- Asignación, por intersección geométrica, de unidad administrativa a la dirección (portal y punto kilométrico) y al topónimo.
+							- Asignación, por intersección geométrica, de código postal a la dirección (portal y punto kilométrico) y al topónimo.
+							- Incorporación de manzanas catastrales.</gco:CharacterString>
+                  <gmd:PT_FreeText>
+                     <gmd:textGroup>
+                        <gmd:LocalisedCharacterString locale="#eng">CartoCiudad is a set of portal-type addresses and kilometre points over the entire national territory, generated from official data.
+									In general terms, the production processes carried out to obtain the CartoCiudad product are
+									- Extraction of data from the road network from the Transport Network Reference Geographic Information
+									- Calculation of the relationship between roads and municipalities (municipalities crossed by each road).
+									- Assignment, by geometric intersection, of population to the address (portal and kilometre point) and to place names.
+									- Assignment, by geometric intersection, of administrative unit to the address (portal and kilometre point) and to place names.
+									- Assignment, by geometric intersection, of postal code to the address (gate and kilometre point)and to place names.
+									- Incorporation of cadastral blocks</gmd:LocalisedCharacterString>
+                     </gmd:textGroup>
+                  </gmd:PT_FreeText>
+               </gmd:statement>
+               <gmd:processStep gco:nilReason="missing"/>
+               <gmd:source>
+                  <gmd:LI_Source>
+                     <gmd:description xsi:type="gmd:PT_FreeText_PropertyType">
+                        <gco:CharacterString>CartoCiudad publica, a través de servicios web, las direcciones postales de España con representación puntual generadas a partir de la información de:
+									1) La red viaria prodecente de la Red de Transporte de la Información Geográfica de Referencia (IGR‐RT) del SCNE, que está constituida por las vías interurbanas (autopistas, autovías, carreteras, caminos, pistas y sendas) con sus puntos kilométricos y los portales ubicados a borde de parcela.
+									2) Las direcciones (calle y número) de diferentes Organismos. Para obtener una cobertura nacional se toman las direcciones de la Dirección General de Catastro, Eusko Jaurlaritza - Gobierno Vasco y Gobierno de Navarra. Se complementan a nivel autonómico con las direcciones del Instituto de Estadística y Cartografía de Andalucía (CDAU), Comunidad de Madrid, y Gobierno de La Rioja y, a nivel local, con las direcciones de la Diputació de Barcelona y Ayuntamiento de Cáceres.
+									3) Códigos postales procedente del Grupo Correos con el fin de establecer una relación con las direcciones y núcleos de población del IGN. Además, el Grupo correos aporta la geometría, a partir de la cual se generan los polígonos de códigos postales a través del servicio de visualización. Los códigos postales no están disponibles para su descarga.
+									4) El nombre oficial y tipo de vía urbana procedente del Instituto Nacional de Estadística, que facilita el nombre oficial y tipo de vía urbana (calle, avenida, plaza, etc.), recopilados a partir de los datos de los ayuntamientos. Anualmente también aporta los distritos y secciones censales. Estos, al igual que los códigos postales, son visibles y consultables a través de los servicios WMS pero no se pueden descargar sus geometrías.
+									5) Líneas límite, poblaciones y puntos de interés procedente del Instituto Geográfico Nacional. Desde el servicio de geocodificación, además de consultar las direcciones se pueden consultar la localización y geometría superficial de los municipios, provincias y comunidades autónomas, puntos de interés procedentes de la Base de datos tridimensional multiescala (1:2.000-1:25.000) con cobertura completa y continua para España, y el Nomenclátor Básico de España (NGBE), y poblaciones.
+									Esta información está a disposición del público a través del Centro de Descargas del CNIG y se publica mediante servicios de datos espaciales de visualización (WMS), descarga (WFS) y servicios REST, abiertos y gratuitos, de cobertura nacional con licencia CC BY 4.0. Esta información se actualiza trimestralmente.</gco:CharacterString>
+                        <gmd:PT_FreeText>
+                           <gmd:textGroup>
+                              <gmd:LocalisedCharacterString locale="#eng">CartoCiudad publishes, through web services, the postal addresses of Spain with specific representation generated from the information of
+											1) The road network produced by the Reference Geographical Information Transport Network (IGR-RT), which is made up of interurban roads (motorways, dual carriageways, roads, tracks and paths) with their kilometre points and the portals located on the edge of the plot.
+											2) The addresses (street and number) of different bodies. To obtain national coverage, the addresses of the General Directorate of Cadastre, Eusko Jaurlaritza - Basque Government and Government of Navarre are taken. At regional level, these are complemented by the addresses of the Andalusian Institute of Statistics and Cartography (CDAU), the Community of Madrid and the Government of La Rioja and, at local level, by the addresses of the Barcelona Provincial Council and Cáceres City Council.
+											3) Postal codes from the Correos Group in order to establish a relationship with the addresses and population centres of the NGI. In addition, Correos Group provides the geometry, from which the postal code polygons are generated through the visualisation service. The postal codes are not available for download.
+											4) The official name and type of urban road from the National Institute of Statistics, which provides the official name and type of urban road (street, avenue, square, etc.), compiled from the data of the town councils. Every year it also provides the districts and census sections. These, like the postal codes, are visible and can be consulted through the WMS services but their geometries cannot be downloaded.
+											5) Boundary lines, towns and points of interest from the National Geographic Institute From the geocoding service, in addition to consulting the addresses, you can also consult the location and surface geometry of the municipalities, provinces and autonomous communities, points of interest from the multiscale three-dimensional database (1: 2,000-1: 25,000) with complete and continuous coverage for Spain, and the Basic Classification of Spain (NGBE), and towns.
+											This information is available to the public through the CNIG's Download Centre and is published through spatial data services for viewing (WMS), downloading (WFS) and REST services, open and free of charge, with national coverage under a CC BY 4.0 licence. This information is updated quarterly.</gmd:LocalisedCharacterString>
+                           </gmd:textGroup>
+                        </gmd:PT_FreeText>
+                     </gmd:description>
+                     <gmd:sourceExtent gco:nilReason="missing"/>
+                  </gmd:LI_Source>
+               </gmd:source>
+               <gmd:source>
+                  <gmd:LI_Source>
+                     <gmd:description xsi:type="gmd:PT_FreeText_PropertyType">
+                        <gco:CharacterString>Cartografía catastral urbana de la Dirección General del Catastro:
+									- MASA (archivo Shapefile): Polígonos que delimitan las manzanas, con la información alfanumérica asociada a dichas geometrías.
+									- PARCELA (archivo Shapefile): Polígonos que delimitan cada una de las parcelas catastrales, con la información alfanumérica asociada a dichas geometrías.
+									- CONSTRU (archivo Shapefile): Polígonos que definen las edificaciones y distintas coberturas del suelo, etc.</gco:CharacterString>
+                        <gmd:PT_FreeText>
+                           <gmd:textGroup>
+                              <gmd:LocalisedCharacterString locale="#eng">Urban cadastral cartography of the General Directorate of Cadastre
+											- MASA (Shapefile file): Polygons that delimit the blocks, with the alphanumeric information associated with these geometries.
+											- PLOT (Shapefile file): Polygons that delimit each of the cadastral plots, with the alphanumeric information associated with these geometries.
+											- CONSTRU (Shapefile file): Polygons that define the buildings and different land cover, etc.</gmd:LocalisedCharacterString>
+                           </gmd:textGroup>
+                        </gmd:PT_FreeText>
+                     </gmd:description>
+                     <gmd:sourceExtent gco:nilReason="missing"/>
+                  </gmd:LI_Source>
+               </gmd:source>
+               <gmd:source>
+                  <gmd:LI_Source>
+                     <gmd:description xsi:type="gmd:PT_FreeText_PropertyType">
+                        <gco:CharacterString>Información del Instituto Nacional de Estadística (INE) utilizada para generar la Información Geográfica de Referencia de la Red de Transportes del IGN: Callejero de viales en archivo dbf: Tabla de base de datos que contiene la denominación oficial de la vía, número de vía INE, relaciones entre identificadores Dirección General de Catastro y el INE.</gco:CharacterString>
+                        <gmd:PT_FreeText>
+                           <gmd:textGroup>
+                              <gmd:LocalisedCharacterString locale="#eng">Information from the National Statistics Institute (INE) used to generate the Reference Geographical Information of the NGI Transport Network: Street directory of roads in dbf file: Database table containing the official name of the road, INE road number, relations between identifiers Directorate General of Cadastre and the INE.</gmd:LocalisedCharacterString>
+                           </gmd:textGroup>
+                        </gmd:PT_FreeText>
+                     </gmd:description>
+                     <gmd:sourceExtent gco:nilReason="inapplicable"/>
+                  </gmd:LI_Source>
+               </gmd:source>
+               <gmd:source>
+                  <gmd:LI_Source>
+                     <gmd:description xsi:type="gmd:PT_FreeText_PropertyType">
+                        <gco:CharacterString>Códigos postales de Correos.</gco:CharacterString>
+                        <gmd:PT_FreeText>
+                           <gmd:textGroup>
+                              <gmd:LocalisedCharacterString locale="#eng">Postal codes of Group Correos</gmd:LocalisedCharacterString>
+                           </gmd:textGroup>
+                        </gmd:PT_FreeText>
+                     </gmd:description>
+                     <gmd:sourceExtent gco:nilReason="inapplicable"/>
+                  </gmd:LI_Source>
+               </gmd:source>
+               <gmd:source>
+                  <gmd:LI_Source>
+                     <gmd:description xsi:type="gmd:PT_FreeText_PropertyType">
+                        <gco:CharacterString>Cartografías de otros organismos oficiales (Comunidades Autónomas, Ayuntamientos), principalmente utilizadas para generar la red viaria, y, en el caso del País Vasco y Navarra, para incluir la información catastral y estadística.</gco:CharacterString>
+                        <gmd:PT_FreeText>
+                           <gmd:textGroup>
+                              <gmd:LocalisedCharacterString locale="#eng">Direcciones de otros organismos oficiales (Comunidades Autónomas, Ayuntamientos), principalmente utilizadas para generar la red viaria, y, en el caso del País Vasco y Navarra, para incluir la información catastral y estadística.</gmd:LocalisedCharacterString>
+                           </gmd:textGroup>
+                        </gmd:PT_FreeText>
+                     </gmd:description>
+                     <gmd:sourceExtent gco:nilReason="inapplicable"/>
+                  </gmd:LI_Source>
+               </gmd:source>
+            </gmd:LI_Lineage>
+         </gmd:lineage>
+      </gmd:DQ_DataQuality>
+  </gmd:dataQualityInfo>
+</gmd:MD_Metadata>

@@ -47,6 +47,15 @@
     {
         "ckan_object": "Dataset",
         "ckan_section": "Basic Info",
+        "metadata_info": "MDR Themes (M)",
+        "new_metadata_field": "theme_eu",
+        "multiplicity": "1.*",
+        "codelist": "http://publications.europa.eu/resource/authority/data-theme",
+        "stored": "List[URI]"
+    },
+    {
+        "ckan_object": "Dataset",
+        "ckan_section": "Basic Info",
         "metadata_info": "NTI-RISP Theme (M)",
         "new_metadata_field": "theme_es",
         "multiplicity": "1.*",

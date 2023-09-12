@@ -19,13 +19,13 @@ def get_harvester_class(harvest_type, url):
     from harvesters.csw import HarvesterCSW
     from harvesters.ogc import HarvesterOGC
     from harvesters.table import HarvesterTable
-    from harvesters.xml import HarvesterMetadataFile
+    from harvesters.xml import HarvesterXML
 
     HARVESTER_DICT = {
         'csw': HarvesterCSW,
         'ogc': HarvesterOGC,
         'table': HarvesterTable,
-        'metadata_file': HarvesterMetadataFile,
+        'xml': HarvesterXML,
         'default': Harvester,
     }
 
@@ -40,7 +40,7 @@ def get_harvester_class(harvest_type, url):
         elif any(ext in url for ext in OGC2CKAN_HARVESTER_CONFIG['table']['keywords']):
             harvest_type = "table"
 
-        elif any(ext in url for ext in OGC2CKAN_HARVESTER_CONFIG['metadata_file']['keywords']):
-            harvest_type = "metadata_file"
+        elif any(ext in url for ext in OGC2CKAN_HARVESTER_CONFIG['xml']['keywords']):
+            harvest_type = "xml"
 
     return HARVESTER_DICT.get(harvest_type, HARVESTER_DICT['default'])

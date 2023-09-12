@@ -10,6 +10,18 @@ CKAN_DATASET_SCHEMAS = {
         "datadictionary": BaseDataDictionary,
         "datadictionaryfield": BaseDataDictionaryField
     },
+    "geodcatap_es": {
+        "dataset": GeoDataset,
+        "distribution": GeoDistribution,
+        "datadictionary": BaseDataDictionary,
+        "datadictionaryfield": BaseDataDictionaryField
+    },  
+    "geodcatap_eu": {
+        "dataset": GeoDataset,
+        "distribution": GeoDistribution,
+        "datadictionary": BaseDataDictionary,
+        "datadictionaryfield": BaseDataDictionaryField
+    },  
     "default": {
         "dataset": BaseDataset,
         "distribution": BaseDistribution,

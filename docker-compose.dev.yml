@@ -19,4 +19,6 @@ services:
     volumes:
         - ./log:${APP_DIR}/log
         - ./metadata:${APP_DIR}/metadata
+        - ./data:${APP_DIR}/data
+        - ./ogc2ckan:${APP_DIR}/ogc2ckan
     network_mode: host
