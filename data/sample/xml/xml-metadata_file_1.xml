@@ -1,0 +1,1221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gmd:MD_Metadata xmlns:gmd="http://www.isotc211.org/2005/gmd"
+                 xmlns:gml="http://www.opengis.net/gml/3.2"
+                 xmlns:gco="http://www.isotc211.org/2005/gco"
+                 xmlns:xlink="http://www.w3.org/1999/xlink"
+                 xmlns:gmx="http://www.isotc211.org/2005/gmx"
+                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://schemas.opengis.net/csw/2.0.2/profiles/apiso/1.0.0/apiso.xsd">
+  <gmd:fileIdentifier>
+      <gco:CharacterString>87ce5171-d713-4eec-a1f3-2b9dd94cad91</gco:CharacterString>
+  </gmd:fileIdentifier>
+  <gmd:language>
+      <gmd:LanguageCode codeList="http://www.loc.gov/standards/iso639-2/" codeListValue="spa"/>
+  </gmd:language>
+  <gmd:characterSet>
+      <gmd:MD_CharacterSetCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#MD_CharacterSetCode"
+                               codeListValue="utf8"/>
+  </gmd:characterSet>
+  <gmd:hierarchyLevel>
+      <gmd:MD_ScopeCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#MD_ScopeCode"
+                        codeListValue="dataset"/>
+  </gmd:hierarchyLevel>
+  <gmd:contact>
+      <gmd:CI_ResponsibleParty>
+         <gmd:organisationName>
+            <gco:CharacterString>Fondo Español de Garantía Agraria (FEGA), Subdirección General de Ayudas Directas - Ministerio de Agricultura, Pesca y Alimentación</gco:CharacterString>
+         </gmd:organisationName>
+         <gmd:contactInfo>
+            <gmd:CI_Contact>
+               <gmd:phone>
+                  <gmd:CI_Telephone>
+                     <gmd:voice>
+                        <gco:CharacterString>(+34) 91 347 64 68</gco:CharacterString>
+                     </gmd:voice>
+                     <gmd:facsimile>
+                        <gco:CharacterString>(+34) 91 347 64 65</gco:CharacterString>
+                     </gmd:facsimile>
+                  </gmd:CI_Telephone>
+               </gmd:phone>
+               <gmd:address>
+                  <gmd:CI_Address>
+                     <gmd:deliveryPoint>
+                        <gco:CharacterString>C/ Beneficencia nº 8</gco:CharacterString>
+                     </gmd:deliveryPoint>
+                     <gmd:city>
+                        <gco:CharacterString>Madrid</gco:CharacterString>
+                     </gmd:city>
+                     <gmd:administrativeArea>
+                        <gco:CharacterString>Madrid</gco:CharacterString>
+                     </gmd:administrativeArea>
+                     <gmd:postalCode>
+                        <gco:CharacterString>28004</gco:CharacterString>
+                     </gmd:postalCode>
+                     <gmd:country>
+                        <gco:CharacterString>España</gco:CharacterString>
+                     </gmd:country>
+                     <gmd:electronicMailAddress>
+                        <gco:CharacterString>sg.ayudasdirectas@fega.es</gco:CharacterString>
+                     </gmd:electronicMailAddress>
+                  </gmd:CI_Address>
+               </gmd:address>
+               <gmd:onlineResource>
+                  <gmd:CI_OnlineResource>
+                     <gmd:linkage>
+                        <gmd:URL>https://www.fega.gob.es</gmd:URL>
+                     </gmd:linkage>
+                  </gmd:CI_OnlineResource>
+               </gmd:onlineResource>
+            </gmd:CI_Contact>
+         </gmd:contactInfo>
+         <gmd:role>
+            <gmd:CI_RoleCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_RoleCode"
+                             codeListValue="pointOfContact"/>
+         </gmd:role>
+      </gmd:CI_ResponsibleParty>
+  </gmd:contact>
+  <gmd:dateStamp>
+      <gco:Date>2020-10-27</gco:Date>
+  </gmd:dateStamp>
+  <gmd:metadataStandardName>
+      <gco:CharacterString>Reglamento (CE) Nº 1205/2008 de Inspire + Perfil NEM v1.2</gco:CharacterString>
+  </gmd:metadataStandardName>
+  <gmd:metadataStandardVersion>
+      <gco:CharacterString>TG 2.0.1</gco:CharacterString>
+  </gmd:metadataStandardVersion>
+  <gmd:referenceSystemInfo>
+      <gmd:MD_ReferenceSystem>
+         <gmd:referenceSystemIdentifier>
+            <gmd:RS_Identifier>
+               <gmd:code>
+                  <gmx:Anchor xlink:href="http://www.opengis.net/def/crs/EPSG/0/4258">EPSG:4258 (ETRS89 coordenadas geográficas)</gmx:Anchor>
+               </gmd:code>
+            </gmd:RS_Identifier>
+         </gmd:referenceSystemIdentifier>
+      </gmd:MD_ReferenceSystem>
+  </gmd:referenceSystemInfo>
+  <gmd:identificationInfo>
+      <gmd:MD_DataIdentification>
+         <gmd:citation>
+            <gmd:CI_Citation>
+               <gmd:title>
+                  <gco:CharacterString>Líneas de declaración del sistema integrado de gestión y control (SIGC)</gco:CharacterString>
+               </gmd:title>
+               <gmd:alternateTitle>
+                  <gco:CharacterString>Layer composed by the geometries coming from the Single Applications submitted to receive CAP payments, under the European Agricultural Guarantee Fund (EAGF) and the European Agricultural Fund for Rural Development (EAFRD).</gco:CharacterString>
+               </gmd:alternateTitle>
+               <gmd:date>
+                  <gmd:CI_Date>
+                     <gmd:date>
+                        <gco:Date>2020-10-01</gco:Date>
+                     </gmd:date>
+                     <gmd:dateType>
+                        <gmd:CI_DateTypeCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_DateTypeCode"
+                                             codeListValue="creation"/>
+                     </gmd:dateType>
+                  </gmd:CI_Date>
+               </gmd:date>
+               <gmd:identifier>
+                  <gmd:RS_Identifier>
+                     <gmd:code>
+                        <gco:CharacterString>ESFEGADECLARACIONESSIGPAC20201001001</gco:CharacterString>
+                     </gmd:code>
+                     <gmd:codeSpace>
+                        <gco:CharacterString>MAPA</gco:CharacterString>
+                     </gmd:codeSpace>
+                  </gmd:RS_Identifier>
+               </gmd:identifier>
+               <gmd:citedResponsibleParty>
+                  <gmd:CI_ResponsibleParty>
+                     <gmd:organisationName>
+                        <gco:CharacterString>Fondo Español de Garantía Agraria (FEGA), Subdirección General de Ayudas Directas - Ministerio de Agricultura, Pesca y Alimentación</gco:CharacterString>
+                     </gmd:organisationName>
+                     <gmd:contactInfo>
+                        <gmd:CI_Contact>
+                           <gmd:phone>
+                              <gmd:CI_Telephone>
+                                 <gmd:voice>
+                                    <gco:CharacterString>(+34) 91 347 64 68</gco:CharacterString>
+                                 </gmd:voice>
+                                 <gmd:facsimile>
+                                    <gco:CharacterString>(+34) 91 347 64 65</gco:CharacterString>
+                                 </gmd:facsimile>
+                              </gmd:CI_Telephone>
+                           </gmd:phone>
+                           <gmd:address>
+                              <gmd:CI_Address>
+                                 <gmd:deliveryPoint>
+                                    <gco:CharacterString>C/ Beneficencia nº 8</gco:CharacterString>
+                                 </gmd:deliveryPoint>
+                                 <gmd:city>
+                                    <gco:CharacterString>Madrid</gco:CharacterString>
+                                 </gmd:city>
+                                 <gmd:administrativeArea>
+                                    <gco:CharacterString>Madrid</gco:CharacterString>
+                                 </gmd:administrativeArea>
+                                 <gmd:postalCode>
+                                    <gco:CharacterString>28004</gco:CharacterString>
+                                 </gmd:postalCode>
+                                 <gmd:country>
+                                    <gco:CharacterString>España</gco:CharacterString>
+                                 </gmd:country>
+                                 <gmd:electronicMailAddress>
+                                    <gco:CharacterString>sg.ayudasdirectas@fega.es</gco:CharacterString>
+                                 </gmd:electronicMailAddress>
+                              </gmd:CI_Address>
+                           </gmd:address>
+                           <gmd:onlineResource>
+                              <gmd:CI_OnlineResource>
+                                 <gmd:linkage>
+                                    <gmd:URL>https://www.fega.gob.es</gmd:URL>
+                                 </gmd:linkage>
+                              </gmd:CI_OnlineResource>
+                           </gmd:onlineResource>
+                        </gmd:CI_Contact>
+                     </gmd:contactInfo>
+                     <gmd:role>
+                        <gmd:CI_RoleCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_RoleCode"
+                                         codeListValue="custodian"/>
+                     </gmd:role>
+                  </gmd:CI_ResponsibleParty>
+               </gmd:citedResponsibleParty>
+               <gmd:citedResponsibleParty>
+                  <gmd:CI_ResponsibleParty>
+                     <gmd:organisationName>
+                        <gco:CharacterString>Generalitat Valenciana, Conselleria de Agricultura, Desarrollo Rural, Emergencia climática y Transición Ecológica</gco:CharacterString>
+                     </gmd:organisationName>
+                     <gmd:contactInfo>
+                        <gmd:CI_Contact>
+                           <gmd:address>
+                              <gmd:CI_Address>
+                                 <gmd:electronicMailAddress>
+                                    <gco:CharacterString>sg.ayudasdirectas@fega.es</gco:CharacterString>
+                                 </gmd:electronicMailAddress>
+                              </gmd:CI_Address>
+                           </gmd:address>
+                           <gmd:onlineResource>
+                              <gmd:CI_OnlineResource>
+                                 <gmd:linkage>
+                                    <gmd:URL>https://www.gva.es</gmd:URL>
+                                 </gmd:linkage>
+                              </gmd:CI_OnlineResource>
+                           </gmd:onlineResource>
+                        </gmd:CI_Contact>
+                     </gmd:contactInfo>
+                     <gmd:role>
+                        <gmd:CI_RoleCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_RoleCode"
+                                         codeListValue="custodian"/>
+                     </gmd:role>
+                  </gmd:CI_ResponsibleParty>
+               </gmd:citedResponsibleParty>
+               <gmd:citedResponsibleParty>
+                  <gmd:CI_ResponsibleParty>
+                     <gmd:organisationName>
+                        <gco:CharacterString>Gobierno de La Rioja, Consejería de Agricultura, Ganadería, Mundo Rural, Territorio y Población</gco:CharacterString>
+                     </gmd:organisationName>
+                     <gmd:contactInfo>
+                        <gmd:CI_Contact>
+                           <gmd:address>
+                              <gmd:CI_Address>
+                                 <gmd:electronicMailAddress>
+                                    <gco:CharacterString>sg.ayudasdirectas@fega.es</gco:CharacterString>
+                                 </gmd:electronicMailAddress>
+                              </gmd:CI_Address>
+                           </gmd:address>
+                           <gmd:onlineResource>
+                              <gmd:CI_OnlineResource>
+                                 <gmd:linkage>
+                                    <gmd:URL>https://www.larioja.org</gmd:URL>
+                                 </gmd:linkage>
+                              </gmd:CI_OnlineResource>
+                           </gmd:onlineResource>
+                        </gmd:CI_Contact>
+                     </gmd:contactInfo>
+                     <gmd:role>
+                        <gmd:CI_RoleCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_RoleCode"
+                                         codeListValue="custodian"/>
+                     </gmd:role>
+                  </gmd:CI_ResponsibleParty>
+               </gmd:citedResponsibleParty>
+               <gmd:citedResponsibleParty>
+                  <gmd:CI_ResponsibleParty>
+                     <gmd:organisationName>
+                        <gco:CharacterString>Gobierno Vasco, Departamento de Desarrollo Económico, Sostenibilidad y Medio Ambiente</gco:CharacterString>
+                     </gmd:organisationName>
+                     <gmd:contactInfo>
+                        <gmd:CI_Contact>
+                           <gmd:address>
+                              <gmd:CI_Address>
+                                 <gmd:electronicMailAddress>
+                                    <gco:CharacterString>sg.ayudasdirectas@fega.es</gco:CharacterString>
+                                 </gmd:electronicMailAddress>
+                              </gmd:CI_Address>
+                           </gmd:address>
+                           <gmd:onlineResource>
+                              <gmd:CI_OnlineResource>
+                                 <gmd:linkage>
+                                    <gmd:URL>https://www.euskadi.net</gmd:URL>
+                                 </gmd:linkage>
+                              </gmd:CI_OnlineResource>
+                           </gmd:onlineResource>
+                        </gmd:CI_Contact>
+                     </gmd:contactInfo>
+                     <gmd:role>
+                        <gmd:CI_RoleCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_RoleCode"
+                                         codeListValue="custodian"/>
+                     </gmd:role>
+                  </gmd:CI_ResponsibleParty>
+               </gmd:citedResponsibleParty>
+               <gmd:citedResponsibleParty>
+                  <gmd:CI_ResponsibleParty>
+                     <gmd:organisationName>
+                        <gco:CharacterString>Gobierno de Navarra, Departamento de Desarrollo Rural y Medio Ambiente</gco:CharacterString>
+                     </gmd:organisationName>
+                     <gmd:contactInfo>
+                        <gmd:CI_Contact>
+                           <gmd:address>
+                              <gmd:CI_Address>
+                                 <gmd:electronicMailAddress>
+                                    <gco:CharacterString>sg.ayudasdirectas@fega.es</gco:CharacterString>
+                                 </gmd:electronicMailAddress>
+                              </gmd:CI_Address>
+                           </gmd:address>
+                           <gmd:onlineResource>
+                              <gmd:CI_OnlineResource>
+                                 <gmd:linkage>
+                                    <gmd:URL>https://www.navarra.es</gmd:URL>
+                                 </gmd:linkage>
+                              </gmd:CI_OnlineResource>
+                           </gmd:onlineResource>
+                        </gmd:CI_Contact>
+                     </gmd:contactInfo>
+                     <gmd:role>
+                        <gmd:CI_RoleCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_RoleCode"
+                                         codeListValue="custodian"/>
+                     </gmd:role>
+                  </gmd:CI_ResponsibleParty>
+               </gmd:citedResponsibleParty>
+               <gmd:citedResponsibleParty>
+                  <gmd:CI_ResponsibleParty>
+                     <gmd:organisationName>
+                        <gco:CharacterString>Región de Murcia, Consejería de Agua, Agricultura, Ganadería, Pesca, Medio Ambiente y Emergencias</gco:CharacterString>
+                     </gmd:organisationName>
+                     <gmd:contactInfo>
+                        <gmd:CI_Contact>
+                           <gmd:address>
+                              <gmd:CI_Address>
+                                 <gmd:electronicMailAddress>
+                                    <gco:CharacterString>sg.ayudasdirectas@fega.es</gco:CharacterString>
+                                 </gmd:electronicMailAddress>
+                              </gmd:CI_Address>
+                           </gmd:address>
+                           <gmd:onlineResource>
+                              <gmd:CI_OnlineResource>
+                                 <gmd:linkage>
+                                    <gmd:URL>https://www.carm.es</gmd:URL>
+                                 </gmd:linkage>
+                              </gmd:CI_OnlineResource>
+                           </gmd:onlineResource>
+                        </gmd:CI_Contact>
+                     </gmd:contactInfo>
+                     <gmd:role>
+                        <gmd:CI_RoleCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_RoleCode"
+                                         codeListValue="custodian"/>
+                     </gmd:role>
+                  </gmd:CI_ResponsibleParty>
+               </gmd:citedResponsibleParty>
+               <gmd:citedResponsibleParty>
+                  <gmd:CI_ResponsibleParty>
+                     <gmd:organisationName>
+                        <gco:CharacterString>Comunidad de Madrid, Consejería de Medio Ambiente, Vivienda y Agricultura</gco:CharacterString>
+                     </gmd:organisationName>
+                     <gmd:contactInfo>
+                        <gmd:CI_Contact>
+                           <gmd:address>
+                              <gmd:CI_Address>
+                                 <gmd:electronicMailAddress>
+                                    <gco:CharacterString>sg.ayudasdirectas@fega.es</gco:CharacterString>
+                                 </gmd:electronicMailAddress>
+                              </gmd:CI_Address>
+                           </gmd:address>
+                           <gmd:onlineResource>
+                              <gmd:CI_OnlineResource>
+                                 <gmd:linkage>
+                                    <gmd:URL>https://www.madrid.org</gmd:URL>
+                                 </gmd:linkage>
+                              </gmd:CI_OnlineResource>
+                           </gmd:onlineResource>
+                        </gmd:CI_Contact>
+                     </gmd:contactInfo>
+                     <gmd:role>
+                        <gmd:CI_RoleCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_RoleCode"
+                                         codeListValue="custodian"/>
+                     </gmd:role>
+                  </gmd:CI_ResponsibleParty>
+               </gmd:citedResponsibleParty>
+               <gmd:citedResponsibleParty>
+                  <gmd:CI_ResponsibleParty>
+                     <gmd:organisationName>
+                        <gco:CharacterString>Xunta de Galicia, Consellería del Medio Rural</gco:CharacterString>
+                     </gmd:organisationName>
+                     <gmd:contactInfo>
+                        <gmd:CI_Contact>
+                           <gmd:address>
+                              <gmd:CI_Address>
+                                 <gmd:electronicMailAddress>
+                                    <gco:CharacterString>sg.ayudasdirectas@fega.es</gco:CharacterString>
+                                 </gmd:electronicMailAddress>
+                              </gmd:CI_Address>
+                           </gmd:address>
+                           <gmd:onlineResource>
+                              <gmd:CI_OnlineResource>
+                                 <gmd:linkage>
+                                    <gmd:URL>https://www.xunta.gal</gmd:URL>
+                                 </gmd:linkage>
+                              </gmd:CI_OnlineResource>
+                           </gmd:onlineResource>
+                        </gmd:CI_Contact>
+                     </gmd:contactInfo>
+                     <gmd:role>
+                        <gmd:CI_RoleCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_RoleCode"
+                                         codeListValue="custodian"/>
+                     </gmd:role>
+                  </gmd:CI_ResponsibleParty>
+               </gmd:citedResponsibleParty>
+               <gmd:citedResponsibleParty>
+                  <gmd:CI_ResponsibleParty>
+                     <gmd:organisationName>
+                        <gco:CharacterString>Gobierno de Extremadura, Consejería de Agricultura, Desarrollo Rural, Población y Territorio</gco:CharacterString>
+                     </gmd:organisationName>
+                     <gmd:contactInfo>
+                        <gmd:CI_Contact>
+                           <gmd:address>
+                              <gmd:CI_Address>
+                                 <gmd:electronicMailAddress>
+                                    <gco:CharacterString>sg.ayudasdirectas@fega.es</gco:CharacterString>
+                                 </gmd:electronicMailAddress>
+                              </gmd:CI_Address>
+                           </gmd:address>
+                           <gmd:onlineResource>
+                              <gmd:CI_OnlineResource>
+                                 <gmd:linkage>
+                                    <gmd:URL>http://www.juntaex.es</gmd:URL>
+                                 </gmd:linkage>
+                              </gmd:CI_OnlineResource>
+                           </gmd:onlineResource>
+                        </gmd:CI_Contact>
+                     </gmd:contactInfo>
+                     <gmd:role>
+                        <gmd:CI_RoleCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_RoleCode"
+                                         codeListValue="custodian"/>
+                     </gmd:role>
+                  </gmd:CI_ResponsibleParty>
+               </gmd:citedResponsibleParty>
+               <gmd:citedResponsibleParty>
+                  <gmd:CI_ResponsibleParty>
+                     <gmd:organisationName>
+                        <gco:CharacterString>Generalitat de Catalunya, Departamento de Acción Climática, Alimentación y Agenda Rural</gco:CharacterString>
+                     </gmd:organisationName>
+                     <gmd:contactInfo>
+                        <gmd:CI_Contact>
+                           <gmd:address>
+                              <gmd:CI_Address>
+                                 <gmd:electronicMailAddress>
+                                    <gco:CharacterString>sg.ayudasdirectas@fega.es</gco:CharacterString>
+                                 </gmd:electronicMailAddress>
+                              </gmd:CI_Address>
+                           </gmd:address>
+                           <gmd:onlineResource>
+                              <gmd:CI_OnlineResource>
+                                 <gmd:linkage>
+                                    <gmd:URL>https://www.gencat.cat</gmd:URL>
+                                 </gmd:linkage>
+                              </gmd:CI_OnlineResource>
+                           </gmd:onlineResource>
+                        </gmd:CI_Contact>
+                     </gmd:contactInfo>
+                     <gmd:role>
+                        <gmd:CI_RoleCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_RoleCode"
+                                         codeListValue="custodian"/>
+                     </gmd:role>
+                  </gmd:CI_ResponsibleParty>
+               </gmd:citedResponsibleParty>
+               <gmd:citedResponsibleParty>
+                  <gmd:CI_ResponsibleParty>
+                     <gmd:organisationName>
+                        <gco:CharacterString>Junta de Castilla y León, Consejería de Agricultura, Ganadería y Desarrollo Rural</gco:CharacterString>
+                     </gmd:organisationName>
+                     <gmd:contactInfo>
+                        <gmd:CI_Contact>
+                           <gmd:address>
+                              <gmd:CI_Address>
+                                 <gmd:electronicMailAddress>
+                                    <gco:CharacterString>sg.ayudasdirectas@fega.es</gco:CharacterString>
+                                 </gmd:electronicMailAddress>
+                              </gmd:CI_Address>
+                           </gmd:address>
+                           <gmd:onlineResource>
+                              <gmd:CI_OnlineResource>
+                                 <gmd:linkage>
+                                    <gmd:URL>https://www.jcyl.es</gmd:URL>
+                                 </gmd:linkage>
+                              </gmd:CI_OnlineResource>
+                           </gmd:onlineResource>
+                        </gmd:CI_Contact>
+                     </gmd:contactInfo>
+                     <gmd:role>
+                        <gmd:CI_RoleCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_RoleCode"
+                                         codeListValue="custodian"/>
+                     </gmd:role>
+                  </gmd:CI_ResponsibleParty>
+               </gmd:citedResponsibleParty>
+               <gmd:citedResponsibleParty>
+                  <gmd:CI_ResponsibleParty>
+                     <gmd:organisationName>
+                        <gco:CharacterString>Junta de Comunidades de Castilla-La Mancha, Consejería de Agricultura, Agua y Desarrollo Rural</gco:CharacterString>
+                     </gmd:organisationName>
+                     <gmd:contactInfo>
+                        <gmd:CI_Contact>
+                           <gmd:address>
+                              <gmd:CI_Address>
+                                 <gmd:electronicMailAddress>
+                                    <gco:CharacterString>sg.ayudasdirectas@fega.es</gco:CharacterString>
+                                 </gmd:electronicMailAddress>
+                              </gmd:CI_Address>
+                           </gmd:address>
+                           <gmd:onlineResource>
+                              <gmd:CI_OnlineResource>
+                                 <gmd:linkage>
+                                    <gmd:URL>https://www.castillalamancha.es</gmd:URL>
+                                 </gmd:linkage>
+                              </gmd:CI_OnlineResource>
+                           </gmd:onlineResource>
+                        </gmd:CI_Contact>
+                     </gmd:contactInfo>
+                     <gmd:role>
+                        <gmd:CI_RoleCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_RoleCode"
+                                         codeListValue="custodian"/>
+                     </gmd:role>
+                  </gmd:CI_ResponsibleParty>
+               </gmd:citedResponsibleParty>
+               <gmd:citedResponsibleParty>
+                  <gmd:CI_ResponsibleParty>
+                     <gmd:organisationName>
+                        <gco:CharacterString>Gobierno de Cantabria, Consejería de Desarrollo Rural, Ganadería, Pesca, Alimentación y Medio Ambiente</gco:CharacterString>
+                     </gmd:organisationName>
+                     <gmd:contactInfo>
+                        <gmd:CI_Contact>
+                           <gmd:address>
+                              <gmd:CI_Address>
+                                 <gmd:electronicMailAddress>
+                                    <gco:CharacterString>sg.ayudasdirectas@fega.es</gco:CharacterString>
+                                 </gmd:electronicMailAddress>
+                              </gmd:CI_Address>
+                           </gmd:address>
+                           <gmd:onlineResource>
+                              <gmd:CI_OnlineResource>
+                                 <gmd:linkage>
+                                    <gmd:URL>https://www.cantabria.es</gmd:URL>
+                                 </gmd:linkage>
+                              </gmd:CI_OnlineResource>
+                           </gmd:onlineResource>
+                        </gmd:CI_Contact>
+                     </gmd:contactInfo>
+                     <gmd:role>
+                        <gmd:CI_RoleCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_RoleCode"
+                                         codeListValue="custodian"/>
+                     </gmd:role>
+                  </gmd:CI_ResponsibleParty>
+               </gmd:citedResponsibleParty>
+               <gmd:citedResponsibleParty>
+                  <gmd:CI_ResponsibleParty>
+                     <gmd:organisationName>
+                        <gco:CharacterString>Gobierno de Canarias, Consejería de Agricultura, Ganadería y Pesca</gco:CharacterString>
+                     </gmd:organisationName>
+                     <gmd:contactInfo>
+                        <gmd:CI_Contact>
+                           <gmd:address>
+                              <gmd:CI_Address>
+                                 <gmd:electronicMailAddress>
+                                    <gco:CharacterString>sg.ayudasdirectas@fega.es</gco:CharacterString>
+                                 </gmd:electronicMailAddress>
+                              </gmd:CI_Address>
+                           </gmd:address>
+                           <gmd:onlineResource>
+                              <gmd:CI_OnlineResource>
+                                 <gmd:linkage>
+                                    <gmd:URL>https://www.gobiernodecanarias.org</gmd:URL>
+                                 </gmd:linkage>
+                              </gmd:CI_OnlineResource>
+                           </gmd:onlineResource>
+                        </gmd:CI_Contact>
+                     </gmd:contactInfo>
+                     <gmd:role>
+                        <gmd:CI_RoleCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_RoleCode"
+                                         codeListValue="custodian"/>
+                     </gmd:role>
+                  </gmd:CI_ResponsibleParty>
+               </gmd:citedResponsibleParty>
+               <gmd:citedResponsibleParty>
+                  <gmd:CI_ResponsibleParty>
+                     <gmd:organisationName>
+                        <gco:CharacterString>Gobierno de las Islas Baleares, Consejería de Agricultura, Pesca y Alimentación</gco:CharacterString>
+                     </gmd:organisationName>
+                     <gmd:contactInfo>
+                        <gmd:CI_Contact>
+                           <gmd:address>
+                              <gmd:CI_Address>
+                                 <gmd:electronicMailAddress>
+                                    <gco:CharacterString>sg.ayudasdirectas@fega.es</gco:CharacterString>
+                                 </gmd:electronicMailAddress>
+                              </gmd:CI_Address>
+                           </gmd:address>
+                           <gmd:onlineResource>
+                              <gmd:CI_OnlineResource>
+                                 <gmd:linkage>
+                                    <gmd:URL>https://www.caib.es</gmd:URL>
+                                 </gmd:linkage>
+                              </gmd:CI_OnlineResource>
+                           </gmd:onlineResource>
+                        </gmd:CI_Contact>
+                     </gmd:contactInfo>
+                     <gmd:role>
+                        <gmd:CI_RoleCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_RoleCode"
+                                         codeListValue="custodian"/>
+                     </gmd:role>
+                  </gmd:CI_ResponsibleParty>
+               </gmd:citedResponsibleParty>
+               <gmd:citedResponsibleParty>
+                  <gmd:CI_ResponsibleParty>
+                     <gmd:organisationName>
+                        <gco:CharacterString>Gobierno del Principado de Asturias, Consejería de Medio Rural y Cohesión Territorial</gco:CharacterString>
+                     </gmd:organisationName>
+                     <gmd:contactInfo>
+                        <gmd:CI_Contact>
+                           <gmd:address>
+                              <gmd:CI_Address>
+                                 <gmd:electronicMailAddress>
+                                    <gco:CharacterString>sg.ayudasdirectas@fega.es</gco:CharacterString>
+                                 </gmd:electronicMailAddress>
+                              </gmd:CI_Address>
+                           </gmd:address>
+                           <gmd:onlineResource>
+                              <gmd:CI_OnlineResource>
+                                 <gmd:linkage>
+                                    <gmd:URL>https://www.asturias.es</gmd:URL>
+                                 </gmd:linkage>
+                              </gmd:CI_OnlineResource>
+                           </gmd:onlineResource>
+                        </gmd:CI_Contact>
+                     </gmd:contactInfo>
+                     <gmd:role>
+                        <gmd:CI_RoleCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_RoleCode"
+                                         codeListValue="custodian"/>
+                     </gmd:role>
+                  </gmd:CI_ResponsibleParty>
+               </gmd:citedResponsibleParty>
+               <gmd:citedResponsibleParty>
+                  <gmd:CI_ResponsibleParty>
+                     <gmd:organisationName>
+                        <gco:CharacterString>Gobierno de Aragón, Departamento de Agricultura, Ganadería y Medio Ambiente</gco:CharacterString>
+                     </gmd:organisationName>
+                     <gmd:contactInfo>
+                        <gmd:CI_Contact>
+                           <gmd:address>
+                              <gmd:CI_Address>
+                                 <gmd:electronicMailAddress>
+                                    <gco:CharacterString>sg.ayudasdirectas@fega.es</gco:CharacterString>
+                                 </gmd:electronicMailAddress>
+                              </gmd:CI_Address>
+                           </gmd:address>
+                           <gmd:onlineResource>
+                              <gmd:CI_OnlineResource>
+                                 <gmd:linkage>
+                                    <gmd:URL>https://www.aragon.es</gmd:URL>
+                                 </gmd:linkage>
+                              </gmd:CI_OnlineResource>
+                           </gmd:onlineResource>
+                        </gmd:CI_Contact>
+                     </gmd:contactInfo>
+                     <gmd:role>
+                        <gmd:CI_RoleCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_RoleCode"
+                                         codeListValue="custodian"/>
+                     </gmd:role>
+                  </gmd:CI_ResponsibleParty>
+               </gmd:citedResponsibleParty>
+               <gmd:citedResponsibleParty>
+                  <gmd:CI_ResponsibleParty>
+                     <gmd:organisationName>
+                        <gco:CharacterString>Junta de Andalucía, Consejería de Agricultura, Pesca, Agua y Desarrollo rural</gco:CharacterString>
+                     </gmd:organisationName>
+                     <gmd:contactInfo>
+                        <gmd:CI_Contact>
+                           <gmd:address>
+                              <gmd:CI_Address>
+                                 <gmd:electronicMailAddress>
+                                    <gco:CharacterString>sg.ayudasdirectas@fega.es</gco:CharacterString>
+                                 </gmd:electronicMailAddress>
+                              </gmd:CI_Address>
+                           </gmd:address>
+                           <gmd:onlineResource>
+                              <gmd:CI_OnlineResource>
+                                 <gmd:linkage>
+                                    <gmd:URL>https://www.juntadeandalucia.es</gmd:URL>
+                                 </gmd:linkage>
+                              </gmd:CI_OnlineResource>
+                           </gmd:onlineResource>
+                        </gmd:CI_Contact>
+                     </gmd:contactInfo>
+                     <gmd:role>
+                        <gmd:CI_RoleCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_RoleCode"
+                                         codeListValue="custodian"/>
+                     </gmd:role>
+                  </gmd:CI_ResponsibleParty>
+               </gmd:citedResponsibleParty>
+               <gmd:presentationForm>
+                  <gmd:CI_PresentationFormCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_PresentationFormCode"
+                                               codeListValue="mapDigital"/>
+               </gmd:presentationForm>
+            </gmd:CI_Citation>
+         </gmd:citation>
+         <gmd:abstract>
+            <gco:CharacterString>El Reglamento (UE) 2021/2116 en su título V regula el sistema integrado de gestión y control (SIGC) indicando que se aplicará a las intervenciones basadas en la superficie o en los animales enumeradas en el título III, capítulos II y IV, del Reglamento (UE) 2021/2115 y a las medidas a que se refieren el capítulo IV del Reglamento (UE) no 228/2013 y el capítulo IV del Reglamento (UE) no 229/2013. En la medida necesaria, el sistema integrado se utilizará también para gestionar y controlar la condicionalidad y las intervenciones en el sector vitivinícola a que se refiere el título III del Reglamento (UE) 2021/2115. Por ello, se debe establecer un sistema que permita la identificación única de los productores que presenten solicitudes para los diferentes regímenes de ayuda, así como la identificación de las parcelas agrícolas utilizando las técnicas del Sistema de Información Geográfica de Parcelas Agrícolas (SIGPAC). Para ello se establece dentro del SIGC la solicitud única anual de ayudas como medio para que el beneficiario pueda presentar su solicitud para todas las intervenciones basadas en la superficie que considere.</gco:CharacterString>
+         </gmd:abstract>
+         <gmd:purpose>
+            <gco:CharacterString>Información alfanumérica y gráfica de base para la gestión de las ayudas PAC, que permite conocer las alternativas de cultivo sobre los recintos SIGPAC y las ayudas solicitadas correspondientes, así como la identificación de las superficies de uso comunal, de manera que sea posible una verificación de la información contra diferentes tablas de referencia, la realización de cruces entre los datos provenientes de las distintas solicitudes (para evitar duplicidades) y la elaboración de un plan de inspecciones sobre el terreno y con medios remotos (control y monitorización con imágenes de satélite, ortofotos...), lo que permite verificar los requisitos de subvencionabilidad de las solicitudes. El objetivo último es garantizar una correcta gestión de los fondos comunitarios destinados al sector.</gco:CharacterString>
+         </gmd:purpose>
+         <gmd:credit>
+            <gco:CharacterString>Organismos Pagadores de los distintos estados miembros. En España cada comunidad autónoma es Organismo Pagador y a su vez el Fondo Español de Garantía Agraria como coordinador de todos ellos, también lo es.</gco:CharacterString>
+         </gmd:credit>
+         <gmd:pointOfContact>
+            <gmd:CI_ResponsibleParty>
+               <gmd:organisationName>
+                  <gco:CharacterString>Fondo Español de Garantía Agraria (FEGA), Subdirección General de Ayudas Directas - Ministerio de Agricultura, Pesca y Alimentación</gco:CharacterString>
+               </gmd:organisationName>
+               <gmd:contactInfo>
+                  <gmd:CI_Contact>
+                     <gmd:phone>
+                        <gmd:CI_Telephone>
+                           <gmd:voice>
+                              <gco:CharacterString>(+34) 91 347 64 68</gco:CharacterString>
+                           </gmd:voice>
+                           <gmd:facsimile>
+                              <gco:CharacterString>(+34) 91 347 64 65</gco:CharacterString>
+                           </gmd:facsimile>
+                        </gmd:CI_Telephone>
+                     </gmd:phone>
+                     <gmd:address>
+                        <gmd:CI_Address>
+                           <gmd:deliveryPoint>
+                              <gco:CharacterString>C/ Beneficencia nº 8</gco:CharacterString>
+                           </gmd:deliveryPoint>
+                           <gmd:city>
+                              <gco:CharacterString>Madrid</gco:CharacterString>
+                           </gmd:city>
+                           <gmd:administrativeArea>
+                              <gco:CharacterString>Madrid</gco:CharacterString>
+                           </gmd:administrativeArea>
+                           <gmd:postalCode>
+                              <gco:CharacterString>28004</gco:CharacterString>
+                           </gmd:postalCode>
+                           <gmd:country>
+                              <gco:CharacterString>España</gco:CharacterString>
+                           </gmd:country>
+                           <gmd:electronicMailAddress>
+                              <gco:CharacterString>sg.ayudasdirectas@fega.es</gco:CharacterString>
+                           </gmd:electronicMailAddress>
+                        </gmd:CI_Address>
+                     </gmd:address>
+                  </gmd:CI_Contact>
+               </gmd:contactInfo>
+               <gmd:role>
+                  <gmd:CI_RoleCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_RoleCode"
+                                   codeListValue="pointOfContact"/>
+               </gmd:role>
+            </gmd:CI_ResponsibleParty>
+         </gmd:pointOfContact>
+         <gmd:resourceMaintenance>
+            <gmd:MD_MaintenanceInformation>
+               <gmd:maintenanceAndUpdateFrequency>
+                  <gmd:MD_MaintenanceFrequencyCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#MD_MaintenanceFrequencyCode"
+                                                   codeListValue="continual"/>
+               </gmd:maintenanceAndUpdateFrequency>
+            </gmd:MD_MaintenanceInformation>
+         </gmd:resourceMaintenance>
+         <gmd:graphicOverview>
+            <gmd:MD_BrowseGraphic>
+               <gmd:fileName>
+                  <gco:CharacterString>https://www.mapama.gob.es/ide/metadatos/srv/api/records/87ce5171-d713-4eec-a1f3-2b9dd94cad91/attachments/ESFEGADECLARACIONESSIGPAC20201001001_vInspire.png</gco:CharacterString>
+               </gmd:fileName>
+               <gmd:fileDescription>
+                  <gco:CharacterString>large_thumbnail</gco:CharacterString>
+               </gmd:fileDescription>
+               <gmd:fileType>
+                  <gco:CharacterString>png</gco:CharacterString>
+               </gmd:fileType>
+            </gmd:MD_BrowseGraphic>
+         </gmd:graphicOverview>
+         <gmd:descriptiveKeywords>
+            <gmd:MD_Keywords>
+               <gmd:keyword>
+                  <gmx:Anchor xlink:href="http://inspire.ec.europa.eu/theme/lu">Uso del suelo</gmx:Anchor>
+               </gmd:keyword>
+               <gmd:keyword>
+                  <gmx:Anchor xlink:href="http://inspire.ec.europa.eu/theme/lc">Cubierta terrestre</gmx:Anchor>
+               </gmd:keyword>
+               <gmd:thesaurusName>
+                  <gmd:CI_Citation>
+                     <gmd:title>
+                        <gmx:Anchor xlink:href="http://www.eionet.europa.eu/gemet/inspire_themes">GEMET - INSPIRE themes, version 1.0</gmx:Anchor>
+                     </gmd:title>
+                     <gmd:date>
+                        <gmd:CI_Date>
+                           <gmd:date>
+                              <gco:Date>2008-06-01</gco:Date>
+                           </gmd:date>
+                           <gmd:dateType>
+                              <gmd:CI_DateTypeCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_DateTypeCode"
+                                                   codeListValue="publication"/>
+                           </gmd:dateType>
+                        </gmd:CI_Date>
+                     </gmd:date>
+                  </gmd:CI_Citation>
+               </gmd:thesaurusName>
+            </gmd:MD_Keywords>
+         </gmd:descriptiveKeywords>
+         <gmd:descriptiveKeywords>
+            <gmd:MD_Keywords>
+               <gmd:keyword>
+                  <gmx:Anchor xlink:href="http://inspire.ec.europa.eu/metadata-codelist/SpatialScope/national">Nacional</gmx:Anchor>
+               </gmd:keyword>
+               <gmd:thesaurusName>
+                  <gmd:CI_Citation>
+                     <gmd:title>
+                        <gmx:Anchor xlink:href="http://inspire.ec.europa.eu/metadata-codelist/SpatialScope">Spatial Scope</gmx:Anchor>
+                     </gmd:title>
+                     <gmd:date>
+                        <gmd:CI_Date>
+                           <gmd:date>
+                              <gco:Date>2019-05-22</gco:Date>
+                           </gmd:date>
+                           <gmd:dateType>
+                              <gmd:CI_DateTypeCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_DateTypeCode"
+                                                   codeListValue="publication"/>
+                           </gmd:dateType>
+                        </gmd:CI_Date>
+                     </gmd:date>
+                  </gmd:CI_Citation>
+               </gmd:thesaurusName>
+            </gmd:MD_Keywords>
+         </gmd:descriptiveKeywords>
+         <gmd:descriptiveKeywords>
+            <gmd:MD_Keywords>
+               <gmd:keyword>
+                  <gmx:Anchor>Solicitud Única</gmx:Anchor>
+               </gmd:keyword>
+               <gmd:keyword>
+                  <gmx:Anchor>Ayudas PAC</gmx:Anchor>
+               </gmd:keyword>
+               <gmd:keyword>
+                  <gmx:Anchor>Ayudas FEAGA</gmx:Anchor>
+               </gmd:keyword>
+               <gmd:keyword>
+                  <gmx:Anchor>Ayudas FEADER</gmx:Anchor>
+               </gmd:keyword>
+               <gmd:keyword>
+                  <gmx:Anchor>Sistema Integrado de Gestión y Control (SIGC)</gmx:Anchor>
+               </gmd:keyword>
+               <gmd:keyword>
+                  <gmx:Anchor>Línea de declaración gráfica</gmx:Anchor>
+               </gmd:keyword>
+               <gmd:keyword>
+                  <gmx:Anchor>Recinto SIGPAC</gmx:Anchor>
+               </gmd:keyword>
+               <gmd:keyword>
+                  <gmx:Anchor>Información alfanumérica</gmx:Anchor>
+               </gmd:keyword>
+               <gmd:keyword>
+                  <gmx:Anchor>Subvencionabilidad</gmx:Anchor>
+               </gmd:keyword>
+               <gmd:keyword>
+                  <gmx:Anchor>GSA</gmx:Anchor>
+               </gmd:keyword>
+               <gmd:keyword>
+                  <gmx:Anchor>Agricultural Parcel</gmx:Anchor>
+               </gmd:keyword>
+            </gmd:MD_Keywords>
+         </gmd:descriptiveKeywords>
+         <gmd:resourceSpecificUsage>
+            <gmd:MD_Usage>
+               <gmd:specificUsage>
+                  <gco:CharacterString>Disponer de información anual detallada (alfanumérica y gráfica) de los distintos cultivos y variedades de las explotaciones agrícolas, para su verificación de cara a la percepción de ayudas PAC y para su uso por otras unidades de la Administración, con fines estadísticos y de planificación.</gco:CharacterString>
+               </gmd:specificUsage>
+               <gmd:userContactInfo>
+                  <gmd:CI_ResponsibleParty>
+                     <gmd:organisationName>
+                        <gco:CharacterString>Ministerio de Agricultura, Pesca y Alimentación</gco:CharacterString>
+                     </gmd:organisationName>
+                     <gmd:contactInfo>
+                        <gmd:CI_Contact>
+                           <gmd:address>
+                              <gmd:CI_Address>
+                                 <gmd:electronicMailAddress>
+                                    <gco:CharacterString>sg.ayudasdirectas@fega.es</gco:CharacterString>
+                                 </gmd:electronicMailAddress>
+                              </gmd:CI_Address>
+                           </gmd:address>
+                        </gmd:CI_Contact>
+                     </gmd:contactInfo>
+                     <gmd:role>
+                        <gmd:CI_RoleCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_RoleCode"
+                                         codeListValue="originator"/>
+                     </gmd:role>
+                  </gmd:CI_ResponsibleParty>
+               </gmd:userContactInfo>
+            </gmd:MD_Usage>
+         </gmd:resourceSpecificUsage>
+         <gmd:resourceConstraints>
+            <gmd:MD_LegalConstraints>
+               <gmd:useConstraints>
+                  <gmd:MD_RestrictionCode codeListValue="otherRestrictions"
+                                          codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#MD_RestrictionCode"/>
+               </gmd:useConstraints>
+               <gmd:otherConstraints>
+                  <gmx:Anchor xlink:href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</gmx:Anchor>
+               </gmd:otherConstraints>
+               <gmd:otherConstraints>
+                  <gco:CharacterString>Nombrar a la fuente: Fondo Español de Garantía Agraria (FEGA)</gco:CharacterString>
+               </gmd:otherConstraints>
+            </gmd:MD_LegalConstraints>
+         </gmd:resourceConstraints>
+         <gmd:resourceConstraints>
+            <gmd:MD_LegalConstraints>
+               <gmd:accessConstraints>
+                  <gmd:MD_RestrictionCode codeListValue="otherRestrictions"
+                                          codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#MD_RestrictionCode"/>
+               </gmd:accessConstraints>
+               <gmd:otherConstraints>
+                  <gmx:Anchor xlink:href="http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/noLimitations">Sin limitaciones al acceso público</gmx:Anchor>
+               </gmd:otherConstraints>
+            </gmd:MD_LegalConstraints>
+         </gmd:resourceConstraints>
+         <gmd:spatialRepresentationType>
+            <gmd:MD_SpatialRepresentationTypeCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#MD_SpatialRepresentationTypeCode"
+                                                  codeListValue="vector"/>
+         </gmd:spatialRepresentationType>
+         <gmd:spatialResolution>
+            <gmd:MD_Resolution>
+               <gmd:equivalentScale>
+                  <gmd:MD_RepresentativeFraction>
+                     <gmd:denominator>
+                        <gco:Integer>5000</gco:Integer>
+                     </gmd:denominator>
+                  </gmd:MD_RepresentativeFraction>
+               </gmd:equivalentScale>
+            </gmd:MD_Resolution>
+         </gmd:spatialResolution>
+         <gmd:language>
+            <gmd:LanguageCode codeList="http://www.loc.gov/standards/iso639-2/" codeListValue="spa"/>
+         </gmd:language>
+         <gmd:topicCategory>
+            <gmd:MD_TopicCategoryCode>farming</gmd:MD_TopicCategoryCode>
+         </gmd:topicCategory>
+         <gmd:extent>
+            <gmd:EX_Extent>
+               <gmd:description>
+                  <gco:CharacterString>Península Ibérica, Islas Baleares, Islas Canarias</gco:CharacterString>
+               </gmd:description>
+               <gmd:geographicElement>
+                  <gmd:EX_GeographicBoundingBox>
+                     <gmd:westBoundLongitude>
+                        <gco:Decimal>-19.00</gco:Decimal>
+                     </gmd:westBoundLongitude>
+                     <gmd:eastBoundLongitude>
+                        <gco:Decimal>5.00</gco:Decimal>
+                     </gmd:eastBoundLongitude>
+                     <gmd:southBoundLatitude>
+                        <gco:Decimal>27.00</gco:Decimal>
+                     </gmd:southBoundLatitude>
+                     <gmd:northBoundLatitude>
+                        <gco:Decimal>44.00</gco:Decimal>
+                     </gmd:northBoundLatitude>
+                  </gmd:EX_GeographicBoundingBox>
+               </gmd:geographicElement>
+               <gmd:temporalElement>
+                  <gmd:EX_TemporalExtent>
+                     <gmd:extent>
+                        <gml:TimePeriod gml:id="ID_7b251184">
+                           <gml:beginPosition>2005-01-01</gml:beginPosition>
+                           <gml:endPosition indeterminatePosition="now"/>
+                        </gml:TimePeriod>
+                     </gmd:extent>
+                  </gmd:EX_TemporalExtent>
+               </gmd:temporalElement>
+            </gmd:EX_Extent>
+         </gmd:extent>
+      </gmd:MD_DataIdentification>
+  </gmd:identificationInfo>
+  <gmd:distributionInfo>
+      <gmd:MD_Distribution>
+         <gmd:distributionFormat>
+            <gmd:MD_Format>
+               <gmd:name>
+                  <gco:CharacterString>SHP-ArcView ShapeFile</gco:CharacterString>
+               </gmd:name>
+               <gmd:version>
+                  <gco:CharacterString>Desconocido</gco:CharacterString>
+               </gmd:version>
+               <gmd:specification>
+                  <gco:CharacterString>Desconocido</gco:CharacterString>
+               </gmd:specification>
+            </gmd:MD_Format>
+         </gmd:distributionFormat>
+         <gmd:distributor>
+            <gmd:MD_Distributor>
+               <gmd:distributorContact>
+                  <gmd:CI_ResponsibleParty>
+                     <gmd:organisationName>
+                        <gco:CharacterString>Fondo Español de Garantía Agraria (FEGA), Subdirección General de Ayudas Directas  - Ministerio de Agricultura, Pesca y Alimentación</gco:CharacterString>
+                     </gmd:organisationName>
+                     <gmd:contactInfo>
+                        <gmd:CI_Contact>
+                           <gmd:phone>
+                              <gmd:CI_Telephone>
+                                 <gmd:voice>
+                                    <gco:CharacterString>(+34) 91 347 64 68</gco:CharacterString>
+                                 </gmd:voice>
+                                 <gmd:facsimile>
+                                    <gco:CharacterString>(+34) 91 347 64 65</gco:CharacterString>
+                                 </gmd:facsimile>
+                              </gmd:CI_Telephone>
+                           </gmd:phone>
+                           <gmd:address>
+                              <gmd:CI_Address>
+                                 <gmd:deliveryPoint>
+                                    <gco:CharacterString>C/ Beneficencia nº 8</gco:CharacterString>
+                                 </gmd:deliveryPoint>
+                                 <gmd:city>
+                                    <gco:CharacterString>Madrid</gco:CharacterString>
+                                 </gmd:city>
+                                 <gmd:administrativeArea>
+                                    <gco:CharacterString>Madrid</gco:CharacterString>
+                                 </gmd:administrativeArea>
+                                 <gmd:postalCode>
+                                    <gco:CharacterString>28004</gco:CharacterString>
+                                 </gmd:postalCode>
+                                 <gmd:country>
+                                    <gco:CharacterString>España</gco:CharacterString>
+                                 </gmd:country>
+                                 <gmd:electronicMailAddress>
+                                    <gco:CharacterString>sg.ayudasdirectas@fega.es</gco:CharacterString>
+                                 </gmd:electronicMailAddress>
+                              </gmd:CI_Address>
+                           </gmd:address>
+                        </gmd:CI_Contact>
+                     </gmd:contactInfo>
+                     <gmd:role>
+                        <gmd:CI_RoleCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_RoleCode"
+                                         codeListValue="distributor"/>
+                     </gmd:role>
+                  </gmd:CI_ResponsibleParty>
+               </gmd:distributorContact>
+            </gmd:MD_Distributor>
+         </gmd:distributor>
+         <gmd:transferOptions>
+            <gmd:MD_DigitalTransferOptions>
+               <gmd:onLine>
+                  <gmd:CI_OnlineResource>
+                     <gmd:linkage>
+                        <gmd:URL>https://sigpac.mapa.gob.es/fega/visor/</gmd:URL>
+                     </gmd:linkage>
+                     <gmd:protocol>
+                        <gco:CharacterString>WWW:LINK-1.0-http--link</gco:CharacterString>
+                     </gmd:protocol>
+                     <gmd:name>
+                        <gco:CharacterString>Visor SIGPAC nacional</gco:CharacterString>
+                     </gmd:name>
+                     <gmd:function>
+                        <gmd:CI_OnLineFunctionCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_OnLineFunctionCode"
+                                                   codeListValue="information"/>
+                     </gmd:function>
+                  </gmd:CI_OnlineResource>
+               </gmd:onLine>
+               <gmd:onLine>
+                  <gmd:CI_OnlineResource>
+                     <gmd:linkage>
+                        <gmd:URL>https://www.mapa.gob.es/es/agricultura/temas/sistema-de-informacion-geografica-de-parcelas-agricolas-sigpac-</gmd:URL>
+                     </gmd:linkage>
+                     <gmd:protocol>
+                        <gco:CharacterString>WWW:LINK-1.0-http--link</gco:CharacterString>
+                     </gmd:protocol>
+                     <gmd:name>
+                        <gco:CharacterString>Información del Ministerio sobre el Sistema de Información de Parcelas Agrícolas (SIGPAC)</gco:CharacterString>
+                     </gmd:name>
+                     <gmd:function>
+                        <gmd:CI_OnLineFunctionCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_OnLineFunctionCode"
+                                                   codeListValue="information"/>
+                     </gmd:function>
+                  </gmd:CI_OnlineResource>
+               </gmd:onLine>
+               <gmd:onLine>
+                  <gmd:CI_OnlineResource>
+                     <gmd:linkage>
+                        <gmd:URL>https://www.fega.gob.es/PwfGcp/es/ayudas_dir_desa_rural/aplicacion_sigpac/index.jsp</gmd:URL>
+                     </gmd:linkage>
+                     <gmd:protocol>
+                        <gco:CharacterString>WWW:LINK-1.0-http--link</gco:CharacterString>
+                     </gmd:protocol>
+                     <gmd:name>
+                        <gco:CharacterString>Información sobre el Visor SIGPAC</gco:CharacterString>
+                     </gmd:name>
+                     <gmd:function>
+                        <gmd:CI_OnLineFunctionCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_OnLineFunctionCode"
+                                                   codeListValue="information"/>
+                     </gmd:function>
+                  </gmd:CI_OnlineResource>
+               </gmd:onLine>
+               <gmd:onLine>
+                  <gmd:CI_OnlineResource>
+                     <gmd:linkage>
+                        <gmd:URL>https://wms.mapa.gob.es/sigpac/wms?request=getcapabilities&amp;Service=WMS</gmd:URL>
+                     </gmd:linkage>
+                     <gmd:protocol>
+                        <gco:CharacterString>WWW:LINK-1.0-http--link</gco:CharacterString>
+                     </gmd:protocol>
+                     <gmd:name>
+                        <gco:CharacterString>Descripción del WMS de SIGPAC</gco:CharacterString>
+                     </gmd:name>
+                     <gmd:function>
+                        <gmd:CI_OnLineFunctionCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_OnLineFunctionCode"
+                                                   codeListValue="information"/>
+                     </gmd:function>
+                  </gmd:CI_OnlineResource>
+               </gmd:onLine>
+               <gmd:onLine>
+                  <gmd:CI_OnlineResource>
+                     <gmd:linkage>
+                        <gmd:URL>https://www.fega.gob.es/orig/</gmd:URL>
+                     </gmd:linkage>
+                     <gmd:protocol>
+                        <gco:CharacterString>WWW:LINK-1.0-http--link</gco:CharacterString>
+                     </gmd:protocol>
+                     <gmd:name>
+                        <gco:CharacterString>Enlace de descarga del servicio ATOM del SIGPAC</gco:CharacterString>
+                     </gmd:name>
+                  </gmd:CI_OnlineResource>
+               </gmd:onLine>
+            </gmd:MD_DigitalTransferOptions>
+         </gmd:transferOptions>
+      </gmd:MD_Distribution>
+  </gmd:distributionInfo>
+  <gmd:dataQualityInfo>
+      <gmd:DQ_DataQuality>
+         <gmd:scope>
+            <gmd:DQ_Scope>
+               <gmd:level>
+                  <gmd:MD_ScopeCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#MD_ScopeCode"
+                                    codeListValue="dataset"/>
+               </gmd:level>
+            </gmd:DQ_Scope>
+         </gmd:scope>
+         <gmd:report>
+            <gmd:DQ_DomainConsistency>
+               <gmd:result>
+                  <gmd:DQ_ConformanceResult>
+                     <gmd:specification>
+                        <gmd:CI_Citation>
+                           <gmd:title>
+                              <gmx:Anchor xlink:href="http://data.europa.eu/eli/reg/2010/1089">Reglamento (UE) n o 1089/2010 de la Comisión de 23 de noviembre de 2010 por el que se aplica la Directiva 2007/2/CE del Parlamento Europeo y del Consejo en lo que se refiere a la interoperabilidad de los conjuntos y los servicios de datos espaciales</gmx:Anchor>
+                           </gmd:title>
+                           <gmd:date>
+                              <gmd:CI_Date>
+                                 <gmd:date>
+                                    <gco:Date>2010-12-08</gco:Date>
+                                 </gmd:date>
+                                 <gmd:dateType>
+                                    <gmd:CI_DateTypeCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_DateTypeCode"
+                                                         codeListValue="publication"/>
+                                 </gmd:dateType>
+                              </gmd:CI_Date>
+                           </gmd:date>
+                        </gmd:CI_Citation>
+                     </gmd:specification>
+                     <gmd:explanation>
+                        <gco:CharacterString>Consultar el reglamento mencionado</gco:CharacterString>
+                     </gmd:explanation>
+                     <gmd:pass>
+                        <gco:Boolean>true</gco:Boolean>
+                     </gmd:pass>
+                  </gmd:DQ_ConformanceResult>
+               </gmd:result>
+            </gmd:DQ_DomainConsistency>
+         </gmd:report>
+         <gmd:report>
+            <gmd:DQ_DomainConsistency>
+               <gmd:result>
+                  <gmd:DQ_ConformanceResult>
+                     <gmd:specification>
+                        <gmd:CI_Citation>
+                           <gmd:title>
+                              <gmx:Anchor xlink:href="http://data.europa.eu/eli/reg/2008/1205">REGLAMENTO (CE) Nº 1205/2008 DE LA COMISIÓN de 3 de diciembre de 2008 por el que se ejecuta la Directiva 2007/2/CE del Parlamento Europeo y del Consejo en lo que se refiere a los metadatos</gmx:Anchor>
+                           </gmd:title>
+                           <gmd:date>
+                              <gmd:CI_Date>
+                                 <gmd:date>
+                                    <gco:Date>2008-12-04</gco:Date>
+                                 </gmd:date>
+                                 <gmd:dateType>
+                                    <gmd:CI_DateTypeCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#CI_DateTypeCode"
+                                                         codeListValue="publication"/>
+                                 </gmd:dateType>
+                              </gmd:CI_Date>
+                           </gmd:date>
+                        </gmd:CI_Citation>
+                     </gmd:specification>
+                     <gmd:explanation>
+                        <gco:CharacterString>Consultar el reglamento mencionado</gco:CharacterString>
+                     </gmd:explanation>
+                     <gmd:pass>
+                        <gco:Boolean>true</gco:Boolean>
+                     </gmd:pass>
+                  </gmd:DQ_ConformanceResult>
+               </gmd:result>
+            </gmd:DQ_DomainConsistency>
+         </gmd:report>
+         <gmd:lineage>
+            <gmd:LI_Lineage>
+               <gmd:statement>
+                  <gco:CharacterString>LLas declaraciones de la PAC comienzan a realizarse en España en el año 1993. Con el avance de los años y las sucesivas Reformas de la PAC acaecidas, se han ido haciendo más completas en cuanto a la información alfanumérica contenida y, desde 2018, se hacen con base gráfica, delimitando los diferentes cultivos sobre los recintos SIGPAC de referencia. Cada una de las delimitaciones gráficas incluidas en estas declaraciones se denomina “línea de declaración gráfica” y se define como la superficie continua declarada por un agricultor, dentro de un recinto SIGPAC, por la que solicita un mismo producto y su variedad, con el mismo sistema de explotación (secano o regadío) o un mismo aprovechamiento. Toda la superficie de la misma línea de declaración gráfica solicita las mismas intervenciones en el marco del SIGC. Aunque cada campaña ha supuesto un avance en los sistemas para conseguir declaraciones con el menor número de errores posible y se utilizan como base las solicitudes del año anterior, o registros de explotaciones en caso de existir, la aportación anual del titular en la revisión de la información y la actualización conforme a los cambios de campaña, es fundamental para conseguir unos datos fiables y coherentes con la realidad del terreno. De ahí que estas declaraciones supongan una fuente excelente de información actualizada para las distintas administraciones públicas españolas, de gran valor para el sector agroalimentario.</gco:CharacterString>
+               </gmd:statement>
+               <gmd:processStep>
+                  <gmd:LI_ProcessStep>
+                     <gmd:description>
+                        <gco:CharacterString>- Recopilación de información de la campaña anterior.
+						- Caché de campaña del SIGPAC. 
+						- Actualizaciones de tablas de referencia y de otras fuentes auxiliares de información. 
+						- Preparación de la aplicación web de captura para la campaña, con las adaptaciones a la reglamentación aplicable durante la misma. 
+						- Formación específica al personal encargado de la captura: adminsitraciones y entidades colaboradoras. 
+						- Inicio del período de captura de las declaraciones y solicitudes de la PAC según plazo reglamentario establecido. 
+						- Las solicitudes son presentadas y registradas oficialmente en los puestos de captura previstos por los distintos organismos pagadores. También existe la posibildiad de rpesentarlas a través de organizacines d eproductores o por parte de los particulares. 
+						- Inicio de la gestión de las solicitudes hasta la resolución de las mismas, con fecha límite 30 de junio del año n+1. 
+						- En el último cuatrimestre del año n, comienza la preparación de captura de la campaña siguiente.</gco:CharacterString>
+                     </gmd:description>
+                  </gmd:LI_ProcessStep>
+               </gmd:processStep>
+               <gmd:source>
+                  <gmd:LI_Source>
+                     <gmd:description>
+                        <gco:CharacterString>Para las declaraciones de la PAC es necesario contar con las siguientes fuentes:
+						- Caché de campaña del SIGPAC.
+                        - Otras capas de información gráfica de cruce y procedentes de declaraciones de campañas anteriores.
+						- Tablas de referencia para los valores de contenido homogéneo (cultivos, variedades, líneas de ayuda solicitadas...) .
+						- Otras fuentes auxiliares de información que permiten realizar cruces y comprobaciones. 
+						- Información en poder de otras administraciones para facilitar verificaciones: Policía, Hacienda, Catastro...</gco:CharacterString>
+                     </gmd:description>
+                  </gmd:LI_Source>
+               </gmd:source>
+            </gmd:LI_Lineage>
+         </gmd:lineage>
+      </gmd:DQ_DataQuality>
+  </gmd:dataQualityInfo>
+</gmd:MD_Metadata>
