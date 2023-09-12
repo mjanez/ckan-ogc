@@ -28,6 +28,5 @@ RUN pdm install --no-self --group prod
 COPY ckan-ogc/conf/config.yaml.template config.yaml
 COPY ckan-ogc/docker-entrypoint.d/entrypoint.sh entrypoint.sh
 COPY ogc2ckan ogc2ckan
-COPY data data
 
 ENTRYPOINT ["/bin/bash", "./entrypoint.sh"]
