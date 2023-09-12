@@ -3,9 +3,13 @@ import os
 import yaml
 import logging
 
-def get_log_module():
-    # Get the directory and file name of the current file
-    dir_path, file_name_ext = os.path.split(os.path.abspath(__file__))
+def get_log_module(file_path=None):
+    if file_path:
+        # Get the directory and file name of the specified file
+        dir_path, file_name_ext = os.path.split(file_path)
+    else:
+        # Get the directory and file name of the current file
+        dir_path, file_name_ext = os.path.split(os.path.abspath(__file__))
     
     # Split the file name and extension
     file_name, file_ext = os.path.splitext(file_name_ext)
