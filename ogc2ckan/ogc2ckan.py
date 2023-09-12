@@ -39,7 +39,7 @@ def launch_harvest(harvest_server=None, ckan_info=None):
     from harvesters.base import Harvester
     start = datetime.now()
 
-    logging.info(f"{log_module}:Server: '{harvest_server.name}' ('{harvest_server.type.upper()}') with url: '{harvest_server.url}' and CKAN organization: {ckan_info.ckan_site_url}/organization/{harvest_server.organization}") 
+    logging.info(f"{log_module}:Harvester: '{harvest_server.name}' ('{harvest_server.type.upper()}') with url/path: '{harvest_server.url}' and CKAN organization: {ckan_info.ckan_site_url}/organization/{harvest_server.organization}") 
 
 
     harvester = Harvester.from_harvest_server(harvest_server, APP_DIR)
@@ -52,12 +52,19 @@ def launch_harvest(harvest_server=None, ckan_info=None):
         diff = end - start
 
         # Log CKAN Datasets with conflicts
-        logging.info(harvest_server["name"] + " (" + harvester.type.upper() + ") dataset records retrieved (" + str(harvester.source_dataset_count) + ") with conflicts: (" + str(harvester.source_dataset_count - harvester.ckan_dataset_count) + ") from ('" + harvester.type.upper() + "'). Check Datasets with conflicts by 'title': " + json.dumps(harvester.ckan_dataset_errors, ensure_ascii=False))
+        logging.info(log_module + ":" + harvest_server["name"] + " (" + harvester.type.upper() + ") dataset records retrieved (" + str(harvester.source_dataset_count) + ") with conflicts: (" + str(harvester.source_dataset_count - harvester.ckan_dataset_count) + ") from ('" + harvester.type.upper() + "')")
+        
+        if harvester.ckan_dataset_errors:
+            logging.info(log_module + ":" + "Check Datasets with conflicts by 'title': " + json.dumps(harvester.ckan_dataset_errors, ensure_ascii=False))
         
         # Log CKAN Data Dictionaries with conflicts
-        logging.info(harvest_server["name"] + " (" + harvester.type.upper() + ") data dictionaries retrieved (" + str(harvester.source_dictionaries_count) + ") with conflicts: (" + str(harvester.source_dictionaries_count - harvester.ckan_dictionaries_count) + ") from ('" + harvester.type.upper() + "'). Check Data dictionaries with conflicts by 'resource_id': " + json.dumps(harvester.ckan_dictionaries_errors, ensure_ascii=False))
+        if harvester.source_dictionaries_count > 0 or harvester.ckan_dictionaries_count > 0:
+            logging.info(log_module + ":" + harvest_server["name"] + " (" + harvester.type.upper() + ") data dictionaries retrieved (" + str(harvester.source_dictionaries_count) + ") with conflicts: (" + str(harvester.source_dictionaries_count - harvester.ckan_dictionaries_count) + ") from ('" + harvester.type.upper() + "')")
+            
+            if harvester.ckan_dictionaries_errors:
+                logging.info(log_module + ":" + "Check Data dictionaries with conflicts by 'resource_id': " + json.dumps(harvester.ckan_dictionaries_errors, ensure_ascii=False))
         
-        logging.info(harvest_server["name"] + " (" + harvester.type.upper() + ") server time elapsed: " + str(diff).split(".")[0])
+        logging.info(log_module + ":" + harvest_server["name"] + " (" + harvester.type.upper() + ") server time elapsed: " + str(diff).split(".")[0])
     
     except Exception as e:
         logging.exception("An exception occurred!")
@@ -66,7 +73,7 @@ def launch_harvest(harvest_server=None, ckan_info=None):
         end = datetime.now()
         diff = end - start
 
-        logging.error(harvest_server["name"] + " (" + harvester.type.upper() + ") server: " + harvest_server['url'] + ' failed connection.')
+        logging.error(log_module + ":" + harvest_server["name"] + " (" + harvester.type.upper() + ") server: " + harvest_server['url'] + ' failed connection.')
         print("ERROR::" + harvest_server["name"] + " (" + harvester.type.upper() + ") server: " + harvest_server['url'] + ' failed connection.')
 
     return harvester
@@ -139,7 +146,7 @@ def main():
         else:
             new_records = 0
 
-        logging.info(f"{log_module}:config.yaml endpoints: {str(len(harvest_servers))} and new CKAN Datasets: {str(new_records)} | Total time elapsed: {str(hrvst_diff).split('.')[0]})" )
+        logging.info(f"{log_module}:'config.yaml' sources: {str(len(harvest_servers))} and new CKAN Datasets: {str(new_records)} | Total time elapsed: {str(hrvst_diff).split('.')[0]}" )
 
     except Exception as e:
         logging.error(f"{log_module}: Error reading configuration file: {e}")
