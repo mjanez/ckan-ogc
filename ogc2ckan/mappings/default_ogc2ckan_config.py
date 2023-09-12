@@ -25,8 +25,8 @@ OGC2CKAN_HARVESTER_CONFIG = {
         'keywords': ['xls', 'csv'],
         'formats': ['csv', 'xls', 'xlsx', 'tsv']
     },
-    'metadata_file': {
-        'type': 'metadata_file',
+    'xml': {
+        'type': 'xml',
         'active': True,
         'keywords': ['xml', 'iso', 'gmd', 'inspire'],
         'formats': ['xml']
@@ -41,7 +41,8 @@ OGC2CKAN_CKAN_API_ROUTES = {
     'update_ckan_resource': '/api/3/action/resource_update',
     'create_ckan_resource_view': '/api/3/action/resource_view_create',
     'create_ckan_resource_dictionary': '/api/3/action/resource_dictionary_create',
-    'get_ckan_datasets_list': '/api/3/action/package_search?fl={fields}&rows={rows}',
+    'get_ckan_datasets_list': '/api/3/action/package_search?fl={fields}&rows={rows}&include_private={include_private}',
+    'get_ckan_datasets_list_paginate': '/api/3/action/package_search?fl={fields}&rows={rows}&start={start}&include_private={include_private}',
     'get_ckan_dataset_info': '/api/3/action/package_search?q={field}:"{field_value}"',
 }
 
@@ -55,7 +56,7 @@ OGC2CKAN_CKANINFO_CONFIG = {
     'parallelization': False,
     'ssl_unverified_mode': False,
     'dir3_url': 'http://datos.gob.es/es/recurso/sector-publico/org/Organismo',
-    'ckan_dataset_schema': 'geodcatap',
+    'ckan_dataset_schema': 'geodcatap-eu',
     'metadata_distributions': False,
     'ckan_fields_json': 'geodcatap.json'
 }
@@ -75,7 +76,11 @@ OGC2CKAN_HARVESTER_MD_CONFIG = {
     'conformance': [
         'http://inspire.ec.europa.eu/documents/inspire-metadata-regulation','http://inspire.ec.europa.eu/documents/commission-regulation-eu-no-13122014-10-december-2014-amending-regulation-eu-no-10892010-0'
     ],
-    'contact_name': 'OGC CKAN Tools',
+    'author': 'ckan-ogc',
+    'author_email': 'admin@localhost',
+    'author_url': 'http://localhost:5000/organization/test',
+    'author_uri': 'http://localhost:5000/organization/test',
+    'contact_name': 'ckan-ogc',
     'contact_email': 'admin@localhost',
     'contact_url': 'http://localhost:5000/organization/test',
     'contact_uri': 'http://localhost:5000/organization/test',
@@ -85,29 +90,48 @@ OGC2CKAN_HARVESTER_MD_CONFIG = {
         'service': 'http://inspire.ec.europa.eu/metadata-codelist/ResourceType/service',
         'default': 'http://inspire.ec.europa.eu/metadata-codelist/ResourceType/dataset',
     },
+    'encoding': 'UTF-8',
     'frequency' : 'http://publications.europa.eu/resource/authority/frequency/UNKNOWN',
+    'inspireid_theme': 'HB',
     'language': 'http://publications.europa.eu/resource/authority/language/ENG',
-    'spatial_representation_type': {
-            'wfs': 'http://inspire.ec.europa.eu/metadata-codelist/SpatialRepresentationType/vector',
-            'wcs': 'http://inspire.ec.europa.eu/metadata-codelist/SpatialRepresentationType/grid',
-            'default': 'http://inspire.ec.europa.eu/metadata-codelist/SpatialRepresentationType/vector',
-            'grid': 'http://inspire.ec.europa.eu/metadata-codelist/SpatialRepresentationType/grid',
-            'vector': 'http://inspire.ec.europa.eu/metadata-codelist/SpatialRepresentationType/vector',
-            'textTable': 'http://inspire.ec.europa.eu/metadata-codelist/SpatialRepresentationType/textTable',
-            'tin': 'http://inspire.ec.europa.eu/metadata-codelist/SpatialRepresentationType/tin',
-            'stereoModel': 'http://inspire.ec.europa.eu/metadata-codelist/SpatialRepresentationType/stereoModel',
-            'video': 'http://inspire.ec.europa.eu/metadata-codelist/SpatialRepresentationType/video',
-    },
+    'license': 'http://creativecommons.org/licenses/by/4.0/',
+    'license_id': 'cc-by',
+    'lineage_process_steps': 'ckan-ogc lineage process steps.',
+    'maintainer': 'ckan-ogc',
+    'maintainer_email': 'admin@localhost',
+    'maintainer_url': 'http://localhost:5000/organization/test',
+    'maintainer_uri': 'http://localhost:5000/organization/test',
     'metadata_profile': [
         "http://semiceu.github.io/GeoDCAT-AP/releases/2.0.0","http://inspire.ec.europa.eu/document-tags/metadata"
     ],
-    'publisher_name': 'OGC CKAN Tools',
+    'provenance': 'ckan-ogc provenance statement.',
+    'publisher_name': 'ckan-ogc',
     'publisher_email': 'admin@localhost',
     'publisher_url': 'http://localhost:5000/organization/test',
     'publisher_identifier': 'http://localhost:5000/organization/test',
     'publisher_uri': 'http://localhost:5000/organization/test',
     'publisher_type': 'http://purl.org/adms/publishertype/NonProfitOrganisation',
-    'reference_system': 'http://www.opengis.net/def/crs/EPSG/0/4258'
+    'reference_system': 'http://www.opengis.net/def/crs/EPSG/0/4258',
+    'representation_type': {
+        'wfs': 'http://inspire.ec.europa.eu/metadata-codelist/SpatialRepresentationType/vector',
+        'wcs': 'http://inspire.ec.europa.eu/metadata-codelist/SpatialRepresentationType/grid',
+        'default': 'http://inspire.ec.europa.eu/metadata-codelist/SpatialRepresentationType/vector',
+        'grid': 'http://inspire.ec.europa.eu/metadata-codelist/SpatialRepresentationType/grid',
+        'vector': 'http://inspire.ec.europa.eu/metadata-codelist/SpatialRepresentationType/vector',
+        'textTable': 'http://inspire.ec.europa.eu/metadata-codelist/SpatialRepresentationType/textTable',
+        'tin': 'http://inspire.ec.europa.eu/metadata-codelist/SpatialRepresentationType/tin',
+        'stereoModel': 'http://inspire.ec.europa.eu/metadata-codelist/SpatialRepresentationType/stereoModel',
+        'video': 'http://inspire.ec.europa.eu/metadata-codelist/SpatialRepresentationType/video',
+    },
+    'spatial': None,
+    'spatial_uri': 'http://datos.gob.es/recurso/sector-publico/territorio/Pais/España',
+    'temporal_start': None,
+    'temporal_end': None,
+    'theme': 'http://inspire.ec.europa.eu/theme/hb',
+    'theme_es': 'http://datos.gob.es/kos/sector-publico/sector/medio-ambiente',
+    'theme_eu': 'http://publications.europa.eu/resource/authority/data-theme/ENVI',
+    'topic': 'http://inspire.ec.europa.eu/metadata-codelist/TopicCategory/biota',
+    'valid': None
 }
 
 OGC2CKAN_MD_FORMATS = {

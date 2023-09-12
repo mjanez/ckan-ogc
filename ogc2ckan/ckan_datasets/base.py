@@ -191,8 +191,8 @@ class Dataset:
     def set_theme(self, theme):
         self.theme = theme
 
-    def set_theme_es(self, theme_es):
-        self.theme_es = theme_es
+    def set_theme_eu(self, theme_eu):
+        self.theme_eu = theme_eu
 
     def set_topic(self, topic):
         self.topic = topic
@@ -356,7 +356,7 @@ class Dataset:
             'version_notes': self.version_notes,
             'spatial_resolution_in_meters': self.spatial_resolution_in_meters,
             'language': self.language,
-            'theme_es': self.theme_es,
+            'theme_eu': self.theme_eu,
             'theme': self.theme,
             'identifier': self.identifier,
             'provenance': self.provenance,

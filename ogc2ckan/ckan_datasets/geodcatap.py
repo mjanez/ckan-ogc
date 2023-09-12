@@ -127,6 +127,7 @@ class Dataset:
         self.topic = "http://inspire.ec.europa.eu/metadata-codelist/TopicCategory/biota"
         self.keywords = []
         self.keywords_uri = []
+        self.keywords_thesaurus = []
         self.reference_system = None
         self.spatial = None
         self.spatial_uri = None
@@ -246,6 +247,9 @@ class Dataset:
 
     def set_keywords_uri(self, keywords_uri):
         self.keywords_uri = keywords_uri
+        
+    def set_keywords_thesaurus(self, keywords_thesaurus):
+        self.keywords_thesaurus = keywords_thesaurus
 
     def set_reference_system(self, reference_system):
         self.reference_system = reference_system
@@ -396,6 +400,8 @@ class Dataset:
             'topic': self.topic,
             'tags': self.keywords,
             'tag_uri': self.keywords_uri,
+            #TODO: Add tag_thesaurus to CKAN Schema
+            #'tag_thesaurus': self.keywords_thesaurus,
             'dcat_type': self.dcat_type,
             'alternate_identifier': self.alternate_identifier,
             'representation_type': self.representation_type,
