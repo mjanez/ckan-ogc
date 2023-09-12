@@ -5,7 +5,7 @@ import logging
 import ssl
 import socket
 import os
-from typing import Any, Dict, Optional, Tuple
+from typing import Any, Dict, Optional, Tuple, Union, List
 
 # third-party libraries  
 import urllib.request
@@ -16,22 +16,24 @@ from config.ogc2ckan_config import get_log_module
 from mappings.default_ogc2ckan_config import OGC2CKAN_CKAN_API_ROUTES
 SSL_UNVERIFIED_MODE = os.environ.get("SSL_UNVERIFIED_MODE", False)
 
-log_module = get_log_module()
+log_module = get_log_module(os.path.abspath(__file__))
 
 
 # CKAN Requests
-def make_request(url: str, ssl_unverified_mode: bool, data: bytes = None, authorization_key: Optional[str] = None) -> Dict[str, Any]:
-    """
-    Sends an HTTPS request to the specified URL with the given data and SSL verification mode.
+def make_request(url: str, ssl_unverified_mode: bool, data: bytes = None, authorization_key: Optional[str] = None, return_result: bool = False) -> Union[Dict[str, Any], Any]:
+    """ Sends an HTTPS request to the specified URL with the given data and SSL verification mode.
+
 
     Args:
         url (str): The URL to send the request to.
         ssl_unverified_mode (bool): Whether to use SSL verification or not.
         data (bytes): The data to send with the request.
         authorization_key (str, optional): The authorization key to use for the request. Defaults to None.
+        return_result (bool): Whether to return the 'result' object from the CKAN response. Defaults to False.
 
     Returns:
         Dict[str, Any]: The response from the CKAN server as a dictionary.
+        Any: The 'result' object from the CKAN response if return_result is True.
     """
     try:
         request = urllib.request.Request(url)
@@ -71,7 +73,11 @@ def make_request(url: str, ssl_unverified_mode: bool, data: bytes = None, author
     package = response_dict['result']
     #pprint(package)
 
-# CKAN harvester functions.
+    if return_result == True:
+        return response_dict
+    else:
+        return None
+
 def create_ckan_datasets(ckan_site_url: str, authorization_key: str, datasets: object, ssl_unverified_mode: bool = False, workspaces: Optional[str] = None) -> Tuple[int, int]:
     """
     Create new datasets on a CKAN server.
@@ -86,43 +92,31 @@ def create_ckan_datasets(ckan_site_url: str, authorization_key: str, datasets: o
     Returns:
         Tuple[int, int]: A tuple containing the number of Harvester server records and CKAN new records counters.
     """
-    source_dataset_count = len(datasets)
-    ckan_dataset_count = source_dataset_count
     ckan_dataset_errors = []
+    source_dataset_count = len(datasets)
+
+    # Check if the datasets already exists in CKAN.
+    datasets, ckan_dataset_errors, ckan_dataset_count = check_ckan_datasets_exists(ckan_site_url, authorization_key, datasets, ssl_unverified_mode, ckan_dataset_errors)
 
     for dataset in datasets:
-        data = None
         try:
-            if workspaces is not None:
-                if any(x.lower() in dataset.ogc_workspace.lower() for x in workspaces) is True:
-                    data = dataset.generate_data()
-                else:
-                    ckan_dataset_count = ckan_dataset_count - 1
-            else:
-                data = dataset.generate_data()
-            if data is not None:
+            if workspaces is not None and not any(x.lower() in dataset.ogc_workspace.lower() for x in workspaces):
+                continue
+            data = dataset.generate_data()
+            if data is None:
                 create_ckan_dataset(ckan_site_url, ssl_unverified_mode, data, authorization_key)
+                ckan_dataset_count += 1
+
         except Exception as e:
-            print("\nckan_site_url: " + ckan_site_url)
-            print("ERROR", file=sys.stderr)
-            print(e, file=sys.stderr)
-            print("While trying to create: " + dataset.name + " | " + dataset.title, file=sys.stderr)
-            pprint(dataset.dataset_dict(), stream=sys.stderr)
-            print("\n", file=sys.stderr)
-            ckan_dataset_count = ckan_dataset_count - 1
-            
-            # Info about the error.
-            error_dict = {
-                'title': dataset.title,
-                'error': str(e)                
-            }
+            print(f"\nckan_site_url: {ckan_site_url}\nERROR: {e}\nWhile trying to create: {dataset.name} | {dataset.title}\n{pprint.pformat(dataset.dataset_dict())}\n", file=sys.stderr)
+            error_dict = {'title': dataset.title, 'error': str(e)}
             if hasattr(dataset, 'inspire_id') and dataset.inspire_id:
                 error_dict['inspire_id'] = dataset.inspire_id
             ckan_dataset_errors.append(error_dict)
-            
+
     return ckan_dataset_count, source_dataset_count, ckan_dataset_errors
 
-def ingest_ckan_datasets(ckan_site_url, authorization_key, datasets, inspireid_theme, theme_es, inspireid_nutscode, ssl_unverified_mode = False, workspace = None):
+def ingest_ckan_datasets(ckan_site_url, authorization_key, datasets, ssl_unverified_mode = False, workspace = None):
     #TODO: Fix function.
     """
     '''
@@ -131,9 +125,6 @@ def ingest_ckan_datasets(ckan_site_url, authorization_key, datasets, inspireid_t
     :param ckan_site_url: CKAN Server url
     :param authorization_key: API Key (http://localhost:5000/user/admin)
     :param datasets: Datasets object
-    :param inspireid_theme: INSPIRE Theme code
-    :param theme_es: NTI-RISP sector
-    :param inspireid_nutscode: NUTS0 Code
     :param ssl_unverified_mode: [INSECURE] Put SSL_UNVERIFIED_MODE=True if the host certificate is self-signed or invalid.
     :param workspace: Only those identifiers starting with identifier_fiter (e.g. 'open_data:...') are created.
     
@@ -301,7 +292,7 @@ def create_ckan_resource_dictionary(ckan_site_url: str, ssl_unverified_mode: boo
     url = ckan_site_url + OGC2CKAN_CKAN_API_ROUTES['create_ckan_resource_dictionary']
     make_request(url, ssl_unverified_mode, data, authorization_key)
 
-def get_ckan_datasets_list(ckan_site_url: str, ssl_unverified_mode: bool, authorization_key: Optional[str] = None, fields: str = 'id,title,extras_inspire_id,extras_alternate_identifier', rows: int = 100) -> None:
+def get_ckan_datasets_list(ckan_site_url: str, ssl_unverified_mode: bool, authorization_key: Optional[str] = None, fields: str = 'id,title,extras_inspire_id,extras_alternate_identifier', rows: int = 100, include_private: bool = True) -> List[Dict[str, Any]]:
     """
     Get a list of datasets from CKAN.
 
@@ -311,13 +302,27 @@ def get_ckan_datasets_list(ckan_site_url: str, ssl_unverified_mode: bool, author
         authorization_key (str, optional): The API authorization key. Defaults to None.
         fields (str, optional): The fields to be returned in the dataset list. Defaults to 'id,title,extra_inspire_id'.
         rows (int, optional): The number of rows to be returned in the dataset list. Defaults to 100.
+        include_private (bool, optional): Whether to include private datasets in the dataset list. Defaults to True.
 
     Returns:
-        None
+        List[Dict[str, Any]]: A list of dictionaries representing the datasets.
     """
     # We'll use the package_search function to list all datasets with fields as need.
-    url = ckan_site_url + OGC2CKAN_CKAN_API_ROUTES['get_ckan_datasets_list'].format(fields=fields, rows=rows)
-    make_request(url, ssl_unverified_mode, authorization_key)
+    url = ckan_site_url + OGC2CKAN_CKAN_API_ROUTES['get_ckan_datasets_list'].format(fields=fields, rows=rows, include_private=include_private)
+    response = make_request(url=url, ssl_unverified_mode=ssl_unverified_mode, authorization_key=authorization_key, return_result=True)
+    results = response['result']['results']
+    count = response['result']['count']
+    # if response['result']['count'] > rows then we need to paginate the results.
+    if count > rows:
+        # Calculate the number of pages we need to paginate through.
+        pages = count // rows + 1
+        # Paginate through the results.
+        for page in range(2, pages + 1):
+            url = ckan_site_url + OGC2CKAN_CKAN_API_ROUTES['get_ckan_datasets_list_paginate'].format(fields=fields, rows=rows, include_private=include_private, start=rows * (page - 1))
+            response = make_request(url=url, ssl_unverified_mode=ssl_unverified_mode, authorization_key=authorization_key, return_result=True)
+            results += response['result']['results']
+    
+    return results
     
 def get_ckan_dataset_info(ckan_site_url: str, ssl_unverified_mode: bool, authorization_key: Optional[str] = None, field: str = 'id', field_value: Optional[str] = None) -> None:
     """
@@ -336,3 +341,39 @@ def get_ckan_dataset_info(ckan_site_url: str, ssl_unverified_mode: bool, authori
     # We'll use the package_search function to list all datasets with fields as need.
     url = ckan_site_url + OGC2CKAN_CKAN_API_ROUTES['get_ckan_dataset_info'].format(field=field, field_value=field_value)
     make_request(url, ssl_unverified_mode, authorization_key)
+
+def check_ckan_datasets_exists(ckan_site_url: str, authorization_key: str, datasets: object, ssl_unverified_mode: bool = False, ckan_dataset_errors: list = []):
+    """Check if datasets already exist in CKAN.
+
+    Args:
+        ckan_site_url (str): The URL of the CKAN site.
+        authorization_key (str): The authorization key for the CKAN site.
+        datasets (object): The datasets to check.
+        ssl_unverified_mode (bool, optional): Whether to use SSL unverified mode. Defaults to False.
+        ckan_dataset_errors (list, optional): A list to store any errors that occur. Defaults to [].
+
+    Returns:
+        tuple: A tuple containing the datasets that need to be loaded, a list of errors, and the number of datasets to load.
+    """
+    ckan_dataset_list = get_ckan_datasets_list(ckan_site_url, ssl_unverified_mode, authorization_key)
+    ckan_datasets_to_load = []
+    
+    # Create a dict indexed by 'id' and 'inspire_id' for efficient searching
+    ckan_dataset_dict = {dataset.get('id'): dataset for dataset in ckan_dataset_list}
+    ckan_dataset_dict.update({dataset.get('inspire_id'): dataset for dataset in ckan_dataset_list if dataset.get('inspire_id')})
+    
+    for dataset in datasets:
+        dataset_id = dataset.ckan_id
+        dataset_title = dataset.title
+        inspire_id = dataset.inspire_id
+        
+        # Check if the dataset already exists in CKAN. Use the indexed dictionary.
+        if dataset_id in ckan_dataset_dict or (inspire_id and inspire_id in ckan_dataset_dict):
+            matching_field = 'id' if dataset_id in ckan_dataset_dict else 'inspire_id'
+            error_message = f"Dataset exists in CKAN with the same '{matching_field}': {dataset_id if matching_field == 'id' else inspire_id}"
+            error_dict = {'title': dataset_title, 'id': dataset_id, 'inspire_id': inspire_id, 'error': error_message}
+            ckan_dataset_errors.append(error_dict)
+        else:
+            ckan_datasets_to_load.append(dataset)
+        
+    return ckan_datasets_to_load, ckan_dataset_errors, len(ckan_datasets_to_load)
