@@ -310,18 +310,21 @@ def get_ckan_datasets_list(ckan_site_url: str, ssl_unverified_mode: bool, author
     # We'll use the package_search function to list all datasets with fields as need.
     url = ckan_site_url + OGC2CKAN_CKAN_API_ROUTES['get_ckan_datasets_list'].format(fields=fields, rows=rows, include_private=include_private)
     response = make_request(url=url, ssl_unverified_mode=ssl_unverified_mode, authorization_key=authorization_key, return_result=True)
-    results = response['result']['results']
-    count = response['result']['count']
-    # if response['result']['count'] > rows then we need to paginate the results.
-    if count > rows:
-        # Calculate the number of pages we need to paginate through.
-        pages = count // rows + 1
-        # Paginate through the results.
-        for page in range(2, pages + 1):
-            url = ckan_site_url + OGC2CKAN_CKAN_API_ROUTES['get_ckan_datasets_list_paginate'].format(fields=fields, rows=rows, include_private=include_private, start=rows * (page - 1))
-            response = make_request(url=url, ssl_unverified_mode=ssl_unverified_mode, authorization_key=authorization_key, return_result=True)
-            results += response['result']['results']
-    
+    if response is not None:
+        results = response['result']['results']
+        count = response['result']['count']
+        # if response['result']['count'] > rows then we need to paginate the results.
+        if count > rows:
+            # Calculate the number of pages we need to paginate through.
+            pages = count // rows + 1
+            # Paginate through the results.
+            for page in range(2, pages + 1):
+                url = ckan_site_url + OGC2CKAN_CKAN_API_ROUTES['get_ckan_datasets_list_paginate'].format(fields=fields, rows=rows, include_private=include_private, start=rows * (page - 1))
+                response = make_request(url=url, ssl_unverified_mode=ssl_unverified_mode, authorization_key=authorization_key, return_result=True)
+                results += response['result']['results']
+    else: 
+        results = []
+
     return results
     
 def get_ckan_dataset_info(ckan_site_url: str, ssl_unverified_mode: bool, authorization_key: Optional[str] = None, field: str = 'id', field_value: Optional[str] = None) -> None:
