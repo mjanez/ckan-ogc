@@ -116,15 +116,17 @@ def start_harvesting(config_file):
         logging.info(f"{log_module}:CKAN_URL: {ckan_info.ckan_site_url}")
 
         try:
-            if harvest_servers is not None:
-                if ckan_info.parallelization is True:
-                    #TODO: Fix multicore parallel processing
-                    parallel_count = Parallel(n_jobs=processes)(delayed(launch_harvest)(harvest_server=endpoint, ckan_info=ckan_info) for endpoint in harvest_servers)
-                    new_records.append(sum(i[0] for i in parallel_count))
-                else:
-                    for endpoint in harvest_servers:
-                        harvester = launch_harvest(harvest_server=endpoint, ckan_info=ckan_info)
-                        new_records.append(harvester.ckan_dataset_count)
+            if harvest_servers is not None and ckan_info.parallelization is True:
+                #TODO: Fix multicore parallel processing
+                logging.warning(f'{log_module}:Parallel processing is not implemented yet.')
+                '''
+                parallel_count = Parallel(n_jobs=processes)(delayed(launch_harvest)(harvest_server=endpoint, ckan_info=ckan_info) for endpoint in harvest_servers)
+                new_records.append(sum(i[0] for i in parallel_count))
+                '''
+            elif harvest_servers and ckan_info.parallelization is False:
+                for endpoint in harvest_servers:
+                    harvester = launch_harvest(harvest_server=endpoint, ckan_info=ckan_info)
+                    new_records.append(harvester.ckan_dataset_count)
         except Exception as e:
             logging.error(f"{log_module}:Check invalid 'type' and 'active: True' in 'harvest_servers/{{my-harvest-server}}'at {config_file} Error: {e}")
             new_records = 0
