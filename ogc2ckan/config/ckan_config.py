@@ -4,10 +4,12 @@ import os
 import logging
 import requests
 import os
+import ssl
 
 # third-party libraries
 import psycopg2
 from bs4 import BeautifulSoup
+import urllib.request
 
 # custom functions
 from config.ogc2ckan_config import get_log_module, load_yaml
@@ -39,20 +41,43 @@ class CKANInfo:
         """
         try:
             dir3_url = OGC2CKAN_CKANINFO_CONFIG['dir3_url']
-            response = requests.get(dir3_url)
-            response.raise_for_status()  # Check HTTP status code
-            self.dir3_soup = BeautifulSoup(response.text, 'html.parser')
-        except requests.exceptions.HTTPError as errh:
-            print("HTTP Error:", errh)
+            request = urllib.request.Request(dir3_url)
+            response = urllib.request.urlopen(request)
+
+            #response = requests.get(dir3_url)
+            #response.raise_for_status()  # Check HTTP status code
+            assert response.code == 200
+            self.dir3_soup = BeautifulSoup(response.read(), 'html.parser')
+
+        except ssl.CertificateError:
+            if self.ssl_unverified_mode == True or self.ssl_unverified_mode.lower() == 'true':
+                hostname = urllib.parse.urlparse(dir3_url).hostname
+                port = 443  # Assuming HTTPS (default port)
+                pem_cert = ssl.get_server_certificate((hostname, port))
+                ssl_context = ssl.create_default_context(cadata=pem_cert)
+                ssl_context.check_hostname = False
+                ssl_context.verify_mode = ssl.CERT_NONE
+
+                # Make the HTTPS request using the custom SSL context.
+                response = urllib.request.urlopen(request, context=ssl_context)
+
+                assert response.code == 200
+                self.dir3_soup = BeautifulSoup(response.read(), 'html.parser')
+
+            else:
+                raise ssl.CertificateError(f"{log_module}:[INSECURE] Put SSL_UNVERIFIED_MODE=True if the host certificate is self-signed or invalid.")   
+
+        except requests.exceptions.HTTPError as e:
+            logging.error(f"{log_module}:HTTP Error getting 'dir3_soup' ({dir3_url}): {e}")
             self.dir3_soup = None
-        except requests.exceptions.ConnectionError as errc:
-            print("Error Connecting:", errc)
+        except requests.exceptions.ConnectionError as e:
+            logging.error(f"{log_module}:Error Connecting: 'dir3_soup' ({dir3_url}): {e}")
             self.dir3_soup = None
-        except requests.exceptions.Timeout as errt:
-            print("Timeout Error:", errt)
+        except requests.exceptions.Timeout as e:
+            logging.error(f"{log_module}:Timeout error: 'dir3_soup' ({dir3_url}): {e}")
             self.dir3_soup = None
-        except requests.exceptions.RequestException as err:
-            print("Something went wrong:", err)
+        except requests.exceptions.RequestException as e:
+            logging.error(f"{log_module}:Something went wrong: 'dir3_soup' ({dir3_url}): {e}")
             self.dir3_soup = None
         
         return self.dir3_soup
