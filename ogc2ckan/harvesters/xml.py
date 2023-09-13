@@ -191,10 +191,10 @@ class HarvesterXML(Harvester):
         dataset.set_spatial_uri(self.get_custom_metadata_value(custom_metadata, 'spatial_uri'))
 
         # Set temporal coverage
-        if layer_info.identification.temporalextent_end and layer_info.identification.temporalextent_start:
+        try:
             dataset.set_temporal_start(layer_info.identification.temporalextent_start)
             dataset.set_temporal_end(layer_info.identification.temporalextent_end)
-        else:
+        except AttributeError:
             dataset.set_temporal_start(self.get_custom_metadata_value(custom_metadata, 'temporal_start'))
             dataset.set_temporal_end(self.get_custom_metadata_value(custom_metadata, 'temporal_end'))
 
