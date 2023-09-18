@@ -101,9 +101,9 @@ def create_ckan_datasets(ckan_site_url: str, authorization_key: str, datasets: o
     for dataset in datasets:
         try:
             if workspaces is not None and not any(x.lower() in dataset.ogc_workspace.lower() for x in workspaces):
-                continue
+                break
             data = dataset.generate_data()
-            if data is None:
+            if data is not None:
                 create_ckan_dataset(ckan_site_url, ssl_unverified_mode, data, authorization_key)
                 ckan_dataset_count += 1
 
