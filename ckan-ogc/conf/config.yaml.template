@@ -7,8 +7,8 @@ harvest_servers:
     active: False
     type: 'ogc'
     organization: 'test'
-    # If the org has a custom mappings: ckan-ogc/ogc2ckan/mappings/organizations/*
-    custom_organization_active: True
+    # If the org has a custom mappings: ckan-ogc/ogc2ckan/mappings/organizations/* for datasets
+    custom_organization_active: False
     custom_organization_mapping_file: 'template-org.yaml'
     private_datasets: False
     default_dcat_info:
