@@ -30,6 +30,7 @@ class HarvesterSchema:
                 "type": "string", 
                 "enum": [value['type'] for key, value in OGC2CKAN_HARVESTER_CONFIG.items()]
                 },
+            "ckan_name_not_uuid": {"type": "boolean"},
             "organization": {"type": "string"},
             "custom_organization_active": {"type": "boolean"},
             "custom_organization_mapping_file": {"type": "string"},
@@ -76,7 +77,7 @@ class HarvesterSchema:
                 "required": ["inspireid_theme", "inspireid_nutscode", "inspireid_versionid"]
             },
         },
-        "required": ["url", "name", "groups", "active", "type", "organization", "custom_organization_active", "custom_organization_mapping_file", "private_datasets", "default_dcat_info","default_keywords", "default_inspire_info"]
+        "required": ["url", "name", "groups", "active", "type", "ckan_name_not_uuid", "organization", "custom_organization_active", "custom_organization_mapping_file", "private_datasets", "default_dcat_info","default_keywords", "default_inspire_info"]
     }
 
 class HarvesterSchemaCSW(HarvesterSchema):

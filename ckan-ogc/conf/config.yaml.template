@@ -5,6 +5,7 @@ harvest_servers:
     name: 'Example OGC'
     groups: []
     active: False
+    ckan_name_not_uuid: True
     type: 'ogc'
     organization: 'test'
     # If the org has a custom mappings: ckan-ogc/ogc2ckan/mappings/organizations/*
@@ -52,6 +53,7 @@ harvest_servers:
     groups: []
     active: False
     type: 'csw'
+    ckan_name_not_uuid: False
     organization: 'test'
     custom_organization_active: False
     custom_organization_mapping_file: ''
@@ -92,6 +94,7 @@ harvest_servers:
     name: 'XML Folder'
     groups: []
     active: False
+    ckan_name_not_uuid: False
     type: 'xml'
     organization: 'test'
     custom_organization_active: False

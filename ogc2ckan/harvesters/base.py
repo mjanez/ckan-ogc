@@ -83,7 +83,7 @@ class Harvester:
         get_all_datasets(self, ckan_info): Gets all datasets from the server.
 
     '''
-    def __init__(self, app_dir, url, name, groups, active, organization, type, custom_organization_active, custom_organization_mapping_file, private_datasets, default_keywords, default_inspire_info, default_dcat_info):
+    def __init__(self, app_dir, url, name, groups, active, organization, type, custom_organization_active, custom_organization_mapping_file, private_datasets, default_keywords, default_inspire_info, ckan_name_not_uuid, default_dcat_info):
         self.app_dir = app_dir
         self.url = url
         self.name = name
@@ -97,6 +97,7 @@ class Harvester:
         self.default_dcat_info = DCATInfo(default_dcat_info) if default_dcat_info else None
         self.default_keywords = default_keywords
         self.default_inspire_info = default_inspire_info
+        self.ckan_name_not_uuid = ckan_name_not_uuid or False
         self.datasets = []
         self.datadictionaries = []
         self.ckan_dataset_count = 0
@@ -182,7 +183,7 @@ class Harvester:
                 - dataset (object): The CKAN dataset class based on the schema.
                 - distribution (object): The CKAN distribution class based on the schema.
                 - uuid_identifier (str): A UUID identifier for the dataset.
-                - ckan_name (str): The CKAN name for the dataset, based on the UUID identifier and organization.
+                - ckan_name (str): The CKAN name for the dataset, based on the UUID or the identifier and organization.
                 - ckan_groups (list): A list of CKAN groups for the dataset.
                 - inspire_id (str): The INSPIRE ID for the dataset.
         """
@@ -199,7 +200,13 @@ class Harvester:
         datadictionaryfield = schema ["datadictionaryfield"]
 
         uuid_identifier = self._create_uuid_identifier()
-        ckan_name = uuid_identifier
+
+        # Use ckan_name instead of uuid_identifier if required
+        if self.ckan_name_not_uuid:
+            ckan_name = self._get_ckan_name(record, self.organization)
+            uuid_identifier = ckan_name
+        else:
+            ckan_name = uuid_identifier
 
         ckan_groups = [{'name': g.lower()} for g in self.groups or []]
 
@@ -501,6 +508,7 @@ class Harvester:
             private_datasets=harvest_server.private_datasets,
             default_keywords=harvest_server.default_keywords,
             default_inspire_info=harvest_server.default_inspire_info,
+            ckan_name_not_uuid=harvest_server.ckan_name_not_uuid,
             **harvest_server.default_dcat_info
         )
 
