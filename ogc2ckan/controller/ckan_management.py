@@ -9,7 +9,7 @@ from typing import Any, Dict, Optional, Tuple, Union, List
 
 # third-party libraries  
 import urllib.request
-from pprint import pprint
+from pprint import pprint, pformat
 
 # custom functions
 from config.ogc2ckan_config import get_log_module
@@ -108,7 +108,7 @@ def create_ckan_datasets(ckan_site_url: str, authorization_key: str, datasets: o
                 ckan_dataset_count += 1
 
         except Exception as e:
-            print(f"\nckan_site_url: {ckan_site_url}\nERROR: {e}\nWhile trying to create: {dataset.name} | {dataset.title}\n{pprint.pformat(dataset.dataset_dict())}\n", file=sys.stderr)
+            print(f"\nckan_site_url: {ckan_site_url}\nERROR: {e}\nWhile trying to create: {dataset.name} | {dataset.title}\n{pformat(dataset.dataset_dict())}\n", file=sys.stderr)
             error_dict = {'title': dataset.title, 'error': str(e)}
             if hasattr(dataset, 'inspire_id') and dataset.inspire_id:
                 error_dict['inspire_id'] = dataset.inspire_id
