@@ -23,6 +23,7 @@ import ptvsd
 TZ = os.environ.get("TZ", "TZ")
 DEV_MODE = None
 VERSION = os.environ.get("VERSION", "0.1")
+CKAN_OGC_DEV_PORT = os.environ.get("CKAN_OGC_DEV_PORT", 5678)
 APP_DIR = os.environ.get("APP_DIR", "/app")
 config_file = os.path.abspath(APP_DIR + "/config.yaml")
 log_module = "[ogc2ckan]"
@@ -156,7 +157,7 @@ def main():
 if __name__ == "__main__":
     if DEV_MODE == True or DEV_MODE == "True":
         # Allow other computers to attach to ptvsd at this IP address and port.
-        ptvsd.enable_attach(address=("0.0.0.0", 5678), redirect_output=True)
+        ptvsd.enable_attach(address=("0.0.0.0", CKAN_OGC_DEV_PORT), redirect_output=True)
 
         # Pause the program until a remote debugger is attached
         ptvsd.wait_for_attach()
