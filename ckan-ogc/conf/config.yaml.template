@@ -136,6 +136,7 @@ harvest_servers:
     name: 'MITMA XLSX'
     groups: []
     active: False
+    ckan_name_not_uuid: False
     type: 'table'
     organization: 'test'
     custom_organization_active: False
