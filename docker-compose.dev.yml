@@ -15,7 +15,7 @@ services:
           max-file: "10"
     ports:
       # debugpy
-      - "5678:5678"
+      - "${CKAN_OGC_DEV_PORT}:${CKAN_OGC_DEV_PORT}"
     volumes:
         - ./log:${APP_DIR}/log
         - ./metadata:${APP_DIR}/metadata

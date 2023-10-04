@@ -35,7 +35,7 @@ class ObjectFromListDicts:
                 setattr(self, key, value)
 
 class HarvesterCSW(Harvester):
-    def __init__(self, app_dir, url, name, groups, active, organization, type, custom_organization_active, custom_organization_mapping_file, private_datasets, default_keywords, default_inspire_info, constraints, **default_dcat_info):
+    def __init__(self, app_dir, url, name, groups, active, organization, type, custom_organization_active, custom_organization_mapping_file, private_datasets, default_keywords, default_inspire_info, ckan_name_not_uuid, constraints, **default_dcat_info):
         super().__init__(app_dir, url, name, groups, active, organization, type, custom_organization_active, custom_organization_mapping_file, private_datasets, default_keywords, default_inspire_info, **default_dcat_info)
         self.constraints = constraints
         self.csw = None
@@ -278,10 +278,10 @@ class HarvesterCSW(Harvester):
         dataset.set_spatial_uri(self.get_custom_metadata_value(custom_metadata, 'spatial_uri'))
 
         # Set temporal coverage
-        if layer_info.identification.temporalextent_end and layer_info.identification.temporalextent_start:
+        try:
             dataset.set_temporal_start(layer_info.identification.temporalextent_start)
             dataset.set_temporal_end(layer_info.identification.temporalextent_end)
-        else:
+        except AttributeError:
             dataset.set_temporal_start(self.get_custom_metadata_value(custom_metadata, 'temporal_start'))
             dataset.set_temporal_end(self.get_custom_metadata_value(custom_metadata, 'temporal_end'))
 

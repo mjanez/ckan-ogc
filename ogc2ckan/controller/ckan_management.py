@@ -9,7 +9,7 @@ from typing import Any, Dict, Optional, Tuple, Union, List
 
 # third-party libraries  
 import urllib.request
-from pprint import pprint
+from pprint import pprint, pformat
 
 # custom functions
 from config.ogc2ckan_config import get_log_module
@@ -101,14 +101,14 @@ def create_ckan_datasets(ckan_site_url: str, authorization_key: str, datasets: o
     for dataset in datasets:
         try:
             if workspaces is not None and not any(x.lower() in dataset.ogc_workspace.lower() for x in workspaces):
-                continue
+                break
             data = dataset.generate_data()
-            if data is None:
+            if data is not None:
                 create_ckan_dataset(ckan_site_url, ssl_unverified_mode, data, authorization_key)
                 ckan_dataset_count += 1
 
         except Exception as e:
-            print(f"\nckan_site_url: {ckan_site_url}\nERROR: {e}\nWhile trying to create: {dataset.name} | {dataset.title}\n{pprint.pformat(dataset.dataset_dict())}\n", file=sys.stderr)
+            print(f"\nckan_site_url: {ckan_site_url}\nERROR: {e}\nWhile trying to create: {dataset.name} | {dataset.title}\n{pformat(dataset.dataset_dict())}\n", file=sys.stderr)
             error_dict = {'title': dataset.title, 'error': str(e)}
             if hasattr(dataset, 'inspire_id') and dataset.inspire_id:
                 error_dict['inspire_id'] = dataset.inspire_id
@@ -310,18 +310,21 @@ def get_ckan_datasets_list(ckan_site_url: str, ssl_unverified_mode: bool, author
     # We'll use the package_search function to list all datasets with fields as need.
     url = ckan_site_url + OGC2CKAN_CKAN_API_ROUTES['get_ckan_datasets_list'].format(fields=fields, rows=rows, include_private=include_private)
     response = make_request(url=url, ssl_unverified_mode=ssl_unverified_mode, authorization_key=authorization_key, return_result=True)
-    results = response['result']['results']
-    count = response['result']['count']
-    # if response['result']['count'] > rows then we need to paginate the results.
-    if count > rows:
-        # Calculate the number of pages we need to paginate through.
-        pages = count // rows + 1
-        # Paginate through the results.
-        for page in range(2, pages + 1):
-            url = ckan_site_url + OGC2CKAN_CKAN_API_ROUTES['get_ckan_datasets_list_paginate'].format(fields=fields, rows=rows, include_private=include_private, start=rows * (page - 1))
-            response = make_request(url=url, ssl_unverified_mode=ssl_unverified_mode, authorization_key=authorization_key, return_result=True)
-            results += response['result']['results']
-    
+    if response is not None:
+        results = response['result']['results']
+        count = response['result']['count']
+        # if response['result']['count'] > rows then we need to paginate the results.
+        if count > rows:
+            # Calculate the number of pages we need to paginate through.
+            pages = count // rows + 1
+            # Paginate through the results.
+            for page in range(2, pages + 1):
+                url = ckan_site_url + OGC2CKAN_CKAN_API_ROUTES['get_ckan_datasets_list_paginate'].format(fields=fields, rows=rows, include_private=include_private, start=rows * (page - 1))
+                response = make_request(url=url, ssl_unverified_mode=ssl_unverified_mode, authorization_key=authorization_key, return_result=True)
+                results += response['result']['results']
+    else: 
+        results = []
+
     return results
     
 def get_ckan_dataset_info(ckan_site_url: str, ssl_unverified_mode: bool, authorization_key: Optional[str] = None, field: str = 'id', field_value: Optional[str] = None) -> None:

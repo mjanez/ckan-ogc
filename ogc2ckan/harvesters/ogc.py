@@ -19,8 +19,8 @@ from mappings.default_ogc2ckan_config import OGC2CKAN_HARVESTER_MD_CONFIG
 
 
 class HarvesterOGC(Harvester):
-    def __init__(self, app_dir, url, name, groups, active, organization, type, custom_organization_active, custom_organization_mapping_file, private_datasets, default_keywords, default_inspire_info, workspaces, constraints=None, **default_dcat_info):
-        super().__init__(app_dir, url, name, groups, active, organization, type, custom_organization_active, custom_organization_mapping_file, private_datasets, default_keywords, default_inspire_info, **default_dcat_info)
+    def __init__(self, app_dir, url, name, groups, active, organization, type, custom_organization_active, custom_organization_mapping_file, private_datasets, default_keywords, default_inspire_info, ckan_name_not_uuid, workspaces, constraints=None, **default_dcat_info):
+        super().__init__(app_dir, url, name, groups, active, organization, type, custom_organization_active, custom_organization_mapping_file, private_datasets, default_keywords, default_inspire_info, ckan_name_not_uuid, **default_dcat_info)
         self.workspaces = workspaces
         self.constraints = constraints
         self.wms = None
@@ -113,27 +113,25 @@ class HarvesterOGC(Harvester):
         dataset, distribution, datadictionary, datadictionaryfield, uuid_identifier, ckan_name, ckan_groups, inspire_id = \
             self.get_dataset_common_elements(record, ckan_info.ckan_dataset_schema)
         
-        # CONNECT
+        # layer_info for wfs/wcs
         if service_type == 'wfs':
-            wfs = self.connect_wfs()
-            layer_info = self.wfs.contents[record]
+            layer_info = self.wfs.contents.get(record)
+            wms_name = record
+            wms_layer_info = self.wms.contents.get(wms_name)
+            wmts_layer_info = self.wmts.contents.get(wms_name)
         elif service_type == 'wcs':
-            wcs = self.connect_wcs()
-            layer_info = self.wcs.contents[record]
-
-        wms = self.connect_wms()
-        wmts = self.connect_wmts()
+            layer_info = self.wcs.contents.get(record)
+            wms_name = record.replace("__", ":")
+            wms_layer_info = self.wms.contents.get(wms_name)
+            wmts_layer_info = self.wmts.contents.get(wms_name)
 
         # Search if custom organization info exists for the dataset
         custom_metadata = None
         if self.custom_organization_active:
-            custom_metadata = self.get_custom_default_metadata(layer_info.id.split(':')[1])
+            custom_metadata = self.get_custom_default_metadata(wms_name.split(':')[1])
 
         # OGC Workspace and OGC services info
-        ogc_workspace = layer_info.id.split(':')[0] if layer_info.id else None
-        wms_layer_info = wms.contents.get(record)
-        wmts_layer_info = wmts.contents.get(record)
-        json_info = wfs.contents.get(record)
+        ogc_workspace = wms_name.split(':')[0] if wms_name else None
 
         # Set basic info of MD
         dataset = dataset(uuid_identifier, ckan_name, self.organization, ckan_info.default_license_id)
@@ -144,7 +142,7 @@ class HarvesterOGC(Harvester):
         dataset.set_private(private)
         
         # Set alternate identifier (layer name)
-        alternate_identifier = layer_info.id if layer_info.id else None
+        alternate_identifier = wms_name if wms_name else None
         dataset.set_alternate_identifier(alternate_identifier)
 
         # Title
@@ -262,16 +260,16 @@ class HarvesterOGC(Harvester):
             self.set_default_responsible_parties(dataset, self.default_dcat_info, ckan_info)
 
         # Overwrite Point of contact (Metadata) and Responsible Party (Resource) from OGC Info
-        if wms.provider:
-            contact_name = wms.provider.contact.name if wms.provider.contact.name is not None else wms.provider.contact.organization
+        if self.wms.provider:
+            contact_name = self.wms.provider.contact.name if self.wms.provider.contact.name is not None else self.wms.provider.contact.organization
             dataset.set_contact_name(contact_name)
-            dataset.set_contact_email(wms.provider.contact.email.lower())
+            dataset.set_contact_email(self.wms.provider.contact.email.lower())
 
         # Set license
         dataset.set_license(ckan_info.default_license)
         
         # Set distributions
-        self.get_distribution(ckan_info, dataset, distribution, record, service_type, layer_info, wms_layer_info, wmts_layer_info, json_info)
+        self.get_distribution(ckan_info, dataset, distribution, record, service_type, layer_info, wms_layer_info, wmts_layer_info)
         
         # Metadata distributions (INSPIRE & GeoDCAT-AP)
         self.set_metadata_distributions(ckan_info, dataset, distribution, record)
@@ -281,7 +279,7 @@ class HarvesterOGC(Harvester):
         
         return dataset
     
-    def get_distribution(self, ckan_info: CKANInfo, dataset, distribution, record: str, service_type: str, layer_info,wms_layer_info, wmts_layer_info, json_info):
+    def get_distribution(self, ckan_info: CKANInfo, dataset, distribution, record: str, service_type: str, layer_info, wms_layer_info, wmts_layer_info):
         # Add distributions (WMS, WFS, WMTS & GeoJSON)
         dataset.set_distributions([])
 
@@ -306,17 +304,16 @@ class HarvesterOGC(Harvester):
             dist_info = self._get_distribution_info("WFS", wfs_url, self.localized_strings_dict['distributions']['wfs'], ckan_info.default_license, ckan_info.default_license_id, dataset.access_rights, dataset.language)
             add_distribution(distribution, dist_info)
 
-        # WCS
-        if service_type == "wcs":
-            wcs_url = f"{self.get_wcs_url()}&request=GetCapabilities#{record}"
-            dist_info = self._get_distribution_info("WCS", wcs_url, self.localized_strings_dict['distributions']['wcs'], ckan_info.default_license, ckan_info.default_license_id, dataset.access_rights, dataset.language)
-            add_distribution(distribution, dist_info)
-
-        # GeoJSON
-        if json_info is not None:
+            # GeoJSON
             layer_id_parts = layer_info.id.split(':')
             workspace = layer_id_parts[0]
             layername = layer_id_parts[1]
             json_url = f"{self.get_wfs_url().replace('geoserver/ows', f'geoserver/{workspace.lower()}/ows')}&version=1.0.0&request=GetFeature&typeName={layername.lower()}&outputFormat=application/json&maxFeatures=100"
-            dist_info = self._get_distribution_info("GeoJSON", json_url, self.localized_strings_dict['distributions']['geojson'], ckan_info.default_license, ckan_info.default_license_id, dataset.access_rights, dataset.language)
+            dist_info_json = self._get_distribution_info("GeoJSON", json_url, self.localized_strings_dict['distributions']['geojson'], ckan_info.default_license, ckan_info.default_license_id, dataset.access_rights, dataset.language)
+            add_distribution(distribution, dist_info_json)
+
+        # WCS
+        if service_type == "wcs":
+            wcs_url = f"{self.get_wcs_url()}&request=GetCapabilities#{record}"
+            dist_info = self._get_distribution_info("WCS", wcs_url, self.localized_strings_dict['distributions']['wcs'], ckan_info.default_license, ckan_info.default_license_id, dataset.access_rights, dataset.language)
             add_distribution(distribution, dist_info)
