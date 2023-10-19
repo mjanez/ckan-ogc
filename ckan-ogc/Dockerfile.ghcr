@@ -7,6 +7,7 @@ RUN echo ${TZ} > /etc/timezone
 ENV CKAN_URL=http://localhost:5000/
 ENV PYCSW_URL=http://localhost:8000/
 ENV CKAN_API_KEY=ckan-api-key
+ENV CKAN_DATASET_MULTILANG=False
 ENV DEFAULT_LICENSE=http://creativecommons.org/licenses/by/4.0/
 ENV DEFAULT_LICENSE_ID=cc-by
 ENV DEV_MODE=False

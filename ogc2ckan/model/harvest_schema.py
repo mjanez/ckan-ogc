@@ -48,13 +48,14 @@ class HarvesterSchema:
                     "contact_uri": {"type": "string"},
                     "contact_url": {"type": "string"},
                     "topic": {"type": "string"},
+                    "theme": {"type": "string"},                    
                     "theme_es": {"type": "string"},
                     "theme_eu": {"type": "string"},
                     "spatial": {"type": "string"},
                     "spatial_uri": {"type": "string"},
                     "language": {"type": "string"},
                 },
-                "required": ["publisher_name", "publisher_email", "publisher_identifier", "publisher_url", "publisher_type", "contact_name", "contact_email", "contact_uri", "contact_url", "topic", "theme_eu", "spatial", "spatial_uri", "language"]
+                "required": ["publisher_name", "publisher_email", "publisher_identifier", "publisher_url", "publisher_type", "contact_name", "contact_email", "contact_uri", "contact_url", "topic", "theme", "theme_eu", "spatial", "spatial_uri", "language"]
             },
             "default_keywords": {
                 "type": "array",

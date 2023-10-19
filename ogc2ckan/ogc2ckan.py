@@ -53,14 +53,14 @@ def launch_harvest(harvest_server=None, ckan_info=None):
         diff = end - start
 
         # Log CKAN Datasets with conflicts
-        logging.info(log_module + ":" + harvest_server["name"] + " (" + harvester.type.upper() + ") dataset records retrieved (" + str(harvester.source_dataset_count) + ") with conflicts: (" + str(harvester.source_dataset_count - harvester.ckan_dataset_count) + ") from ('" + harvester.type.upper() + "')")
+        logging.info(log_module + ":" + harvest_server["name"] + " (" + harvester.type.upper() + ") dataset records retrieved (" + str(harvester.source_dataset_count) + ") with conflicts: (" + str(len(harvester.ckan_dataset_errors)) + ") from ('" + harvester.type.upper() + "')")
         
         if harvester.ckan_dataset_errors:
             logging.info(log_module + ":" + "Check Datasets with conflicts by 'title': " + json.dumps(harvester.ckan_dataset_errors, ensure_ascii=False))
         
         # Log CKAN Data Dictionaries with conflicts
         if harvester.source_dictionaries_count > 0 or harvester.ckan_dictionaries_count > 0:
-            logging.info(log_module + ":" + harvest_server["name"] + " (" + harvester.type.upper() + ") data dictionaries retrieved (" + str(harvester.source_dictionaries_count) + ") with conflicts: (" + str(harvester.source_dictionaries_count - harvester.ckan_dictionaries_count) + ") from ('" + harvester.type.upper() + "')")
+            logging.info(log_module + ":" + harvest_server["name"] + " (" + harvester.type.upper() + ") data dictionaries retrieved (" + str(harvester.source_dictionaries_count) + ") with conflicts: (" + str(len(harvester.ckan_dictionaries_errors)) + ") from ('" + harvester.type.upper() + "')")
             
             if harvester.ckan_dictionaries_errors:
                 logging.info(log_module + ":" + "Check Data dictionaries with conflicts by 'resource_id': " + json.dumps(harvester.ckan_dictionaries_errors, ensure_ascii=False))
@@ -155,7 +155,7 @@ def main():
         logging.error(f"{log_module}: Error reading configuration file: {e}")
              
 if __name__ == "__main__":
-    if DEV_MODE == True or DEV_MODE == "True":
+    if DEV_MODE == True or DEV_MODE.lower() == "true":
         # Allow other computers to attach to ptvsd at this IP address and port.
         ptvsd.enable_attach(address=("0.0.0.0", CKAN_OGC_DEV_PORT), redirect_output=True)
 

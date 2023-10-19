@@ -162,8 +162,8 @@ class HarvesterTable(Harvester):
             except:
                 custom_metadata = self.get_custom_default_metadata(inspire_id, 'dataset_group_id')
         
-        # Set private dataset
-        private = getattr(self, 'private_datasets', False)
+        # Set private dataset. Check first if exists in table_dataset, otherwise check in ckan config
+        private = bool(table_dataset.private) if hasattr(table_dataset, 'private') and table_dataset.private in [True, 'True', 'true'] else getattr(self, 'private_datasets', False)
         dataset.set_private(private)
         
         # Set alternate identifier (layer name)
@@ -177,7 +177,7 @@ class HarvesterTable(Harvester):
 
         # Description
         description = custom_metadata.get('description') if custom_metadata else table_dataset.notes
-        dataset.set_description(description or self.localized_strings_dict['description'])
+        dataset.set_notes(description or self.localized_strings_dict['description'])
   
         # CKAN Groups
         # ckan_groups is table_dataset.groups if exists, otherwise ckan_groups is ckan_groups
@@ -320,9 +320,31 @@ class HarvesterTable(Harvester):
         # Metadata distributions (INSPIRE & GeoDCAT-AP)
         self.set_metadata_distributions(ckan_info, dataset, distribution, record)
         
-        # Set keywords/themes/topic categories
-        self.set_default_keywords_themes_topic(dataset, custom_metadata, ckan_info.ckan_dataset_schema)
+        # Set keywords from table
+        keywords = []
+        keywords_uri = []
+        if hasattr(table_dataset, 'tag_string'):
+            for k in table_dataset.tag_string:
+                keyword_name = k.lower()                
+                if 'http' in keyword_name or '/' in keyword_name:
+                    keyword_name = keyword_name.split('/')[-1]
+                    keywords_uri.add(keyword_name)
+                keywords.append({'name': keyword_name})
+                
+        if hasattr(table_dataset, 'tag_uri'):
+            if isinstance(table_dataset.tag_uri, str):
+                keywords_uri.append(table_dataset.tag_uri)
+            else:
+                for k in table_dataset.tag_uri:
+                    keywords_uri.append(k)
         
+        # Set keywords/themes/topic categories
+        self.set_default_keywords_themes_topic(dataset, custom_metadata, ckan_info.ckan_dataset_schema, keywords, keywords_uri)
+        
+        # Set translated fields if multilang is True
+        if ckan_info.dataset_multilang:
+            self.set_translated_fields(dataset, table_dataset, language)
+
         return dataset
     
     def get_distribution(self, ckan_info: CKANInfo, dataset, distribution, datadictionary, datadictionaryfield, record: str, table_dataset: object = None):
@@ -356,11 +378,12 @@ class HarvesterTable(Harvester):
                 format_type, media_type, conformance, dist_name = None, None, [], r.name or f"{self.localized_strings_dict['distributions']['default']} {table_dataset.title}."
 
             try:
+                                
                 distribution_data = {
                     'id': distribution_id,
                     'url': r.get('url', ''),
                     'name': dist_name,
-                    'format': format_type,
+                    'format': self._update_custom_formats(format_type, r.get('url', '')),
                     'media_type': media_type,
                     'description': r.get('description', ''),
                     'license': r.get('license', ckan_info.default_license),
@@ -395,6 +418,27 @@ class HarvesterTable(Harvester):
             
         except Exception as e:
             logging.error(f"Error adding data dictionary {distribution_id}: {e}")
+
+
+    @staticmethod
+    def _update_custom_formats(format, url=None, **args):
+        """Update the custom format.
+        
+        If the format contains 'esri' or 'arcgis' (case-insensitive) or the URL contains 'viewer.html?url=',
+        the format is updated to 'HTML'.
+        
+        Args:
+            format (str): The custom format to update.
+            url (str, optional): The URL to check. Defaults to None.
+            **args: Additional arguments that are ignored.
+            
+        Returns:
+            str: The updated custom format.
+        """
+        if any(string in format.lower() for string in ['esri', 'arcgis']) or 'viewer.html?url=' in url:
+            format = 'HTML'
+            
+        return format
 
     @staticmethod
     def _update_object_lists(data):

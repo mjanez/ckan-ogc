@@ -50,7 +50,7 @@ class Distribution:
     def set_rights(self, rights):
         self.rights = rights
 
-    def set_description(self, description):
+    def set_notes(self, description):
         self.description = description
 
     def set_language(self, language):
@@ -111,7 +111,9 @@ class Dataset:
         self.license_id = license_id
         self.identifier = None
         self.title = None
+        self.title_translated = None
         self.notes = None
+        self.notes_translated = None
         self.version_notes = None
         self.language = None
         self.keywords = []
@@ -164,8 +166,14 @@ class Dataset:
     def set_title(self, title):
         self.title = title
 
-    def set_description(self, notes):
+    def set_title_translated(self, title_translated):
+        self.title_translated = title_translated
+
+    def set_notes(self, notes):
         self.notes = notes
+
+    def set_notes_translated(self, notes_translated):
+        self.notes_translated = notes_translated
 
     def set_resource_type(self, resource_type):
         self.dcat_type = resource_type
@@ -402,8 +410,108 @@ class Dataset:
 
         return dataset_dict
 
-    def generate_data(self):
-        dataset_dict = self.dataset_dict()
+    def dataset_dict(self):
+        '''    
+        CKAN API 'package_create': https://docs.ckan.org/en/2.9/api/index.html#ckan.logic.action.create.package_create
+            package_create(
+                name = NULL,
+                title = NULL,
+                private = FALSE,
+                author = NULL,
+                author_email = NULL,
+                maintainer = NULL,
+                maintainer_email = NULL,
+                license_id = NULL,
+                notes = NULL,
+                package_url = NULL,
+                version = NULL,
+                state = "active",
+                type = NULL,
+                resources = NULL,
+                tags = NULL,
+                extras = NULL,
+                relationships_as_object = NULL,
+                relationships_as_subject = NULL,
+                groups = NULL,
+                owner_org = NULL,
+                url = get_default_url(),
+                key = get_default_key(),
+                as = "list",
+                ...
+                )
+        '''
+
+        # Put the details of the dataset we're going to create into a dict.
+        dataset_dict = {
+            'id': self.ckan_id,
+            'name': self.name,
+            'owner_org': self.owner_org,
+            'private': self.private,
+            'groups': self.groups,
+            'title_translated': self.title_translated,
+            'notes_translated': self.notes_translated,
+            'license_id': self.license_id,
+            'topic': self.topic,
+            'tags': self.keywords,
+            'tag_uri': self.keywords_uri,
+            'dcat_type': self.dcat_type,
+            'representation_type': self.representation_type,
+            'access_rights': self.access_rights,
+            'inspire_id': self.inspire_id,
+            'version_notes': self.version_notes,
+            'spatial_resolution_in_meters': self.spatial_resolution_in_meters,
+            'language': self.language,
+            'theme_eu': self.theme_eu,
+            'theme': self.theme,
+            'identifier': self.identifier,
+            'provenance': self.provenance,
+            'lineage_source': self.lineage_source,
+            'lineage_process_steps': self.lineage_process_steps,
+            'source': self.source,
+            'frequency': self.frequency,
+            'reference': self.reference,
+            'conforms_to': self.conformance,
+            'metadata_profile': self.metadata_profile,
+            'encoding': self.encoding,
+            'reference_system': self.reference_system,
+            'spatial': self.spatial,
+            'spatial_uri': self.spatial_uri,
+            'publisher_uri': self.publisher_uri,
+            'publisher_name': self.publisher_name,
+            'publisher_url': self.publisher_url,
+            'publisher_email': self.publisher_email,
+            'publisher_identifier': self.publisher_identifier,
+            'publisher_type': self.publisher_type,
+            'contact_uri': self.contact_uri,
+            'contact_url': self.contact_url,
+            'contact_name': self.contact_name,
+            'contact_email': self.contact_email,
+            'maintainer': self.maintainer_name,
+            'maintainer_uri': self.maintainer_uri,
+            'maintainer_url': self.maintainer_url,
+            'maintainer_email': self.maintainer_email,
+            'author': self.author_name,
+            'author_uri': self.author_uri,
+            'author_email': self.author_email,
+            'author_url': self.author_url,
+            'created': self.created,
+            'modified': self.modified,
+            'temporal_start': self.temporal_start,
+            'temporal_end': self.temporal_end,
+            'valid': self.valid,
+            'extras': [
+            {'key': 'issued', 'value': self.issued},
+        ],
+            'resources': [i.to_dict() for i in self.distributions]
+        }
+
+        return dataset_dict
+
+    def generate_data(self, multilang: bool = False):
+        if multilang is True:
+            dataset_dict = self.dataset_dict_multilang()
+        else:
+            dataset_dict = self.dataset_dict()
         # Use the json module to dump the dictionary to a string for posting.
         quoted_data = urllib.parse.quote(json.dumps(dataset_dict))
         byte_data = quoted_data.encode('utf-8')

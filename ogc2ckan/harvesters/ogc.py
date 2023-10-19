@@ -152,7 +152,7 @@ class HarvesterOGC(Harvester):
 
         # Description
         description = custom_metadata.get('description') if custom_metadata else layer_info.abstract
-        dataset.set_description(description or self.localized_strings_dict['description'])
+        dataset.set_notes(description or self.localized_strings_dict['description'])
   
         # CKAN Groups defined in config.yaml
         dataset.set_groups(ckan_groups)
@@ -276,6 +276,10 @@ class HarvesterOGC(Harvester):
         
         # Set keywords/themes/topic categories
         self.set_default_keywords_themes_topic(dataset, custom_metadata, ckan_info.ckan_dataset_schema)
+        
+        # Set translated fields if multilang is True
+        if ckan_info.dataset_multilang:
+            self.set_translated_fields(dataset, layer_info, language)
         
         return dataset
     

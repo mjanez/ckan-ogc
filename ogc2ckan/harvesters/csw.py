@@ -36,7 +36,7 @@ class ObjectFromListDicts:
 
 class HarvesterCSW(Harvester):
     def __init__(self, app_dir, url, name, groups, active, organization, type, custom_organization_active, custom_organization_mapping_file, private_datasets, default_keywords, default_inspire_info, ckan_name_not_uuid, constraints, **default_dcat_info):
-        super().__init__(app_dir, url, name, groups, active, organization, type, custom_organization_active, custom_organization_mapping_file, private_datasets, default_keywords, default_inspire_info, **default_dcat_info)
+        super().__init__(app_dir, url, name, groups, active, organization, type, custom_organization_active, custom_organization_mapping_file, private_datasets, default_keywords, default_inspire_info, ckan_name_not_uuid, **default_dcat_info)
         self.constraints = constraints
         self.csw = None
         self.csw_url = None
@@ -216,7 +216,7 @@ class HarvesterCSW(Harvester):
 
         # Description
         description = custom_metadata.get('description') if custom_metadata else layer_info.identification.abstract
-        dataset.set_description(description or self.localized_strings_dict['description'])
+        dataset.set_notes(description or self.localized_strings_dict['description'])
 
         # CKAN Groups defined in config.yaml
         dataset.set_groups(ckan_groups)
@@ -387,7 +387,11 @@ class HarvesterCSW(Harvester):
 
         # Set keywords from CSW
         self.ows_get_keywords(dataset, layer_info.identification.keywords)
-                
+
+        # Set translated fields if multilang is True
+        if ckan_info.dataset_multilang:
+            self.set_translated_fields(dataset, layer_info, language)
+
         return dataset
 
     def get_distribution(self, ckan_info: CKANInfo, dataset, distribution, record: str, service_type: str, layer_info):

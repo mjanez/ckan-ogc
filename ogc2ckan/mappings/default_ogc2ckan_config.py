@@ -1,11 +1,12 @@
 # Default values of ogc2ckan
-## File paths
+# File paths
 OGC2CKAN_PATHS_CONFIG = {
     'default_localized_strings_file': 'default_localized_strings.yaml',
+    'default_languages_yaml': 'languages.yaml',
     'default_mappings_folder': 'ogc2ckan/mappings'
 }
 
-## Harvesters develop for this project. ogc2ckan/harvesters/harvesters.py
+# Harvesters develop for this project. ogc2ckan/harvesters/harvesters.py
 OGC2CKAN_HARVESTER_CONFIG = {
     'csw_server': {
         'type': 'csw',
@@ -33,7 +34,7 @@ OGC2CKAN_HARVESTER_CONFIG = {
     },
 }
 
-## CKAN Api routes
+# CKAN Api routes
 OGC2CKAN_CKAN_API_ROUTES = {
     'create_ckan_dataset': '/api/3/action/package_create',
     'update_ckan_dataset': '/api/3/action/package_update',
@@ -46,11 +47,12 @@ OGC2CKAN_CKAN_API_ROUTES = {
     'get_ckan_dataset_info': '/api/3/action/package_search?q={field}:"{field_value}"',
 }
 
-## CKANInfo class default configuration
+# CKANInfo class default configuration
 OGC2CKAN_CKANINFO_CONFIG = {
     'ckan_site_url': 'http://localhost:5000',
     'pycsw_site_url': 'http://localhost:8000',
     'authorization_key': None,
+    'dataset_multilang': False,
     'default_license': 'http://creativecommons.org/licenses/by/4.0/',
     'default_license_id': 'cc-by',
     'parallelization': False,
@@ -61,7 +63,7 @@ OGC2CKAN_CKANINFO_CONFIG = {
     'ckan_fields_json': 'geodcatap.json'
 }
 
-## DBDsn class default configuration
+# DBDsn class default configuration
 OGC2CKAN_DBDSN_CONFIG = {
     'host': 'localhost',
     'port': '5432',
@@ -70,7 +72,16 @@ OGC2CKAN_DBDSN_CONFIG = {
     'password': 'password'
 }
 
-## Default DCAT metadata configuration
+# Metadata multilang fields avalaibles, schema: geodcatap_es
+OGC2CKAN_MD_MULTILANG_FIELDS = {
+    'title': 'title_translated',
+    'notes': 'notes_translated',
+    'provenance': 'provenance',
+    'purpose': 'purpose',
+    'version_notes': 'version_notes'
+}
+
+# Default DCAT metadata configuration
 OGC2CKAN_HARVESTER_MD_CONFIG = {
     'access_rights': 'http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/noLimitations',
     'conformance': [
@@ -172,3 +183,6 @@ OGC2CKAN_ISO_MD_ELEMENTS = {
     'lineage_process_steps': 'gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:processStep'
     
 }
+
+# loose definition of BCP47-like strings
+BCP_47_LANGUAGE = u'^[a-z]{2,8}(-[0-9a-zA-Z]{1,8})*$'
