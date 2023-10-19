@@ -8,6 +8,7 @@ import logging
 from datetime import datetime
 import html
 import os
+import string
 
 # third-party libraries
 from geojson import Polygon, dumps
@@ -23,7 +24,7 @@ from controller import ckan_management
 from model.custom_organization import CustomOrganization
 from controller.mapping import get_mapping_value
 from config.ogc2ckan_config import load_yaml, get_log_module
-from mappings.default_ogc2ckan_config import OGC2CKAN_PATHS_CONFIG, OGC2CKAN_HARVESTER_MD_CONFIG, OGC2CKAN_CKANINFO_CONFIG, OGC2CKAN_MD_FORMATS, OGC2CKAN_ISO_MD_ELEMENTS
+from mappings.default_ogc2ckan_config import OGC2CKAN_PATHS_CONFIG, OGC2CKAN_HARVESTER_MD_CONFIG, OGC2CKAN_CKANINFO_CONFIG, OGC2CKAN_MD_FORMATS, OGC2CKAN_ISO_MD_ELEMENTS, OGC2CKAN_MD_MULTILANG_FIELDS, BCP_47_LANGUAGE
 from harvesters.harvesters import get_harvester_class
 
 
@@ -111,9 +112,10 @@ class Harvester:
         default_localized_strings_file = f"{self.app_dir}/{OGC2CKAN_PATHS_CONFIG['default_mappings_folder']}/{OGC2CKAN_PATHS_CONFIG['default_localized_strings_file']}"
         # Localized default info
         yaml_dict = load_yaml(default_localized_strings_file)
-        language = self.get_default_dcat_info_attribute("language")
-        self.localized_strings_dict = self._get_localized_dict(yaml_dict, language)
+        self.default_language = self.get_default_dcat_info_attribute("language")
+        self.localized_strings_dict = self._get_localized_dict(yaml_dict, self.default_language)
         self.ows_namespaces = self._ows_get_namespaces()
+
 
     @classmethod
     def from_harvest_server(cls, harvest_server, app_dir):
@@ -160,11 +162,11 @@ class Harvester:
             logging.info(f"{log_module}:{self.name} ({self.type.upper()}) server OGC workspaces selected: {', '.join([w.upper() for w in self.workspaces])}")
 
             # Create datasets using ckan_management
-            self.ckan_dataset_count, self.source_dataset_count, self.ckan_dataset_errors = ckan_management.create_ckan_datasets(ckan_info.ckan_site_url, ckan_info.authorization_key, self.datasets, ckan_info.ssl_unverified_mode, self.workspaces)
+            self.ckan_dataset_count, self.source_dataset_count, self.ckan_dataset_errors = ckan_management.create_ckan_datasets(ckan_info.ckan_site_url, ckan_info.authorization_key, self.datasets, ckan_info.dataset_multilang, ckan_info.ssl_unverified_mode, self.workspaces)
 
         else:
             # Create datasets using ckan_management
-            self.ckan_dataset_count, self.source_dataset_count, self.ckan_dataset_errors = ckan_management.create_ckan_datasets(ckan_info.ckan_site_url, ckan_info.authorization_key, self.datasets,  ckan_info.ssl_unverified_mode)
+            self.ckan_dataset_count, self.source_dataset_count, self.ckan_dataset_errors = ckan_management.create_ckan_datasets(ckan_info.ckan_site_url, ckan_info.authorization_key, self.datasets, ckan_info.dataset_multilang, ckan_info.ssl_unverified_mode)
 
         # Create data dictionaries using ckan_management
         if self.datadictionaries:
@@ -918,7 +920,51 @@ class Harvester:
 
             self._set_min_max_coordinates(dataset, minx, maxx, miny, maxy)
 
-    def set_default_keywords_themes_topic(self, dataset, custom_metadata, ckan_schema = 'geodcatap'):
+    def set_translated_fields(self, dataset, source_data: object, source_language=None):
+        if not isinstance(source_data, object):
+            raise Exception(f"source data of: '{dataset.title}' not supported translated_fields")
+
+        # Check if source_language and self.default_language are the same, if not and source_language is not None, set default_language_code to source_language
+        source_language = source_language if "http" in source_language else None
+        default_language = source_language if source_language is not None and source_language != self.default_language else self.default_language
+
+        required_lang = get_mapping_value(default_language, 'language', 'iso_639_2')
+
+        for field, field_translated in OGC2CKAN_MD_MULTILANG_FIELDS.items():
+            output = {}
+            source_langs = set()
+
+            prefix = field + '-'
+            for match_field in filter(lambda attr: attr.startswith(prefix), dir(source_data)):
+                lang = match_field.split('-', 1)[1]
+                source_langs.add(lang)
+                m = re.match(BCP_47_LANGUAGE, lang)
+                if not m:
+                    logging.error(f"{log_module}:set_translated_fields | Invalid language code: '{lang}'")
+                    output = None
+                    
+                try:
+                    if output is not None:
+                        output[lang] = getattr(source_data, match_field)
+                except Exception as e:
+                    logging.error(f"{log_module}:set_translated_fields | Error getting attribute '{match_field}': {e}")
+                    output = None
+                    
+                if output is None:
+                    output = {}
+
+            if required_lang in source_langs:
+                getattr(dataset, f"set_{field_translated}")(output)  
+            else:
+                value = getattr(dataset, field) if hasattr(dataset, field) else ''
+                output[required_lang] = value if value is not None else ''
+                getattr(dataset, f"set_{field_translated}")(output)
+                try:
+                    getattr(dataset, f"set_{field_translated}")(output)
+                except Exception as e:
+                    logging.error(f"{log_module}:set_translated_fields | Error getting attribute '{field_translated}': {e}")
+
+    def set_default_keywords_themes_topic(self, dataset, custom_metadata, ckan_schema = 'geodcatap', source_keywords = None, source_keywords_uri = None):
         """Sets the keywords for a dataset. INSPIRE keywords/themes, default/custom keywords, ISO 19115 Topic category and Spanish NTI-RISP Theme.
 
         Args:
@@ -932,22 +978,27 @@ class Harvester:
         Raises:
             None.
         """
+        
+        if source_keywords is not None:
+            keywords = source_keywords
+        else:
+            keywords = []
+            
+        if source_keywords_uri is not None:
+            keywords_uri = set(source_keywords_uri)
+        else:
+            keywords_uri = set()
+        
         # Includes default keywords
-        keywords = []
         themes = []
         themes_es = []
         themes_eu = []
-        keywords_uri = set()
         if self.default_keywords is not None:
             for k in self.default_keywords:
                 keyword_name = k["name"].lower()
-                if '/theme/' in k["uri"]:
-                    # INSPIRE Theme
-                    keywords.append({'name': keyword_name})
-                else:
-                    # Keyword
-                    keywords.append({'name': keyword_name})
-                keywords_uri.add(k["uri"])
+                if k["uri"]:
+                    keywords_uri.add(k["uri"])
+                keywords.append({'name': keyword_name})
 
         # Add custom keywords
         if custom_metadata is not None and 'keywords' in custom_metadata:
@@ -958,13 +1009,14 @@ class Harvester:
                 keywords_uri.add(k['uri'])
 
         # Set keywords (INSPIRE quality) and INSPIRE Themes
-        inspireid_theme = self.get_default_dcat_info_attribute("inspireid_theme").lower()
-        theme_inspire = "http://inspire.ec.europa.eu/theme/" + inspireid_theme
+        theme = self.get_default_dcat_info_attribute("theme").lower() or None
+        if theme:
+            inspireid_theme = theme.split('/')[-1]
 
         # Insert inspireid_theme (default) as theme/keyword
         keywords.append({'name': inspireid_theme})
-        keywords_uri.add(theme_inspire)
-        themes.append(inspireid_theme)
+        keywords_uri.add(theme)
+        themes.append(theme)
 
         # Set ISO 19115 Topic Category
         ## Insert topic (default) as topic
@@ -983,5 +1035,48 @@ class Harvester:
 
         self._set_themes_eu(dataset, list(set(themes_eu)))
         self._set_themes(dataset, list(set(themes)))
-        dataset.set_keywords(keywords)
+        dataset.set_keywords(self.clean_keywords(keywords))
         self._set_keywords_uri(dataset, list(keywords_uri))
+        
+    def clean_keywords(self, keywords):
+        """
+        Cleans the names of keywords in a list of dictionaries.
+
+        Removes empty names and non-alphanumeric characters, allowing only: a-z, ñ, 0-9, _, -, ., and spaces.
+        Truncates the cleaned name to a maximum length of 100 characters.
+
+        Args:
+            keywords (list): A list of dictionaries containing keyword information.
+
+        Returns:
+            list: A new list of dictionaries with cleaned keyword names.
+        """
+        cleaned_keywords = [{'name': self._clean_name(d['name'])} for d in keywords if d.get('name')]
+
+        return cleaned_keywords
+
+    @staticmethod
+    def _clean_name(name):
+        """
+        Cleans a name by removing accents, special characters, and spaces.
+
+        Args:
+            name (str): The name to clean.
+
+        Returns:
+            str: The cleaned name.
+        """
+        # Define a dictionary to map accented characters to their unaccented equivalents except ñ
+        accent_map = {
+            'á': 'a', 'é': 'e', 'í': 'i', 'ó': 'o', 'ú': 'u',
+            'ü': 'u', 'ñ': 'ñ'
+        }
+
+        # Replace accented and special characters with their unaccented equivalents or _
+        name = ''.join(accent_map.get(c, c) for c in name)
+        name = re.sub(r'[^a-zñ0-9_.-]', '_', name.lower().strip())
+
+        # Truncate the name to 40 characters
+        name = name[:40]
+
+        return name
