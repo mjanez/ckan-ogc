@@ -23,6 +23,7 @@ class CKANInfo:
         self.ckan_site_url = os.environ.get('CKAN_URL', OGC2CKAN_CKANINFO_CONFIG['ckan_site_url'])
         self.pycsw_site_url = os.environ.get('PYCSW_URL', OGC2CKAN_CKANINFO_CONFIG['pycsw_site_url'])
         self.authorization_key = os.environ.get('CKAN_API_KEY', OGC2CKAN_CKANINFO_CONFIG['authorization_key'])
+        self.dataset_multilang = True if os.environ.get('CKAN_DATASET_MULTILANG') == 'True' else OGC2CKAN_CKANINFO_CONFIG['dataset_multilang']
         self.default_license = os.environ.get('DEFAULT_LICENSE', OGC2CKAN_CKANINFO_CONFIG['default_license'])
         self.default_license_id = os.environ.get('DEFAULT_LICENSE_ID', OGC2CKAN_CKANINFO_CONFIG['default_license_id'])
         self.ckan_harvester = OGC2CKAN_HARVESTER_CONFIG

@@ -78,7 +78,7 @@ def make_request(url: str, ssl_unverified_mode: bool, data: bytes = None, author
     else:
         return None
 
-def create_ckan_datasets(ckan_site_url: str, authorization_key: str, datasets: object, ssl_unverified_mode: bool = False, workspaces: Optional[str] = None) -> Tuple[int, int]:
+def create_ckan_datasets(ckan_site_url: str, authorization_key: str, datasets: object, dataset_multilang: bool, ssl_unverified_mode: bool = False, workspaces: Optional[str] = None) -> Tuple[int, int]:
     """
     Create new datasets on a CKAN server.
 
@@ -86,6 +86,7 @@ def create_ckan_datasets(ckan_site_url: str, authorization_key: str, datasets: o
         ckan_site_url (str): The URL of the CKAN server.
         authorization_key (str): The API key for the CKAN server.
         datasets (object): The datasets to create.
+        dataset_multilang (bool): Whether the dataset is multilingual or not.
         ssl_unverified_mode (bool, optional): Whether to use SSL verification or not. Defaults to False.
         workspaces (str, optional): Only those identifiers starting with identifier_filter (e.g. 'open_data:...') are created. Defaults to None.
 
@@ -93,16 +94,16 @@ def create_ckan_datasets(ckan_site_url: str, authorization_key: str, datasets: o
         Tuple[int, int]: A tuple containing the number of Harvester server records and CKAN new records counters.
     """
     ckan_dataset_errors = []
-    source_dataset_count = len(datasets)
+    ckan_dataset_count = 0
 
     # Check if the datasets already exists in CKAN.
-    datasets, ckan_dataset_errors, ckan_dataset_count = check_ckan_datasets_exists(ckan_site_url, authorization_key, datasets, ssl_unverified_mode, ckan_dataset_errors)
+    datasets, ckan_dataset_errors, source_dataset_count = check_ckan_datasets_exists(ckan_site_url, authorization_key, datasets, ssl_unverified_mode, ckan_dataset_errors)
 
     for dataset in datasets:
         try:
             if workspaces is not None and not any(x.lower() in dataset.ogc_workspace.lower() for x in workspaces):
                 break
-            data = dataset.generate_data()
+            data = dataset.generate_data(dataset_multilang)
             if data is not None:
                 create_ckan_dataset(ckan_site_url, ssl_unverified_mode, data, authorization_key)
                 ckan_dataset_count += 1
