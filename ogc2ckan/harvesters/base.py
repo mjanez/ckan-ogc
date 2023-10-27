@@ -928,7 +928,7 @@ class Harvester:
         source_language = source_language if "http" in source_language else None
         default_language = source_language if source_language is not None and source_language != self.default_language else self.default_language
 
-        required_lang = get_mapping_value(default_language, 'language', 'iso_639_2')
+        required_lang = get_mapping_value(default_language, 'language', 'iso_639_1')
 
         for field, field_translated in OGC2CKAN_MD_MULTILANG_FIELDS.items():
             output = {}
