@@ -231,7 +231,7 @@ class HarvesterCSW(Harvester):
         dcat_type = OGC2CKAN_HARVESTER_MD_CONFIG['dcat_type']
         dataset.set_resource_type(
             dcat_type['series'] if layer_info.hierarchy == "series"
-            else dcat_type['service'] if layer_info.hierarchy == "service"
+            else dcat_type['spatial_data_service'] if layer_info.hierarchy == "service"
             else dcat_type['dataset'])
 
         # Set SpatialRepresentationType
