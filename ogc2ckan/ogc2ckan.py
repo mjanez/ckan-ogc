@@ -21,7 +21,7 @@ import ptvsd
 
 # Ennvars
 TZ = os.environ.get("TZ", "TZ")
-DEV_MODE = None
+DEV_MODE = os.environ.get("DEV_MODE", None)
 VERSION = os.environ.get("VERSION", "0.1")
 CKAN_OGC_DEV_PORT = os.environ.get("CKAN_OGC_DEV_PORT", 5678)
 APP_DIR = os.environ.get("APP_DIR", "/app")
