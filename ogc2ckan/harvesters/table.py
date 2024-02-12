@@ -75,6 +75,9 @@ class HarvesterTable(Harvester):
                                 
                 logging.info(f"{log_module}:Load '{self.file_extension.upper()}' file: '{filename}' with {len(table_data)} records") 
 
+                # Clean column names by removing leading/trailing whitespaces, newlines, and tabs
+                table_data.columns = table_data.columns.str.strip().str.replace('\n', '').str.replace('\t', '')
+
                 # Remove all fields that are a nan float and trim all spaces of the values
                 table_data = table_data.apply(lambda x: x.str.strip() if x.dtype == 'object' else x)
                 table_data = table_data.fillna(value='')
@@ -90,18 +93,32 @@ class HarvesterTable(Harvester):
                 table_distributions = table_distributions.rename(columns=lambda x: x.replace('resource_', ''))
                 table_datadictionaries = table_datadictionaries.rename(columns=lambda x: re.sub(re.compile(r'datadictionary(_info)?_'), '', x).replace('info.', ''))
 
-                # Group distributions by dataset_id and convert to list of dicts
-                table_distributions_grouped = table_distributions.groupby('dataset_id').apply(lambda x: x.to_dict('records')).to_dict()
+                # Remove rows where 'dataset_id' is None or an empty string
+                table_distributions = table_distributions[table_distributions['dataset_id'].notna() & (table_distributions['dataset_id'] != '')]
 
-                # Group datadictionaries by resource_id and convert to list of dicts
-                table_datadictionaries_grouped = table_datadictionaries.groupby('resource_id').apply(lambda x: x.to_dict('records')).to_dict()
+                if not table_distributions.empty:
+                    # Group distributions by dataset_id and convert to list of dicts
+                    table_distributions_grouped = table_distributions.groupby('dataset_id' ).apply(lambda x: x.to_dict('records')).to_dict()
+                else:
+                    logging.info(f"{log_module}:No distributions loaded. Check 'distribution.dataset_id' fields")
+                    table_distributions_grouped = None
 
+                # Filter datadictionaries where resource_id is not empty or None
+                if 'resource_id' in table_datadictionaries.columns:
+                    table_datadictionaries = table_datadictionaries[table_datadictionaries['resource_id'].notna() & (table_datadictionaries['resource_id'] != '')]
+
+                    # Group datadictionaries by resource_id and convert to list of dicts
+                    table_datadictionaries_grouped = table_datadictionaries.groupby('resource_id').apply(lambda x: x.to_dict('records')).to_dict()
+                else:
+                    logging.info(f"{log_module}:No datadictionaries loaded. Check 'datadictionary.resource_id' fields.")
+                    table_datadictionaries_grouped = None
+                     
                 # Add distributions and datadictionaries to each dataset object
                 table_data = [
                     {
                         **d,
                         'distributions': [
-                            {**dr, 'datadictionaries': table_datadictionaries_grouped.get(dr['id'], [])}
+                            {**dr, 'datadictionaries': table_datadictionaries_grouped.get(dr['id'], []) if table_datadictionaries_grouped else []}
                             for dr in table_distributions_grouped.get(
                                 d.get('identifier') or d.get('alternate_identifier') or d.get('inspire_id'), []
                             )
@@ -194,11 +211,9 @@ class HarvesterTable(Harvester):
         dataset.set_modified(modified_date)
 
         # DCAT Type (dataset/series)
-        dcat_type = OGC2CKAN_HARVESTER_MD_CONFIG['dcat_type']
-        is_series = False
-        if table_dataset.dcat_type and 'http' in table_dataset.dcat_type and 'series' in table_dataset.dcat_type:
-            is_series = True
-        dataset.set_resource_type(dcat_type['series' if is_series else 'default'])
+        dcat_type = getattr(table_dataset, 'dcat_type', OGC2CKAN_HARVESTER_MD_CONFIG['representation_type']['default'])
+        dcat_type = dcat_type.replace('https:', 'http:') if dcat_type else None
+        dataset.set_resource_type(dcat_type)
 
         # Set SpatialRepresentationType
         representation_type = getattr(table_dataset, 'representation_type', OGC2CKAN_HARVESTER_MD_CONFIG['representation_type']['default']).replace('https:', 'http:')
@@ -315,7 +330,8 @@ class HarvesterTable(Harvester):
         dataset.set_license(ckan_info.default_license)
         
         # Set distributions
-        self.get_distribution(ckan_info, dataset, distribution, datadictionary, datadictionaryfield, record, table_dataset)
+        if table_dataset.distributions:
+            self.get_distribution(ckan_info, dataset, distribution, datadictionary, datadictionaryfield, record, table_dataset)
         
         # Metadata distributions (INSPIRE & GeoDCAT-AP)
         self.set_metadata_distributions(ckan_info, dataset, distribution, record)
@@ -324,8 +340,10 @@ class HarvesterTable(Harvester):
         keywords = []
         keywords_uri = []
         if hasattr(table_dataset, 'tag_string'):
-            for k in table_dataset.tag_string:
-                keyword_name = k.lower()                
+            tag_string = table_dataset.tag_string
+            tag_string = [tag_string] if isinstance(tag_string, str) else tag_string
+            for k in tag_string:
+                keyword_name = k.lower()
                 if 'http' in keyword_name or '/' in keyword_name:
                     keyword_name = keyword_name.split('/')[-1]
                     keywords_uri.add(keyword_name)
@@ -353,7 +371,7 @@ class HarvesterTable(Harvester):
         datadictionaries = []
         
         for i, r in enumerate(table_dataset.distributions):
-            distribution_id = r.get('id', str(uuid.uuid4()))
+            distribution_id = self._normalize_id(r.get('id', str(uuid.uuid4())))
             # Get data dictionaries
             if r.datadictionaries:
                 self.get_datadictionary(datadictionary, datadictionaryfield, r.datadictionaries, distribution_id)
@@ -435,7 +453,7 @@ class HarvesterTable(Harvester):
         Returns:
             str: The updated custom format.
         """
-        if any(string in format.lower() for string in ['esri', 'arcgis']) or 'viewer.html?url=' in url:
+        if isinstance(format, str) and (any(string in format.lower() for string in ['esri', 'arcgis']) or 'viewer.html?url=' in url):
             format = 'HTML'
             
         return format
