@@ -313,6 +313,14 @@ class HarvesterTable(Harvester):
         metadata_profile = getattr(table_dataset, 'metadata_profile', OGC2CKAN_HARVESTER_MD_CONFIG['metadata_profile'])
         dataset.set_metadata_profile(metadata_profile)
         
+        # Set graphic overview
+        graphic_overview = getattr(table_dataset, 'graphic_overview', None)
+        dataset.set_graphic_overview(graphic_overview)
+        
+        # Set purpose
+        purpose = getattr(table_dataset, 'purpose', None)
+        dataset.set_purpose(purpose)
+        
         # Set Responsible Parties (Point of contact, Resource publisher and Resource contact/maintainer)
         self.set_default_responsible_parties(dataset, self.default_dcat_info, ckan_info, table_dataset)
 
