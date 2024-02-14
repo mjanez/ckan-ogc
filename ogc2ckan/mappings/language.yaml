@@ -1,92 +1,92 @@
 -
    id: http://publications.europa.eu/resource/authority/language/ENG
-   iso_639_2: en
-   iso_639_3: eng
+   iso_639_1: en
+   iso_639_2: eng
 -
    id: http://publications.europa.eu/resource/authority/language/SPA
-   iso_639_2: es
-   iso_639_3: spa
+   iso_639_1: es
+   iso_639_2: spa
 -
    id: http://publications.europa.eu/resource/authority/language/DEU
-   iso_639_2: de
-   iso_639_3: deu
+   iso_639_1: de
+   iso_639_2: deu
 -
    id: http://publications.europa.eu/resource/authority/language/FRA
-   iso_639_2: fr
-   iso_639_3: fra
+   iso_639_1: fr
+   iso_639_2: fra
 -
    id: http://publications.europa.eu/resource/authority/language/ITA
-   iso_639_2: it
-   iso_639_3: ita
+   iso_639_1: it
+   iso_639_2: ita
 -
    id: http://publications.europa.eu/resource/authority/language/POR
-   iso_639_2: pt
-   iso_639_3: por
+   iso_639_1: pt
+   iso_639_2: por
 -
    id: http://publications.europa.eu/resource/authority/language/NLD
-   iso_639_2: nl
-   iso_639_3: nld
+   iso_639_1: nl
+   iso_639_2: nld
 -
    id: http://publications.europa.eu/resource/authority/language/SWE
-   iso_639_2: sv
-   iso_639_3: swe
+   iso_639_1: sv
+   iso_639_2: swe
 -
    id: http://publications.europa.eu/resource/authority/language/POL
-   iso_639_2: pl
-   iso_639_3: pol
+   iso_639_1: pl
+   iso_639_2: pol
 -
    id: http://publications.europa.eu/resource/authority/language/DAN
-   iso_639_2: da
-   iso_639_3: dan
+   iso_639_1: da
+   iso_639_2: dan
 -
    id: http://publications.europa.eu/resource/authority/language/FIN
-   iso_639_2: fi
-   iso_639_3: fin
+   iso_639_1: fi
+   iso_639_2: fin
 -
    id: http://publications.europa.eu/resource/authority/language/EST
-   iso_639_2: et
-   iso_639_3: est
+   iso_639_1: et
+   iso_639_2: est
 -
    id: http://publications.europa.eu/resource/authority/language/LVA
-   iso_639_2: lv
-   iso_639_3: lav
+   iso_639_1: lv
+   iso_639_2: lav
 -
    id: http://publications.europa.eu/resource/authority/language/LTU
-   iso_639_2: lt
-   iso_639_3: lit
+   iso_639_1: lt
+   iso_639_2: lit
 -
    id: http://publications.europa.eu/resource/authority/language/CZE
-   iso_639_2: cs
-   iso_639_3: ces
+   iso_639_1: cs
+   iso_639_2: ces
 -
    id: http://publications.europa.eu/resource/authority/language/SLO
-   iso_639_2: sk
-   iso_639_3: slk
+   iso_639_1: sk
+   iso_639_2: slk
 -
    id: http://publications.europa.eu/resource/authority/language/HUN
-   iso_639_2: hu
-   iso_639_3: hun
+   iso_639_1: hu
+   iso_639_2: hun
 -
    id: http://publications.europa.eu/resource/authority/language/SLV
-   iso_639_2: sl
-   iso_639_3: slv
+   iso_639_1: sl
+   iso_639_2: slv
 -
    id: http://publications.europa.eu/resource/authority/language/BUL
-   iso_639_2: bg
-   iso_639_3: bul
+   iso_639_1: bg
+   iso_639_2: bul
 -
    id: http://publications.europa.eu/resource/authority/language/ROM
-   iso_639_2: ro
-   iso_639_3: ron
+   iso_639_1: ro
+   iso_639_2: ron
 -
    id: http://publications.europa.eu/resource/authority/language/HRV
-   iso_639_2: hr
-   iso_639_3: hrv
+   iso_639_1: hr
+   iso_639_2: hrv
 -
    id: http://publications.europa.eu/resource/authority/language/MAL
-   iso_639_2: mt
-   iso_639_3: mlt
+   iso_639_1: mt
+   iso_639_2: mlt
 -
    id: http://publications.europa.eu/resource/authority/language/GRE
-   iso_639_2: el
-   iso_639_3: ell
+   iso_639_1: el
+   iso_639_2: ell

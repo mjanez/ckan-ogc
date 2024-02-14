@@ -72,6 +72,8 @@ class HarvesterXML(Harvester):
             try:
                 metadata = MD_Metadata(etree.parse(md_record))
                 identifier = metadata.identifier
+                #TODO: Multilang also for CSW and OGC harvesters
+                #metadata.locales = ['es', 'en']
                 if identifier:
                     md_records[identifier] = metadata
             except XmlError as e:
@@ -144,7 +146,7 @@ class HarvesterXML(Harvester):
         dcat_type = OGC2CKAN_HARVESTER_MD_CONFIG['dcat_type']
         dataset.set_resource_type(
             dcat_type['series'] if layer_info.hierarchy == "series"
-            else dcat_type['service'] if layer_info.hierarchy == "service"
+            else dcat_type['spatial_data_service'] if layer_info.hierarchy == "service"
             else dcat_type['dataset'])
 
         # Set SpatialRepresentationType

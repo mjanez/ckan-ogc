@@ -108,6 +108,7 @@ class Dataset:
         self.owner_org = owner_org
         self.private = False
         self.groups = []
+        self.graphic_overview = None
         # use http://<ckan_url>/api/action/organization_list to see the organization ids in your CKAN site
         self.license_id = license_id
         self.identifier = ckan_id
@@ -180,6 +181,9 @@ class Dataset:
 
     def set_groups(self, groups):
         self.groups = groups
+
+    def set_graphic_overview(self, graphic_overview):
+        self.graphic_overview = graphic_overview
 
     def set_publisher_uri(self, publisher_uri):
         self.publisher_uri = publisher_uri
@@ -402,6 +406,7 @@ class Dataset:
             'owner_org': self.owner_org,
             'private': self.private,
             'groups': self.groups,
+            'graphic_overview': self.graphic_overview,
             'title': self.title,
             'notes': self.notes,
             'license_id': self.license_id,
@@ -505,6 +510,7 @@ class Dataset:
             'owner_org': self.owner_org,
             'private': self.private,
             'groups': self.groups,
+            'graphic_overview': self.graphic_overview,
             'title_translated': self.title_translated,
             'notes_translated': self.notes_translated,
             'license_id': self.license_id,

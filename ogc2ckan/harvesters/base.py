@@ -560,6 +560,20 @@ class Harvester:
         return ckan_name
 
     @staticmethod
+    def _normalize_id(id):
+        # the id of a CKAN dataset, must be between 2 and 36 characters long and contain only lowercase
+        # alphanumeric characters, - and _, e.g. 'warandpeace'
+        normal = unicodedata.normalize('NFKD', id).encode('ASCII', 'ignore').decode('utf-8')
+        ckan_name = re.sub(r'[^a-z0-9_-]', '_', normal.lower())[:36]
+        if len(ckan_name) == 0:
+            ckan_name = 'unnamed'
+        elif ckan_name[0].isdigit():
+            ckan_name = 'n' + ckan_name[1:]
+        ckan_name = ckan_name.lower()
+
+        return ckan_name
+
+    @staticmethod
     def _normalize_date(date):
         if isinstance(date, str):
             date_formats = ['%Y-%m-%d', '%d-%m-%Y']
@@ -639,7 +653,7 @@ class Harvester:
                 informat = ''.join(str(value) for value in dist_info.values()).lower()
                 informat = next((key for key in OGC2CKAN_MD_FORMATS if key.lower() in informat), dist_info.get('url', '').lower())
             except:
-                informat = dist_info['url'].lower()
+                informat = dist_info['url'].lower() if isinstance(dist_info['url'], str) else dist_info['url']
 
         return OGC2CKAN_MD_FORMATS.get(informat, (None, None, None, None))
 
@@ -928,7 +942,7 @@ class Harvester:
         source_language = source_language if "http" in source_language else None
         default_language = source_language if source_language is not None and source_language != self.default_language else self.default_language
 
-        required_lang = get_mapping_value(default_language, 'language', 'iso_639_2')
+        required_lang = get_mapping_value(default_language, 'language', 'iso_639_1')
 
         for field, field_translated in OGC2CKAN_MD_MULTILANG_FIELDS.items():
             output = {}
