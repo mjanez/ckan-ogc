@@ -166,7 +166,7 @@ List of *containers*:
 ### Base images
 | Repository | Type | Docker tag | Size | Notes |
 | --- | --- | --- | --- | --- |
-| python 3.11| base image | `python/python:3.11-slim-bullseye` | 45.57 MB |  - |
+| python 3.13| base image | `python/python:3.13-slim-bullseye` | 45.57 MB |  - |
 
 ### Built images
 | Repository | Type | Docker tag | Size | Notes |
