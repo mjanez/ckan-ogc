@@ -197,3 +197,12 @@ OGC2CKAN_ISO_MD_ELEMENTS = {
 
 # loose definition of BCP47-like strings
 BCP_47_LANGUAGE = u'^[a-z]{2,8}(-[0-9a-zA-Z]{1,8})*$'
+
+CUSTOM_FORMAT_RULES = [
+    {
+        'format_strings': ['esri', 'arcgis'],
+        'url_string': 'viewer.html?url=',
+        'new_format': 'HTML'
+    },
+    # Add more rules here as needed
+]

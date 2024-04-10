@@ -134,7 +134,7 @@ pdm run python ogc2ckan/ogc2ckan.py
 ## Additional info
 ### CKAN Schemas
 The CKAN output schemas are located in the [`ogc2ckan/ckan_datasets`](./ogc2ckan/ckan_datasets) folder. The schemas are used to map the metadata fields from the different sources to the CKAN dataset fields. Now are available the following schemas:
-   * `geodcatap`: Schema based in [GeoDCAT-AP Schema for CKAN](https://github.com/mjanez/ckanext-scheming_dcat).
+   * `geodcatap`: Schema based in [GeoDCAT-AP Schema for CKAN](https://github.com/mjanez/ckanext-schemingdcat).
    * `base`: A DCAT schema with the basic fields. 
 
 You can create your own Schema.
@@ -166,7 +166,7 @@ List of *containers*:
 ### Base images
 | Repository | Type | Docker tag | Size | Notes |
 | --- | --- | --- | --- | --- |
-| python 3.11| base image | `python/python:3.11-slim-bullseye` | 45.57 MB |  - |
+| python 3.13| base image | `python/python:3.13-slim-bullseye` | 45.57 MB |  - |
 
 ### Built images
 | Repository | Type | Docker tag | Size | Notes |

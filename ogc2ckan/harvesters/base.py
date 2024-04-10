@@ -1088,7 +1088,7 @@ class Harvester:
 
         # Replace accented and special characters with their unaccented equivalents or _
         name = ''.join(accent_map.get(c, c) for c in name)
-        name = re.sub(r'[^a-zñ0-9_.-]', '_', name.lower().strip())
+        name = re.sub(r'[^a-zñ0-9_.-]', '-', name.lower().strip())
 
         # Truncate the name to 40 characters
         name = name[:40]
