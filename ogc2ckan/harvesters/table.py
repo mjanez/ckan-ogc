@@ -18,7 +18,7 @@ from config.ckan_config import CKANInfo
 
 # custom functions
 from config.ogc2ckan_config import get_log_module
-from mappings.default_ogc2ckan_config import OGC2CKAN_HARVESTER_CONFIG, OGC2CKAN_HARVESTER_MD_CONFIG, OGC2CKAN_CKANINFO_CONFIG
+from mappings.default_ogc2ckan_config import OGC2CKAN_HARVESTER_CONFIG, OGC2CKAN_HARVESTER_MD_CONFIG, OGC2CKAN_CKANINFO_CONFIG, CUSTOM_FORMAT_RULES
 from controller.mapping import get_df_mapping_json
 
 log_module = get_log_module(os.path.abspath(__file__))
@@ -409,7 +409,7 @@ class HarvesterTable(Harvester):
                     'id': distribution_id,
                     'url': r.get('url', ''),
                     'name': dist_name,
-                    'format': self._update_custom_formats(format_type, r.get('url', '')),
+                    'format': self._update_custom_format(format_type, r.get('url', '')),
                     'media_type': media_type,
                     'description': r.get('description', ''),
                     'license': r.get('license', ckan_info.default_license),
@@ -447,11 +447,12 @@ class HarvesterTable(Harvester):
 
 
     @staticmethod
-    def _update_custom_formats(format, url=None, **args):
-        """Update the custom format.
+    def _update_custom_format(format, url=None, **args):
+        """Update the custom format based on custom rules.
         
-        If the format contains 'esri' or 'arcgis' (case-insensitive) or the URL contains 'viewer.html?url=',
-        the format is updated to 'HTML'.
+        The function checks the format and URL against a set of custom rules (CUSTOM_FORMAT_RULES). If a rule matches,
+        the format is updated according to that rule. This function is designed to be easily
+        extendable with new rules.
         
         Args:
             format (str): The custom format to update.
@@ -461,9 +462,14 @@ class HarvesterTable(Harvester):
         Returns:
             str: The updated custom format.
         """
-        if isinstance(format, str) and (any(string in format.lower() for string in ['esri', 'arcgis']) or 'viewer.html?url=' in url):
-            format = 'HTML'
-            
+        if isinstance(format, str):
+            format_lower = format.lower()
+
+            for rule in CUSTOM_FORMAT_RULES:
+                if any(string in format_lower for string in rule['format_strings']) or rule['url_string'] in url:
+                    format = rule['new_format']
+                    break
+                    
         return format
 
     @staticmethod
